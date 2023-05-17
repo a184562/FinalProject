@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<NowPlaying />
+		<h1>123456478979416545</h1>
 		<GenreRecommend />
 	</div>
 </template>

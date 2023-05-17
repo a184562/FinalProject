@@ -29,7 +29,6 @@ export default {
 			url: nowplaying_URL,
 		})
 		.then((res) => {
-			console.log(res)
 			this.nowplaying_movies = res.data.results
 		})
 		.catch((err) => console.log(err))
