@@ -1,8 +1,14 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <a href="#">Login</a> |
+      <a href="#">Signup</a> |
+      <a href="#">Profile</a>
+    </nav>
+    <nav>
+      <router-link to="/">Movie</router-link> |
+      <router-link to="/community">Community</router-link> |
+      <router-link to="/entertain">Entertainment</router-link>
     </nav>
     <router-view/>
   </div>
