@@ -1,8 +1,21 @@
 <template>
 	<div>
-		<NowPlaying />
-		<h1>123456478979416545</h1>
-		<GenreRecommend />
+		<div>
+			<h1>Now Playing</h1>
+			<NowPlaying />
+		</div>
+		<div>
+			<h1>Genre1</h1>
+			<GenreRecommend />
+		</div>
+		<div>
+			<h1>Genre2</h1>
+			<GenreRecommend />
+		</div>
+		<div>
+			<h1>Genre3</h1>
+			<GenreRecommend />
+		</div>
 	</div>
 </template>
 

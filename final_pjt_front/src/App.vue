@@ -6,7 +6,7 @@
       <a href="#">Profile</a>
     </nav>
     <nav>
-      <router-link to="/">Movie</router-link> |
+      <router-link to="/movies">Movie</router-link> |
       <router-link to="/community">Community</router-link> |
       <router-link to="/entertain">Entertainment</router-link>
     </nav>

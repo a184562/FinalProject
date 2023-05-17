@@ -3,13 +3,14 @@ import VueRouter from 'vue-router'
 import MovieListView from '../views/MovieListView.vue'
 import CommunityView from '../views/CommunityView.vue'
 import EntertainView from '../views/EntertainView.vue'
+import MovieDetailView from '../views/MovieDetailView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'movie',
+    path: '/movies',
+    name: 'movies',
     component: MovieListView
   },
   {
@@ -21,6 +22,11 @@ const routes = [
     path: '/entertain',
     name: 'entertain',
     component: EntertainView
+  },
+  {
+    path: '/movie',
+    name: 'movie',
+    component: MovieDetailView
   }
 ]
 

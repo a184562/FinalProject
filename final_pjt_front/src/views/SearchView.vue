@@ -6,7 +6,7 @@
 
 <script>
 export default {
-	name: MovieDetail,
+	name: 'SearchView',
 }
 </script>
 
