@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5eb8b35c-95f1-4ae5-8fef-c6e16413225a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/final_pjt_back/final_pjt_back/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_pjt_back/final_pjt_back/asgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_pjt_back/final_pjt_back/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_pjt_back/final_pjt_back/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_pjt_back/final_pjt_back/wsgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_pjt_back/manage.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="2PtsJeI0XeXlmUCtA4zWRYWkPpN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5eb8b35c-95f1-4ae5-8fef-c6e16413225a" name="Default Changelist" comment="" />
+      <created>1684287644413</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1684287644413</updated>
+    </task>
+    <servers />
+  </component>
+</project>
