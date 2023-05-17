@@ -20,3 +20,5 @@ class MovieCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = MovieComment
         fields = '__all__'
+
+

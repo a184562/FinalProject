@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Article,Comment,CommentToComment
+from .models import Article,Comment,MovieReview,MovieComment
 
 # 자유게시판 LIST
 class ArticleListSerializer(serializers.ModelSerializer):
@@ -12,20 +12,20 @@ class ArticleListSerializer(serializers.ModelSerializer):
 class ArticleDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ('title','content','created_at','updated_at','user','like_users',)
+        fields = '__all__'
         read_only_fields = ('user',)
 
 # 영화리뷰게시판 LIST
 class MovieReviewListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Article
+        model = MovieReview
         fields = ('title','movie_title','rank','user','like_users')
         read_only_fields = ('user',)
 
-# 영화리뷰게시판 LIST
+# 영화리뷰게시판 DETAIL
 class MovieReviewDetailSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Article
+        model = MovieReview
         fields = '__all__'
         read_only_fields = ('user',)
 
@@ -36,9 +36,8 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ('user','article')
 
-# 대댓글 기능
-class CommentToCommentSerializer(serializers.ModelSerializer):
+class MovieCommentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CommentToComment
+        model = MovieComment
         fields = '__all__'
-        read_only_fields = ('user','comment')
+        read_only_fields = ('user','article')
