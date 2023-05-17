@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <nav>
-      <a href="#">Login</a> |
-      <a href="#">Signup</a> |
+      <a href="http://localhost:8080/login">Login</a> |
+      <a href="http://localhost:8080/signup">Signup</a> |
       <a href="#">Profile</a>
     </nav>
     <nav>

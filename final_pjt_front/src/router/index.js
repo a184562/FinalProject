@@ -6,6 +6,12 @@ import EntertainView from '../views/EntertainView.vue'
 import MovieDetailView from '../views/MovieDetailView.vue'
 import FreeBoard from '../components/Community/FreeBoard.vue'
 import MovieReview from '../components/Community/MovieReview.vue'
+import LogIn from '../views/Login.vue'
+import SignUp from '../views/Signup.vue'
+import GamePlay from '../components/Entertain/Game.vue'
+
+
+
 
 Vue.use(VueRouter)
 
@@ -40,6 +46,21 @@ const routes = [
     name: 'review',
     component: MovieReview
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: LogIn
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: SignUp
+  },
+  {
+    path: '/entertain/game',
+    name: 'game',
+    component: GamePlay
+  }
 ]
 
 const router = new VueRouter({
