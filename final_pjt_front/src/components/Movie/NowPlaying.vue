@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<MovieCard />
+		<MovieCard v-for="movie in nowplaying_movies" :key="movie.id"
+		:movie="movie" />
 		<p>1234</p>
 	</div>
 </template>
@@ -17,12 +18,19 @@ export default {
 	components: {
 		MovieCard,
 	},
+	data() {
+		return {
+			nowplaying_movies : null,
+		}
+	},
 	created() {
-		axios(nowplaying_URL, {
-		
+		axios({
+			method: 'get',
+			url: nowplaying_URL,
 		})
 		.then((res) => {
 			console.log(res)
+			this.nowplaying_movies = res.data.results
 		})
 		.catch((err) => console.log(err))
 	},
