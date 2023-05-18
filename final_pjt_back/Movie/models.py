@@ -11,8 +11,8 @@ class Genre(models.Model):
     name = models.TextField()
 
 
-class movie(models.Model):
-    title = models.CharField(max_length=100)
+class Movie(models.Model):
+    title = models.CharField(max_length=100,unique=True)
     original_title = models.CharField(max_length=100)
     poster_path = models.CharField(max_length=200)
     overview = models.TextField()
@@ -22,5 +22,5 @@ class movie(models.Model):
     genres = models.ManyToManyField(Genre)
     # like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
     runtime = models.IntegerField()
-    
+
 
