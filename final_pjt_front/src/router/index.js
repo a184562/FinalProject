@@ -11,6 +11,7 @@ import SignUp from '../views/Signup.vue'
 import GamePlay from '../components/Entertain/Game.vue'
 import FreeBoardDetail from '../components/Community/FreeBoardDetail.vue'
 import MovieReviewDetail from '../components/Community/MovieReviewDetail.vue'
+import GenreSelectView from '../views/GenreSelectView.vue'
 
 
 
@@ -72,6 +73,11 @@ const routes = [
     path: '/entertain/game',
     name: 'game',
     component: GamePlay
+  },
+  {
+    path: '/genre',
+    name: 'genre',
+    component: GenreSelectView
   }
 ]
 
