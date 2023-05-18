@@ -22,4 +22,5 @@ class movie(models.Model):
     genres = models.ManyToManyField(Genre)
     # like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
     runtime = models.IntegerField()
+    
 
