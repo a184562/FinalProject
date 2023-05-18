@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import axios from 'axios'
+import axios from 'axios'
 // import router from '@/router'
 
 
@@ -9,6 +9,7 @@ import Vuex from 'vuex'
 // const movie_URL_1 = 'https://api.themoviedb.org/3/movie/'
 // const movie_URL_2 = `?api_key=${API_KEY}`
 
+const Django_API_URL = 'http://127.0.0.1:8000'
 
 Vue.use(Vuex)
 
@@ -22,7 +23,17 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
-    
+    getArticle(context) {
+      axios({
+        method: 'get',
+        url: `${Django_API_URL}/api/v2/community/free/`,
+      })
+      .then((res) => {
+        console.log(context, res, this.url)
+      })
+      .catch((err) => {
+        console.log(err, this.url)})
+    }
   },
   modules: {
   }

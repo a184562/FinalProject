@@ -5,8 +5,8 @@ from .models import Article,Comment,MovieReview,MovieComment
 class ArticleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ('title','user','like_users')
-        read_only_fields = ('user')
+        fields = ('title')
+        # read_only_fields = ('user')
       
 # 자유게시판 DETAIL
 class ArticleDetailSerializer(serializers.ModelSerializer):

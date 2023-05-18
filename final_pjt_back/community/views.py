@@ -27,7 +27,8 @@ def article_detail(request,article_pk):
 def article_create(request):
       serializer= ArticleDetailSerializer(data=request.data)
       if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+            # serializer.save(user=request.user)
+            serializer.save()
             return Response(serializer.data)
       
 @api_view(['PUT','DELETE'])
