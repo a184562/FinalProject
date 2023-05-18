@@ -6,11 +6,17 @@ from .models import Movie
 from .serializers import MovieDetailSerializer,MovieListSerializer
 
 
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def movie_list(request):
-    movie = get_list_or_404(Movie)
-    serializer = MovieListSerializer(movie,many=True)
-    return Response(serializer.data)
+    if request.method=='GET':
+        movie = get_list_or_404(Movie)
+        serializer = MovieListSerializer(movie,many=True)
+        return Response(serializer.data)
+    elif request.method=='POST':
+        serializer = MovieDetailSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
 
 @api_view(['GET'])
 def movie_detail(request,movie_pk):
