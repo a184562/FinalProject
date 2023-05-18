@@ -16,6 +16,14 @@ export default {
 	name: 'FreeBoard',
 	components: {
 		FreeBoardList,
+	},
+	created() {
+		this.getArticle()
+	},
+	methods: {
+		getArticle() {
+			this.$store.dispatch('getArticle')
+		}
 	}
 }
 </script>
