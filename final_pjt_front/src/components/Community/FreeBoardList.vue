@@ -15,13 +15,20 @@ import FreeBoardArticle from './FreeBoardArticle.vue'
 
 export default {
 	name: 'FreeBoardList',
+	
 	components: {
 		FreeBoardArticle,
 	},
-	computed: {
-		free_articles() {
-			return this.$store.state.free_articles
+	// computed: {
+	// 	free_articles() {
+	// 		return this.$store.state.free_articles
+	// 	}
+	// },
+	data() {
+		return {
+			free_articles: this.$store.state.free_articles
 		}
+		
 	}
 }
 </script>

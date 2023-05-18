@@ -10,6 +10,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+const Django_API_URL = 'http://127.0.0.1:8000'
+
+
 export default {
 	name: "FreeBoardDetail",
 	data() {
@@ -18,6 +22,22 @@ export default {
 		}
 	},
 	// axios로 Django 데이터베이스 서버에 연결 후 작업
+	created() {
+		this.getArticleDetail()
+	},
+	methods: {
+		getArticleDetail() {
+			axios({
+				method: 'get',
+				url: `${Django_API_URL}/api/v1/community/free/${this.$route.params.id}`,
+			})
+			.then((res) => {
+				console.log(res)
+				this.free_article = res.data
+			})
+			.catch((err) => console.log(err))
+		}	
+	}
 }
 </script>
 

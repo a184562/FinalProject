@@ -3,7 +3,7 @@
 		<h5>{{ free_article.id }}</h5>
 		<p>{{ free_article.title }}</p>
 		<router-link :to="{
-			name: 'FreeBoardDetail',
+			name: 'freeboarddetail',
 			params: {id: free_article.id}}">
 			[DETAIL]
 		</router-link>

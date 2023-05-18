@@ -21,6 +21,9 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
+    GET_ARTICLES(state, articles) {
+      state.free_articles = articles
+    }
   },
   actions: {
     getArticle(context) {
@@ -30,6 +33,7 @@ export default new Vuex.Store({
       })
       .then((res) => {
         console.log(context, res)
+        context.commit('GET_ARTICLES', res.data)
       })
       .catch((err) => {
         console.log(err)})

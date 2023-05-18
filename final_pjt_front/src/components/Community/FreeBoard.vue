@@ -18,12 +18,14 @@ export default {
 	components: {
 		FreeBoardList,
 	},
+	
 	created() {
 		this.getArticle()
 	},
 	methods: {
 		getArticle() {
 			this.$store.dispatch('getArticle')
+			
 		},
 		gotoCreate() {
 			this.$router.push({name: 'freecreate'})
