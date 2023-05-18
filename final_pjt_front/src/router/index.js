@@ -10,6 +10,7 @@ import LogIn from '../views/Login.vue'
 import SignUp from '../views/Signup.vue'
 import GamePlay from '../components/Entertain/Game.vue'
 import FreeBoardDetail from '../components/Community/FreeBoardDetail.vue'
+import MovieReviewDetail from '../components/Community/MovieReviewDetail.vue'
 
 
 
@@ -44,13 +45,18 @@ const routes = [
   },
   {
     path: '/community/free/:id',
-    name: 'FreeBoardDetail',
+    name: 'freeboarddetail',
     component: FreeBoardDetail
   },
   {
     path: '/community/review',
     name: 'review',
     component: MovieReview
+  },
+  {
+    path: '/community/review/:id',
+    name: 'reviewdetail',
+    component: MovieReviewDetail
   },
   {
     path: '/login',
