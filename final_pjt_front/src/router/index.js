@@ -9,6 +9,7 @@ import MovieReview from '../components/Community/MovieReview.vue'
 import LogIn from '../views/Login.vue'
 import SignUp from '../views/Signup.vue'
 import GamePlay from '../components/Entertain/Game.vue'
+import FreeBoardDetail from '../components/Community/FreeBoardDetail.vue'
 
 
 
@@ -40,6 +41,11 @@ const routes = [
     path: '/community/free',
     name: 'free',
     component: FreeBoard
+  },
+  {
+    path: '/community/free/:id',
+    name: 'FreeBoardDetail',
+    component: FreeBoardDetail
   },
   {
     path: '/community/review',

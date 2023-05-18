@@ -14,7 +14,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    movies: []
+    free_articles: [],
+    review_articles: [],
   },
   getters: {
   },
