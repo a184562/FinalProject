@@ -1,43 +1,26 @@
 from rest_framework import serializers
-from .models import Article,Comment,MovieReview,MovieComment
+from .models import Article, Comment
 
-# 자유게시판 LIST
+
+
+
 class ArticleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ('title','user','like_users')
-        read_only_fields = ('user')
-      
-# 자유게시판 DETAIL
-class ArticleDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Article
-        fields = '__all__'
-        read_only_fields = ('user',)
+        fields = ('id','title','content')
 
-# 영화리뷰게시판 LIST
-class MovieReviewListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MovieReview
-        fields = ('title','movie_title','rank','user','like_users')
-        read_only_fields = ('user',)
 
-# 영화리뷰게시판 DETAIL
-class MovieReviewDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MovieReview
-        fields = '__all__'
-        read_only_fields = ('user',)
-
-# 댓글 기능
 class CommentSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Comment
         fields = '__all__'
-        read_only_fields = ('user','article')
+        read_only_fields = ('article')
 
-class MovieCommentSerializer(serializers.ModelSerializer):
+
+class ArticleDetailSerializer(serializers.ModelSerializer):
+    comment_set = CommentSerializer(many=True, read_only=True)
+    
     class Meta:
-        model = MovieComment
+        model = Article
         fields = '__all__'
-        read_only_fields = ('user','article')
