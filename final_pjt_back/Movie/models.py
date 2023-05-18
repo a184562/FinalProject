@@ -18,9 +18,7 @@ class Movie(models.Model):
     overview = models.TextField()
     vote_average = models.FloatField()
     release_date = models.DateField()
-    popularity = models.IntegerField()
+    popularity = models.FloatField()
     genres = models.ManyToManyField(Genre)
-    # like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
-    runtime = models.IntegerField()
 
 

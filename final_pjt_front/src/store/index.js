@@ -17,6 +17,7 @@ export default new Vuex.Store({
   state: {
     free_articles: [],
     review_articles: [],
+    movie_data: null,
   },
   getters: {
   },
@@ -52,6 +53,30 @@ export default new Vuex.Store({
       })
       .catch((err) => {
         console.log(err)})
+    },
+    insertMoviedata(context, movie_data) {
+      const movie_id = movie_data.id
+      const title = movie_data.title
+      const original_title = movie_data.original_title
+      const poster_path = movie_data.poster_path
+      const overview = movie_data.overview
+      const vote_average = movie_data.vote_average
+      const release_date = movie_data.release_date
+      const popularity = movie_data.popularity
+      const genres = movie_data.genre_ids
+      // const runtime = movie_data.runtime
+      console.log(title, original_title, poster_path, overview,
+        vote_average, release_date, popularity)
+      axios({
+        method: 'post',
+        url: `${Django_API_URL}/api/v1/movies/`,
+        data: {movie_id,title, original_title, poster_path, overview,
+        vote_average, release_date, popularity,genres}
+      })
+      .then(() => {
+        console.log('moving')
+      })
+      .catch(() => console.log(popularity))
     }
   },
   modules: {
