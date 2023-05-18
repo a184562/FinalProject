@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404, get_list_or_404
 
-from .models import Article,MovieReview
+from .models import Article,MovieReview,Comment,MovieComment
 from .serializers import ArticleListSerializer,ArticleDetailSerializer,CommentSerializer,MovieReviewDetailSerializer,MovieReviewListSerializer,MovieCommentSerializer
 
 
@@ -42,6 +42,21 @@ def article_update_delete(request,article_pk):
             article.delete()
             return Response({'id': article_pk})
 
+@api_view(['POST'])
+def article_like(request,article_pk):
+    article = get_object_or_404(Article,pk=article_pk)
+    user = request.user
+
+    if article.like_users.filter(pk=user.pk).exists():
+        article.like_users.remove(user)
+        serializer = ArticleDetailSerializer(article)
+        return Response(serializer.data)
+    
+    else:
+        article.like_users.add(user)
+        serializer = ArticleDetailSerializer(article)
+        return Response(serializer.data)
+
 
 # 자유게시판 디테일의 댓글
 @api_view(['GET'])
@@ -74,7 +89,25 @@ def comment_delete_update(request,article_pk,comment_pk):
             comment.delete()
             return Response({'id':comment_pk})
 
+@api_view(['POST'])
+def comment_like(request,comment_pk):
+    comment = get_object_or_404(Comment,pk=comment_pk)
+    user = request.user
 
+    if comment.like_users.filter(pk=user.pk).exists():
+        comment.like_users.remove(user)
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data)
+    
+    else:
+        comment.like_users.add(user)
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data)
+
+
+
+
+# 영화 게시판 
 @api_view(['GET'])
 def moviereview_list(request):
       moviereview = get_list_or_404(MovieReview)
@@ -108,7 +141,23 @@ def moviereview_delete_update(request,movie_pk):
             moviereview.delete()
             return Response({'id':movie_pk})     
 
+@api_view(['POST'])
+def moviereview_like(request,movie_pk):
+    moviereview = get_object_or_404(MovieReview,pk=movie_pk)
+    user = request.user
 
+    if moviereview.like_users.filter(pk=user.pk).exists():
+        moviereview.like_users.remove(user)
+        serializer = MovieReviewDetailSerializer(moviereview)
+        return Response(serializer.data)
+    
+    else:
+        moviereview.like_users.add(user)
+        serializer = MovieReviewDetailSerializer(moviereview)
+        return Response(serializer.data)
+
+
+# 영화 게시판 댓글
 @api_view(['GET'])
 def moviecomment_list(request,movie_pk):
       moviereview = get_object_or_404(MovieReview, pk = movie_pk)
@@ -140,6 +189,18 @@ def moviecomment_delete_update(request,movie_pk,moviecomment_pk):
             return Response({'id':moviecomment_pk})
 
 
+@api_view(['POST'])
+def moviecomment_like(request,comment_pk):
+    moviecomment = get_object_or_404(MovieComment,pk=comment_pk)
+    user = request.user
 
-
+    if moviecomment.like_users.filter(pk=user.pk).exists():
+        moviecomment.like_users.remove(user)
+        serializer = MovieCommentSerializer(moviecomment)
+        return Response(serializer.data)
+    
+    else:
+        moviecomment.like_users.add(user)
+        serializer = MovieCommentSerializer(moviecomment)
+        return Response(serializer.data)
 
