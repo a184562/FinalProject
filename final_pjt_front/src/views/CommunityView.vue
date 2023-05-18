@@ -5,7 +5,7 @@
 			<router-link to="/community/review">영화리뷰 게시판</router-link>
 		</nav>
 		
-
+		
 		
 
 	</div>

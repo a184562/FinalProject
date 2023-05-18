@@ -26,13 +26,13 @@ export default new Vuex.Store({
     getArticle(context) {
       axios({
         method: 'get',
-        url: `${Django_API_URL}/api/v2/community/free/`,
+        url: `${Django_API_URL}/api/v1/community/free/`,
       })
       .then((res) => {
-        console.log(context, res, this.url)
+        console.log(context, res)
       })
       .catch((err) => {
-        console.log(err, this.url)})
+        console.log(err)})
     }
   },
   modules: {

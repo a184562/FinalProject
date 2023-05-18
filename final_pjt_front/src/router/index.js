@@ -12,6 +12,7 @@ import GamePlay from '../components/Entertain/Game.vue'
 import FreeBoardDetail from '../components/Community/FreeBoardDetail.vue'
 import MovieReviewDetail from '../components/Community/MovieReviewDetail.vue'
 import GenreSelectView from '../views/GenreSelectView.vue'
+import FreeBoardCreate from  '../components/Community/FreeBoardCreate.vue'
 
 
 
@@ -48,6 +49,11 @@ const routes = [
     path: '/community/free/:id',
     name: 'freeboarddetail',
     component: FreeBoardDetail
+  },
+  {
+    path: '/community/free/create',
+    name: 'freecreate',
+    component: FreeBoardCreate
   },
   {
     path: '/community/review',

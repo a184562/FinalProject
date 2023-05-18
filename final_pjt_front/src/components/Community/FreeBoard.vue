@@ -6,6 +6,7 @@
 		</nav>
 		<h1>자유게시판</h1>
 		<FreeBoardList />
+		<button @click="gotoCreate">글쓰기</button>
 	</div>
 </template>
 
@@ -23,6 +24,9 @@ export default {
 	methods: {
 		getArticle() {
 			this.$store.dispatch('getArticle')
+		},
+		gotoCreate() {
+			this.$router.push({name: 'freecreate'})
 		}
 	}
 }

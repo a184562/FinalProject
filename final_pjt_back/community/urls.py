@@ -4,4 +4,6 @@ from . import views
 
 
 urlpatterns = [
+    path('community/free/', views.article_list),
+    path('community/free/<int:article_pk>', views.article_detail),
 ]
