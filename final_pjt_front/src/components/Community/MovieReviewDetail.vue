@@ -10,14 +10,31 @@
 </template>
 
 <script>
+import axios from 'axios'
+const Django_API_URL = 'http://127.0.0.1:8000'
+
 export default {
 	name: "MovieReviewDetail",
 	data() {
 		return {
 			review_article: null,
 		}
-	}
+	},
 	// axios로 Django 데이터베이스 서버에 연결 후 작업
+	created() {
+		this.getReviewDetail()
+	},
+	getReviewDetail() {
+			axios({
+				method: 'get',
+				url: `${Django_API_URL}/api/v1/community/review/${this.$route.params.id}/`,
+			})
+			.then((res) => {
+				console.log(res)
+				this.review_article = res.data
+			})
+			.catch((err) => console.log(err))
+		}	
 }
 </script>
 

@@ -29,7 +29,7 @@ export default {
 		getArticleDetail() {
 			axios({
 				method: 'get',
-				url: `${Django_API_URL}/api/v1/community/free/${this.$route.params.id}`,
+				url: `${Django_API_URL}/api/v1/community/free/${this.$route.params.id}/`,
 			})
 			.then((res) => {
 				console.log(res)

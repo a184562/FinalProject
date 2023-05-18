@@ -18,10 +18,11 @@ export default {
 	components: {
 		MovieReviewArticle,
 	},
-	computed: {
-		review_articles() {
-			return this.$store.state.review_articles
+	data() {
+		return {
+			review_articles: this.$store.state.review_articles
 		}
+		
 	}
 }
 </script>

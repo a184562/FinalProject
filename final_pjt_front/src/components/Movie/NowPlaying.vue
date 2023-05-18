@@ -1,8 +1,9 @@
 <template>
-	<div>
-		<MovieCard v-for="movie in nowplaying_movies" :key="movie.id"
-		:movie="movie" />
-		<p>1234</p>
+	<div class="container">
+		<div class="item"
+		v-for="movie in nowplaying_movies" :key="movie.id">
+			<MovieCard :movie="movie" />
+		</div>
 	</div>
 </template>
 
@@ -39,5 +40,8 @@ export default {
 </script>
 
 <style>
-
+.container {
+	display: grid;
+	
+}
 </style>

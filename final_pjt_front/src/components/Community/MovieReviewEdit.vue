@@ -23,9 +23,10 @@ export default {
 		}
 	},
 	methods: {
-		createArticle() {
+		editArticle() {
 			const title = this.title
 			const content = this.content
+			const movie_title = this.movie_title
 
 			if (!title) {
         alert('제목 입력해주세요')
@@ -36,6 +37,15 @@ export default {
       }
 
 			// axios로 Django 데이터베이스 서버에 연결 후 작업
+			axios({
+				method: 'post',
+				url: `${Django_API_URL}/api/v1/community/free/`,
+				data: {title, content}
+			})
+			.then(() => {
+				this.$router.push({name:'free'})
+			})
+			.catch((err) => console.log(err))
 		}
 	}
 }

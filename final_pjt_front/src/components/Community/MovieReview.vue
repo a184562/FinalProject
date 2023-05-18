@@ -2,10 +2,11 @@
 	<div>
 		<nav>
 			<router-link to="/community/free">자유게시판</router-link> |
-			<router-link to="/community/review">영화리뷰 게시판</router-link>
+			<router-link to="/community/review">리뷰 게시판</router-link>
 		</nav>
-		<h1>영화리뷰 게시판</h1>
+		<h1>리뷰 게시판</h1>
 		<MovieReviewList />
+		<button @click="gotoReviewCreate">글쓰기</button>
 	</div>
 </template>
 
@@ -16,6 +17,17 @@ export default {
 	name : 'MovieReview',
 	components: {
 		MovieReviewList,
+	},
+	created() {
+		this.getReview()
+	},
+	methods: {
+		getReview() {
+			this.$store.dispatch('getReview')
+		},
+		gotoReviewCreate() {
+			this.$router.push({name: 'reviewcreate'})
+		}
 	}
 }
 </script>

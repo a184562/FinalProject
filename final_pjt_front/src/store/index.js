@@ -23,6 +23,9 @@ export default new Vuex.Store({
   mutations: {
     GET_ARTICLES(state, articles) {
       state.free_articles = articles
+    },
+    GET_REVIEW(state, articles) {
+      state.review_articles = articles
     }
   },
   actions: {
@@ -34,6 +37,18 @@ export default new Vuex.Store({
       .then((res) => {
         console.log(context, res)
         context.commit('GET_ARTICLES', res.data)
+      })
+      .catch((err) => {
+        console.log(err)})
+    },
+    getReview(context) {
+      axios({
+        method: 'get',
+        url: `${Django_API_URL}/api/v1/community/review/`,
+      })
+      .then((res) => {
+        console.log(context, res)
+        context.commit('GET_REVIEW', res.data)
       })
       .catch((err) => {
         console.log(err)})

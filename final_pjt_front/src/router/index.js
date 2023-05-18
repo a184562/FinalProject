@@ -13,6 +13,7 @@ import FreeBoardDetail from '../components/Community/FreeBoardDetail.vue'
 import MovieReviewDetail from '../components/Community/MovieReviewDetail.vue'
 import GenreSelectView from '../views/GenreSelectView.vue'
 import FreeBoardCreate from  '../components/Community/FreeBoardCreate.vue'
+import MovieReviewCreate from '../components/Community/MovieReviewCreate.vue'
 
 
 
@@ -26,6 +27,11 @@ const routes = [
     component: MovieListView
   },
   {
+    path: '/movie',
+    name: 'movie',
+    component: MovieDetailView
+  },
+  {
     path: '/community',
     name: 'community',
     component: CommunityView
@@ -34,11 +40,6 @@ const routes = [
     path: '/entertain',
     name: 'entertain',
     component: EntertainView
-  },
-  {
-    path: '/movie',
-    name: 'movie',
-    component: MovieDetailView
   },
   {
     path: '/community/free',
@@ -64,6 +65,11 @@ const routes = [
     path: '/community/review/:id',
     name: 'reviewdetail',
     component: MovieReviewDetail
+  },
+  {
+    path: '/community/review/create',
+    name: 'reviewcreate',
+    component: MovieReviewCreate
   },
   {
     path: '/login',
