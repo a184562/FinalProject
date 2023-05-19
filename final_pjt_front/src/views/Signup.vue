@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Sign Up Page</h1>
-    <form>
+    <form @submit.prevent="signUp">
       <label for="username">username : </label>
       <input type="text" id="username" v-model="username"><br>
 
