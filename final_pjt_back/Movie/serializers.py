@@ -5,7 +5,7 @@ from .models import Movie,Genre
 class MovieListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ('title','poster_path')
+        fields = '__all__'
 
 class MovieDetailSerializer(serializers.ModelSerializer):
     class Meta:

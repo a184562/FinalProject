@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+		<!-- <p>{{nowplaying_movies}}</p> -->
 		<div class="item"
 		v-for="movie in nowplaying_movies" :key="movie.id">
 			<MovieCard :movie="movie" />
@@ -21,6 +22,15 @@ export default {
 	components: {
 		MovieCard,
 	},
+	props: {
+		nowplaying_movies: Array,
+	},
+	
+	// data() {
+	// 	return {
+
+	// 	}
+	// }
 	// data() {
 	// 	return {
 	// 		nowplaying_movies : null,

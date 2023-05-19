@@ -2,7 +2,8 @@
 	<div>
 		<div>
 			<h1>Now Playing</h1>
-			<NowPlaying />
+			<NowPlaying :nowplaying_movies="nowplaying_movies" />
+			<p>{{nowplaying_movies}}</p>
 		</div>
 		<div>
 			<h1>Genre1</h1>
@@ -16,6 +17,7 @@
 			<h1>Genre3</h1>
 			<GenreRecommend />
 		</div>
+		
 	</div>
 </template>
 
@@ -39,33 +41,27 @@ export default {
 	},
 	data() {
 		return {
-			nowplaying_movies: null,
+			nowplaying_movies: [],
 			genres: null,
 		}
 	},
 	created() {
-		// axios({
-		// 	method: 'get',
-		// 	url: nowplaying_URL,
-		// })
-		// .then((res) => {
-		// 	// console.log(res)
-		// 	this.nowplaying_movies = res.data.results
-		// 	this.plusMovies()
-		// })
-		// .catch((err) => console.log(err))
-
+		this.getMovie()	
+		this.nowplaying_Movies()
 		
 	},
 	methods: {
-		// plusMovies() {
-		// 	for (const movie_data of this.nowplaying_movies) {
-		// 		// console.log(movie_data)
-		// 		this.$store.dispatch('insertMoviedata', movie_data)
-		// 	}
-		// },
-		getArticle() {
+		getMovie() {
 			return this.$store.dispatch('getMovie')
+		},
+		nowplaying_Movies() {
+			let release_date_1 = '2023'
+			for(const movie of this.$store.state.movie_list) {
+				if(movie.release_date.indexOf(release_date_1) !== -1){
+					this.nowplaying_movies.push(movie)
+				}
+			}
+			console.log(this.nowplaying_movies)
 		}
 	}
 }

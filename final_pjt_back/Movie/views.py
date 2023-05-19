@@ -25,6 +25,7 @@ def movie_detail(request,movie_pk):
 
 @api_view(['POST'])
 def movie_data(request):
+    movies = []
     for objs in ans:
         for obj in objs:
         # print(obj)
@@ -45,7 +46,11 @@ def movie_data(request):
                 for genre in obj['genre_ids']:
                     movie.genres.add(genre)
                 movie.save()
-    return Response(movie)
+                movies.append(movie)
+    serializer = MovieListSerializer(movies, many=True)
+    
+    
+    return Response(serializer.data)
         # movie_dict = {
         #     "pk" : obj['movie_id'],
         #     "model" : "Movie.movie",

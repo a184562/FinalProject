@@ -15,9 +15,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    movie_list: [],
     free_articles: [],
     review_articles: [],
-    movie_data: null,
+    is_action: false,
   },
   getters: {
   },
@@ -27,16 +28,22 @@ export default new Vuex.Store({
     },
     GET_REVIEW(state, articles) {
       state.review_articles = articles
+    },
+    GET_MOVIE(state, movie_data) {
+      movie_data.forEach(movies => state.movie_list.push(movies))
+
     }
   },
   actions: {
     getMovie(context) {
+      
       axios({
         method: 'get',
         url: `${Django_API_URL}/api/v1/movies/`,
       })
       .then((res) => {
         console.log(res, context)
+        context.commit('GET_MOVIE', res.data)
       })
       .catch((err) => console.log(err))
     },
@@ -64,42 +71,6 @@ export default new Vuex.Store({
       .catch((err) => {
         console.log(err)})
     },
-    // insertMoviedata(context, movie_data) {
-    //   const movie_id = movie_data.id
-    //   const title = movie_data.title
-    //   const original_title = movie_data.original_title
-    //   const poster_path = movie_data.poster_path
-    //   const overview = movie_data.overview
-    //   const vote_average = movie_data.vote_average
-    //   const release_date = movie_data.release_date
-    //   const popularity = movie_data.popularity
-    //   const genres = movie_data.genre_ids
-    //   // const runtime = movie_data.runtime
-    //   // console.log(title, original_title, poster_path, overview,
-    //   //   vote_average, release_date, popularity)
-    //   axios({
-    //     method: 'post',
-    //     url: `${Django_API_URL}/api/v1/movies/`,
-    //     data: {
-    //       "pk" : movie_id,
-    //       "model" : "Movie.movie",
-    //       "fields":{
-    //         "title":title,
-    //         "original_title":original_title,
-    //         "poster_path": poster_path,
-    //         "overview": overview,
-    //         "vote_average": vote_average,
-    //         "release_date": release_date,
-    //         "popularity": popularity,
-    //         "genres": genres,
-    //       }
-    //     }
-    //   })
-    //   .then(() => {
-    //     console.log(movie_data)
-    //   })
-    //   .catch(() => console.log(movie_data))
-    // },
     
   },
   modules: {
