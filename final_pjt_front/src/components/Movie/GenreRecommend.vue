@@ -1,7 +1,10 @@
 <template>
-	<div>
-		<MovieCard v-for="movie in movies" :key="movie.id"
-		:movie="movie" />
+	<div class="container">
+		<div class="box"
+		v-for="(movie, index) in genre" :key="index">
+			<MovieCard :movie="movie"/>
+		</div>
+	
 	</div>
 </template>
 
@@ -17,11 +20,14 @@ export default {
 	components: {
 		MovieCard,
 	},
-	data() {
-		return {
-			movies: null,
-		}
+	props: {
+		genre: Array,
 	},
+	// data() {
+	// 	return {
+	// 		movies: null,
+	// 	}
+	// },
 	created() {
 	// 	axios({
 	// 		method: 'get',
@@ -36,6 +42,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.container {
+	display: flex;
+	flex-wrap: wrap;
+}
+.box{
+	width: 20%;
+}
 </style>

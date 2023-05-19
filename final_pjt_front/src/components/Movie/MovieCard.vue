@@ -32,10 +32,12 @@ export default {
 .card {
 	border: solid black 2px;
 	cursor: pointer;
+	border-radius: 0.5rem;
+	height: 25rem;
+	margin: 2px;
 }
-
 img {
-	width: 300px;
-	height: 450px;
+	width: 80%;
+	height: 50%;
 }
 </style>

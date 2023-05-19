@@ -14,11 +14,12 @@ const Django_API_URL = 'http://127.0.0.1:8000'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  
   state: {
     movie_list: [],
     free_articles: [],
     review_articles: [],
-    is_action: false,
+    genre_list: []
   },
   getters: {
   },
@@ -31,12 +32,16 @@ export default new Vuex.Store({
     },
     GET_MOVIE(state, movie_data) {
       movie_data.forEach(movies => state.movie_list.push(movies))
-
     }
   },
   actions: {
+    // getGenre(context) {
+    //   axios({
+    //     method: 'get',
+    //     url: `${Django_API_URL}/api/v1/genre`
+    //   })
+    // },
     getMovie(context) {
-      
       axios({
         method: 'get',
         url: `${Django_API_URL}/api/v1/movies/`,

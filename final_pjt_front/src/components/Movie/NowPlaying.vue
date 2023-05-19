@@ -1,8 +1,9 @@
 <template>
 	<div class="container">
 		<!-- <p>{{nowplaying_movies}}</p> -->
-		<div class="item"
-		v-for="movie in nowplaying_movies" :key="movie.id">
+		<div class="box"
+		v-for="(movie, index) in nowplaying_movies" :key="index">
+			
 			<MovieCard :movie="movie" />
 		</div>
 	</div>
@@ -25,47 +26,16 @@ export default {
 	props: {
 		nowplaying_movies: Array,
 	},
-	
-	// data() {
-	// 	return {
 
-	// 	}
-	// }
-	// data() {
-	// 	return {
-	// 		nowplaying_movies : null,
-	// 	}
-	// },
-	// created() {
-	// 	axios({
-	// 		method: 'get',
-	// 		url: nowplaying_URL,
-	// 	})
-	// 	.then((res) => {
-	// 		this.nowplaying_movies = res.data.results
-	// 		this.plus()
-	// 	})
-	// 	.catch((err) => console.log(err))
-		
-		
-	// },
-	// methods: {
-	// 	plus() {
-	// 		for (const movie_data of this.nowplaying_movies) {
-	// 			console.log(movie_data)
-	// 			this.$store.dispatch('insertMoviedata', movie_data)
-	// 		}
-	// 	}
-	// }
-	
-	
-	
 }
 </script>
 
-<style>
+<style scoped>
 .container {
-	display: grid;
-	
+	display: flex;
+	flex-wrap: wrap;
+}
+.box{
+	width: 20%;
 }
 </style>
