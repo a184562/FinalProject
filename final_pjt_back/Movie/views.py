@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .models import Movie
 from .serializers import MovieDetailSerializer,MovieListSerializer
-
+import json
 
 @api_view(['GET','POST'])
 def movie_list(request):
@@ -14,26 +14,29 @@ def movie_list(request):
         return Response(serializer.data)
     
     elif request.method=='POST':
-        genres = []
-
-        
-        movie = Movie(id=request.data['movie_id'], 
-        title = request.data['title'],
-        original_title = request.data['original_title'],
-        poster_path = request.data['poster_path'],
-        overview = request.data['overview'],
-        vote_average = request.data['vote_average'],
-        release_date = request.data['release_date'],
-        popularity = request.data['popularity'],
+        movie = Movie(id=request.data['pk'], 
+        title = request.data['fields']['title'],
+        original_title = request.data['fields']['original_title'],
+        poster_path = request.data['fields']['poster_path'],
+        overview = request.data['fields']['overview'],
+        vote_average = request.data['fields']['vote_average'],
+        release_date = request.data['fields']['release_date'],
+        popularity = request.data['fields']['popularity'],
         )
         
         movie.save()
-        for genre in request.data['genres']:
-            movie.genres.add(genre)   
-            # movie.genres        
-        if movie.is_valid(raise_exeception=True):
-            movie.save()
-            return Response(movie)
+        for genre in request.data['fields']['genres']:
+            movie.genres.add(genre)
+        movie.save()
+        # print('============================================================')
+        # print(request.data["fields"]["genres"])
+        # print('============================================================')
+        return Response(movie)
+        # serializer = MovieDetailSerializer(movie)
+        # if serializer.is_valid(raise_exception=True):
+        #     serializer.save()
+        # return Response(serializer.data)
+        # return Response(movie)
 
 
 @api_view(['GET'])

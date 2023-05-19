@@ -19,7 +19,7 @@ class Movie(models.Model):
     vote_average = models.FloatField()
     release_date = models.DateField()
     popularity = models.FloatField()
-    genres = models.ManyToManyField(Genre)
+    genres = models.ManyToManyField(Genre, blank=True)
 
 
 # class Review(models.Model):
