@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'community',
     'account',
     'corsheaders',
-    # 'rest_framework',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,11 +57,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8080',
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:8080',
+# ]
 
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'final_pjt_back.urls'
 

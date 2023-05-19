@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404, get_list_or_404
-from .models import Movie
-from .serializers import MovieDetailSerializer,MovieListSerializer
+from .models import Movie,Genre
+from .serializers import MovieDetailSerializer,MovieListSerializer,GenreSerializer
 
 
 @api_view(['GET','POST'])
@@ -41,3 +41,10 @@ def movie_detail(request,movie_pk):
     movie = get_object_or_404(Movie,pk=movie_pk)
     serializer = MovieDetailSerializer(movie)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def genre(request):
+    genre = GenreSerializer(data=request.data)
+    if genre.is_valid():
+        genre.save()
+        return Response(genre.data)

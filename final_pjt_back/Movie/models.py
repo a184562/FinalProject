@@ -22,3 +22,7 @@ class Movie(models.Model):
     genres = models.ManyToManyField(Genre)
 
 
+# class Review(models.Model):
+#     content = models.CharField(max_length=100)
+#     rank = 
+
