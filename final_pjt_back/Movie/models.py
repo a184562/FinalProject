@@ -21,8 +21,9 @@ class Movie(models.Model):
     popularity = models.FloatField(null=True)
     genres = models.ManyToManyField(Genre, blank=True)
 
-
-# class Review(models.Model):
-#     content = models.CharField(max_length=100)
-#     rank = 
-
+class Comment(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    

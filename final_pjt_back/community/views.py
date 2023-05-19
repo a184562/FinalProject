@@ -1,11 +1,10 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from django.shortcuts import get_object_or_404, get_list_or_404
-
+from rest_framework.permissions import IsAuthenticated
 from .models import Article,Comment,Review,ReviewComment
 from .serializers import ArticleListSerializer,ArticleDetailSerializer,CommentSerializer,ReviewListSerializer,ReviewCommentSerializer,ReviewDetailSerializer
-
 
  # 기사
 @api_view(['GET','POST'])
@@ -42,7 +41,6 @@ def article_detail(request, article_pk):
 @api_view(['GET'])
 def comment_list(request):
     if request.method == 'GET':
-        # comments = Comment.objects.all()
         comments = get_list_or_404(Comment)
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
@@ -50,7 +48,6 @@ def comment_list(request):
 
 @api_view(['GET', 'DELETE', 'PUT'])
 def comment_detail(request, comment_pk):
-    # comment = Comment.objects.get(pk=comment_pk)
     comment = get_object_or_404(Comment, pk=comment_pk)
 
     if request.method == 'GET':
@@ -70,7 +67,6 @@ def comment_detail(request, comment_pk):
     
 @api_view(['POST'])
 def comment_create(request, article_pk):
-    # article = Article.objects.get(pk=article_pk)
     article = get_object_or_404(Article, pk=article_pk)
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
@@ -116,19 +112,17 @@ def Review_detail(request, review_pk):
 @api_view(['GET'])
 def reviewcomment_list(request):
     if request.method == 'GET':
-        # comments = Comment.objects.all()
         reviewcomment = get_list_or_404(ReviewComment)
-        serializer = CommentSerializer(reviewcomment, many=True)
+        serializer = ReviewCommentSerializer(reviewcomment, many=True)
         return Response(serializer.data)
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
 def reviewcomment_detail(request, reviewcomment_pk):
-    # comment = Comment.objects.get(pk=comment_pk)
     reviewcomment = get_object_or_404(ReviewComment, pk=reviewcomment_pk)
 
     if request.method == 'GET':
-        serializer = CommentSerializer(reviewcomment)
+        serializer = ReviewCommentSerializer(reviewcomment)
         return Response(serializer.data)
 
     elif request.method == 'DELETE':
@@ -136,7 +130,7 @@ def reviewcomment_detail(request, reviewcomment_pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     elif request.method == 'PUT':
-        serializer = CommentSerializer(reviewcomment, data=request.data)
+        serializer = ReviewCommentSerializer(reviewcomment, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
@@ -146,10 +140,9 @@ def reviewcomment_detail(request, reviewcomment_pk):
 
 @api_view(['POST'])
 def reviewcomment_create(request, review_pk):
-    # article = Article.objects.get(pk=article_pk)
     review = get_object_or_404(Review, pk=review_pk)
     serializer = ReviewCommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(review=review)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data)
 
