@@ -39,7 +39,8 @@ export default new Vuex.Store({
     },
     GET_MOVIE(state, movie_data) {
       movie_data.forEach(movies => state.movie_list.push(movies))
-    }
+    },
+    
   },
   actions: {
     signUp(context, payload) {
@@ -92,7 +93,7 @@ export default new Vuex.Store({
         url: `${Django_API_URL}/api/v1/community/free/`,
       })
       .then((res) => {
-        console.log(context, res)
+        // console.log(context, res)
         context.commit('GET_ARTICLES', res.data)
       })
       .catch((err) => {
@@ -110,7 +111,6 @@ export default new Vuex.Store({
       .catch((err) => {
         console.log(err)})
     },
-    
   },
   modules: {
   }

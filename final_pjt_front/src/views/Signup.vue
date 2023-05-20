@@ -21,9 +21,9 @@ export default {
   name: 'SignUp',
   data() {
     return {
-      username: null,
-      password1 : null,
-      password2 : null,
+      username: "",
+      password1 : "",
+      password2 : "",
     }
   },
   methods: {
@@ -41,10 +41,10 @@ export default {
     },
     GoToHome(){
       console.log(this.username)
-      if(this.username==undefined || this.username==""){
+      if(this.username==""){
         alert('아이디를 입력해주세요')
         return false
-      }else if(this.password1==null || this.password1==""){
+      }else if(this.password1==""){
         alert('비밀번호를 입력해주세요')
         return false
       }else if(this.password1 != this.password2){

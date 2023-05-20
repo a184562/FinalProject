@@ -6,7 +6,7 @@
 			<input type="text" id="title" v-model.trim="title"><br>
 			<label for="content">내용 : </label>
 			<textarea id="content" cols="30" rows="10" v-model.trim="content"></textarea><br>
-			<input type="submit" id="제출">
+			<input type="submit" id="제출" @click="createArticle">
 		</form>
 		
 	</div>
@@ -14,6 +14,7 @@
 
 <script>
 import axios from 'axios'
+
 const Django_API_URL = 'http://127.0.0.1:8000'
 
 
@@ -21,8 +22,8 @@ export default {
 	name: 'FreeBoardCreate',
 	data() {
 		return {
-			title : null,
-			content : null,
+			title : "",
+			content : "",
 		}
 	},
 	methods: {
@@ -30,26 +31,31 @@ export default {
 			const title = this.title
 			const content = this.content
 
-			if (!title) {
-        alert('제목 입력해주세요')
-        return
-      } else if (!content){
-        alert('내용 입력해주세요')
-        return
-      }
-
-			// axios로 Django 데이터베이스 서버에 연결 후 작업
+			if(this.title=="") {
+				alert('제목을 입력하세요')
+				return
+			}
+			else if (this.content == "") {
+				alert('내용을 입력하세요')
+				return
+			}
+			
+			
 			axios({
 				method: 'post',
 				url: `${Django_API_URL}/api/v1/community/free/`,
-				data: {title, content}
+				data: {
+					title, content
+				}
 			})
-			.then(() => {
-				this.$router.push({name:'free'})
+			.then((res) => {
+				console.log(res)
+				this.$router.push({name: 'free'}).catch(() => {})
 			})
-			.catch((err) => console.log(err))
-		}
+			.catch(() => {})
+
 	}
+}
 }
 </script>
 

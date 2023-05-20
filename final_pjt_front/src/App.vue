@@ -15,7 +15,20 @@
 </template>
 
 
+<script>
 
+export default {
+  created() {
+    this.createMovie()
+  },
+  methods: {
+    createMovie() {
+      this.$store.dispatch('createMovie')
+    }
+  }
+}
+
+</script>
 
 
 

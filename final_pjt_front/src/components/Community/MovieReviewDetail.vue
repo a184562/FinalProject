@@ -24,7 +24,8 @@ export default {
 	created() {
 		this.getReviewDetail()
 	},
-	getReviewDetail() {
+	methods: {
+		getReviewDetail() {
 			axios({
 				method: 'get',
 				url: `${Django_API_URL}/api/v1/community/review/${this.$route.params.id}/`,
@@ -35,6 +36,8 @@ export default {
 			})
 			.catch((err) => console.log(err))
 		}	
+	}
+	
 }
 </script>
 
