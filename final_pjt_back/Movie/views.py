@@ -99,6 +99,6 @@ def comment_create(request, movie_pk):
     if request.method == 'POST':
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(movie=movie)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            serializer.save(user=request.user,movie=movie)
+            return Response(serializer.data)
 
