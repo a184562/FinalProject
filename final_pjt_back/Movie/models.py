@@ -25,6 +25,7 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="moviecomments")
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     content = models.TextField()
+    rank = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
