@@ -1,19 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MovieListView from '../views/MovieListView.vue'
-import CommunityView from '../views/CommunityView.vue'
-import EntertainView from '../views/EntertainView.vue'
 import MovieDetailView from '../views/MovieDetailView.vue'
+import CommunityView from '../views/CommunityView.vue'
 import FreeBoard from '../components/Community/FreeBoard.vue'
+import FreeBoardDetail from '../components/Community/FreeBoardDetail.vue'
+import FreeBoardCreate from  '../components/Community/FreeBoardCreate.vue'
 import MovieReview from '../components/Community/MovieReview.vue'
+import MovieReviewDetail from '../components/Community/MovieReviewDetail.vue'
+import MovieReviewCreate from '../components/Community/MovieReviewCreate.vue'
+import EntertainView from '../views/EntertainView.vue'
+import GamePlay from '../components/Entertain/Game.vue'
+import GenreSelectView from '../views/GenreSelectView.vue'
+import SearchView from '../views/SearchView.vue'
 import LogIn from '../views/Login.vue'
 import SignUp from '../views/Signup.vue'
-import GamePlay from '../components/Entertain/Game.vue'
-import FreeBoardDetail from '../components/Community/FreeBoardDetail.vue'
-import MovieReviewDetail from '../components/Community/MovieReviewDetail.vue'
-import GenreSelectView from '../views/GenreSelectView.vue'
-import FreeBoardCreate from  '../components/Community/FreeBoardCreate.vue'
-import MovieReviewCreate from '../components/Community/MovieReviewCreate.vue'
 
 
 
@@ -35,11 +36,6 @@ const routes = [
     path: '/community',
     name: 'community',
     component: CommunityView
-  },
-  {
-    path: '/entertain',
-    name: 'entertain',
-    component: EntertainView
   },
   {
     path: '/community/free',
@@ -80,6 +76,16 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: SignUp
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: SearchView
+  },
+  {
+    path: '/entertain',
+    name: 'entertain',
+    component: EntertainView
   },
   {
     path: '/entertain/game',

@@ -3,7 +3,8 @@
     <nav>
       <a href="http://localhost:8080/login">Login</a> |
       <a href="http://localhost:8080/signup">Signup</a> |
-      <a href="#">Profile</a>
+      <a href="#">Profile</a> |
+      <router-link to="/search">Search</router-link>
     </nav>
     <nav>
       <router-link to="/">Movie</router-link> |
@@ -15,20 +16,7 @@
 </template>
 
 
-<script>
 
-export default {
-  created() {
-    this.createMovie()
-  },
-  methods: {
-    createMovie() {
-      this.$store.dispatch('createMovie')
-    }
-  }
-}
-
-</script>
 
 
 
