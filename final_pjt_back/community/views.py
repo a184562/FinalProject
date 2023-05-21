@@ -8,6 +8,7 @@ from .serializers import ArticleListSerializer,ArticleDetailSerializer,CommentSe
 
  # 기사
 @api_view(['GET','POST'])
+@permission_classes([IsAuthenticated])
 def article_list(request):
     if request.method=="GET":
       article = get_list_or_404(Article)
@@ -17,11 +18,12 @@ def article_list(request):
     elif request.method=='POST':
        serializer = ArticleDetailSerializer(data=request.data)
        if serializer.is_valid(raise_exception=True):
-          serializer.save()
+          serializer.save(user=request.user)
           return Response(serializer.data)
        
 
 @api_view(['GET','PUT','DELETE'])
+
 def article_detail(request, article_pk):
    article = get_object_or_404(Article, pk=article_pk)
    if request.method=="GET":
@@ -31,7 +33,7 @@ def article_detail(request, article_pk):
    elif request.method=='PUT':
       serializer = ArticleDetailSerializer(article,data=request.data)
       if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data)
    elif request.method == 'DELETE':
       article.delete()
@@ -61,7 +63,7 @@ def comment_detail(request, comment_pk):
     elif request.method == 'PUT':
         serializer = CommentSerializer(comment, data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data)
 
     
@@ -70,7 +72,7 @@ def comment_create(request, article_pk):
     article = get_object_or_404(Article, pk=article_pk)
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(article=article)
+        serializer.save(user=request.user,article=article)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -86,7 +88,7 @@ def Review_list(request):
     elif request.method=='POST':
        serializer = ReviewDetailSerializer(data=request.data)
        if serializer.is_valid(raise_exception=True):
-          serializer.save()
+          serializer.save(user=request.user)
           return Response(serializer.data)
        
 
@@ -100,7 +102,7 @@ def Review_detail(request, review_pk):
    elif request.method=='PUT':
       serializer = ReviewDetailSerializer(review,data=request.data)
       if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data)
       
    elif request.method == 'DELETE':
@@ -132,7 +134,7 @@ def reviewcomment_detail(request, reviewcomment_pk):
     elif request.method == 'PUT':
         serializer = ReviewCommentSerializer(reviewcomment, data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            serializer.save(user=request.user)
             return Response(serializer.data)
 
     
@@ -143,6 +145,6 @@ def reviewcomment_create(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     serializer = ReviewCommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(review=review)
+        serializer.save(user=request.user,review=review)
         return Response(serializer.data)
 
