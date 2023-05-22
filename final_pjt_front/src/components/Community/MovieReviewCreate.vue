@@ -8,7 +8,7 @@
 			<textarea id="content" cols="30" rows="10" v-model.trim="content"></textarea><br>
 			<label for="movie_title">영화 제목 : </label>
 			<input type="text" id="movie_title" v-model.trim="movie_title"><br>
-			<input type="submit" id="제출" @click="createReview">
+			<input type="submit" id="제출">
 		</form>
 	
 	</div>

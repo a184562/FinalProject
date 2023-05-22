@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import router from '../router'
 import axios from 'axios'
 // import router from '@/router'
 
@@ -29,7 +28,6 @@ export default new Vuex.Store({
     },
     SAVE_TOKEN(state,token){
       state.token = token
-      router.push({name:'movies'})
     },
     GET_ARTICLES(state, articles) {
       state.free_articles = articles

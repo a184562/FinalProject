@@ -14,7 +14,7 @@ export default {
 	
 	data() {
 		return {
-			movie: null,
+			movie: '',
 			poster_URL: ''
 		}
 	},

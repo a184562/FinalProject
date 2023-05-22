@@ -16,6 +16,7 @@ def article_list(request):
       return Response(serializer.data)
     elif request.method=='POST':
        serializer = ArticleDetailSerializer(data=request.data)
+
        if serializer.is_valid(raise_exception=True):
           serializer.save(user=request.user)
           return Response(serializer.data)
