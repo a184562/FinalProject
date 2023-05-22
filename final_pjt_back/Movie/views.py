@@ -91,6 +91,7 @@ def comment_create(request, movie_pk):
             return Response(serializer.data)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 @api_view(['POST'])
 def like_movie(request, movie_pk, my_pk):
@@ -109,3 +110,7 @@ def like_movie(request, movie_pk, my_pk):
 # @api_view(['POST'])
 # def genre_create(request):
 >>>>>>> 80a2890bf188d992f8618c2ceedf7cae7ebcb7ae
+=======
+# @api_view(['POST'])
+# def genre_create(request):
+>>>>>>> refs/remotes/origin/main
