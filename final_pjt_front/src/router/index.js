@@ -15,6 +15,7 @@ import GenreSelectView from '../views/GenreSelectView.vue'
 import SearchView from '../views/SearchView.vue'
 import LogIn from '../views/Login.vue'
 import SignUp from '../views/Signup.vue'
+import ProfileView from '../views/ProfileView.vue'
 
 
 
@@ -96,6 +97,11 @@ const routes = [
     path: '/genre',
     name: 'genre',
     component: GenreSelectView
+  },
+  {
+    path: '/profile/:id',
+    name: 'profile',
+    component: ProfileView
   }
 ]
 

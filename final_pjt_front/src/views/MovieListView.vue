@@ -1,26 +1,29 @@
 <template>
-	<div>
-		<h1>Now Playing</h1>
-		<div >
-			<NowPlaying :nowplaying_movies="nowplaying_movies" />
-		</div>
-		<h1>Genre1</h1>
-		<div >
-			<!-- <h1>{{ genre_1.name }}</h1> -->
-			<GenreRecommend :genre="genres_1" />
-		</div>
-		<h1>Genre2</h1>
-		<div >
-			<!-- <h1>{{ genre_2.name }}</h1> -->
-			<GenreRecommend :genre="genres_2" />
-		</div>
-		<h1>Genre3</h1>
-		<div >
-			<!-- <h1>{{ genre_3.name }}</h1> -->
-			<GenreRecommend :genre="genres_3" />
-		</div>
 		
+	<div>
+		<div>
+			<h1>Now Playing</h1>
+			<div >
+				<NowPlaying :nowplaying_movies="nowplaying_movies" />
+			</div>
+			<h1>Genre1</h1>
+			<div >
+				<!-- <h1>{{ genre_1.name }}</h1> -->
+				<GenreRecommend :genre="genres_1" />
+			</div>
+			<h1>Genre2</h1>
+			<div >
+				<!-- <h1>{{ genre_2.name }}</h1> -->
+				<GenreRecommend :genre="genres_2" />
+			</div>
+			<h1>Genre3</h1>
+			<div >
+				<!-- <h1>{{ genre_3.name }}</h1> -->
+				<GenreRecommend :genre="genres_3" />
+			</div>
+		</div>
 	</div>
+	
 </template>
 
 <script>
@@ -75,8 +78,10 @@ export default {
 			this.genres_2 = this.genres_Movie_2(this.$store.state.movie_list)
 			this.genres_3 = this.genres_Movie_3(this.$store.state.movie_list)
 			this.temp_movie_list = JSON.stringify(this.$store.state.movie_list)
+			
 			localStorage.setItem('movie_list', this.temp_movie_list)
 			localStorage.setItem('movie_list_length', this.$store.state.movie_list.length)
+
 		},
 		nowplaying_Movies(array) {
 			let release_date_1 = '2023'

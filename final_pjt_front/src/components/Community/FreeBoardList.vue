@@ -19,16 +19,19 @@ export default {
 	components: {
 		FreeBoardArticle,
 	},
-	// computed: {
-	// 	free_articles() {
-	// 		return this.$store.state.free_articles
-	// 	}
-	// },
 	data() {
 		return {
-			free_articles: this.$store.state.free_articles
+			free_articles: null,
 		}
-		
+	},
+	created() {
+		this.getFreeArticle()
+	},
+	methods: {
+		async getFreeArticle() {
+			await this.$store.dispatch('getArticle')
+			this.free_articles = this.$store.state.free_articles
+		}
 	}
 }
 </script>

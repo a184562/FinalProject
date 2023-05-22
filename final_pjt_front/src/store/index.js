@@ -7,6 +7,7 @@ const Django_API_URL = 'http://127.0.0.1:8000'
 
 Vue.use(Vuex)
 
+
 export default new Vuex.Store({
   
   state: {
@@ -16,10 +17,13 @@ export default new Vuex.Store({
     review_articles: [],
     genre_list: [],
     movie_num : 0,
-    user_id : null,
-    username : null,
+    user_data : null,
+    is_loggedin : false,
   },
   getters: {
+    isloggedin(state) {
+      return !!state
+    },
     isLogin(state){
       return state.token ? true : false
     }
@@ -35,33 +39,62 @@ export default new Vuex.Store({
       // state.user_id = 
     },
     GET_ARTICLES(state, articles) {
-      state.free_articles = articles
+      // state.free_articles = articles
+      state.free_articles = []
+      articles.forEach(article => {
+        
+          state.free_articles.push(article)
+        })
+        
+      console.log(state.free_articles, 1234567890)
     },
     GET_REVIEW(state, articles) {
-      state.review_articles = articles
+      state.review_articles = []
+      articles.forEach(article => {
+        state.review_articles.push(article)
+      })
     },
     GET_MOVIE(state, movie_data) {
       if(state.movie_num === 0) {
         movie_data.forEach(movies => state.movie_list.push(movies))
-      }
-      state.movie_num = 1
+        state.movie_num = 1
+      } 
+      
     },
     GET_USER(state, data) {
-      state.user_id = data.pk
+      state.user_data = data
+      console.log(data)
+      console.log(state.user_data)
+    },
+    LOG_OUT(state) {
+      state.token = null
+      state.user_data = null
     }
   },
   
 
   actions: {
     async getMovie(context) {
-      await axios({
-        method: 'get',
-        url: `${Django_API_URL}/api/v1/movies/`,
+      if (context.state.movie_num === 0) {
+        context.dispatch('postMovie')
+        
+        await axios({
+            method: 'get',
+            url: `${Django_API_URL}/api/v1/movies/`,
+          })
+          .then((res) => {
+            console.log(res, context)
+            context.commit('GET_MOVIE', res.data)
+          })
+          .catch((err) => console.log(err))
+      }
+    },
+    postMovie() {
+      axios({
+        method: 'post',
+        url: `${Django_API_URL}/api/v1/moviedata/`
       })
-      .then((res) => {
-        console.log(res, context)
-        context.commit('GET_MOVIE', res.data)
-      })
+      .then((res) => console.log(res))
       .catch((err) => console.log(err))
     },
     signUp(context, payload) {
@@ -115,8 +148,11 @@ export default new Vuex.Store({
       .then((res) => context.commit('GET_USER', res.data))
       .catch((err) => console.log(err))
     },
-    getArticle(context) {
-      axios({
+    logout(context) {
+      context.commit("LOG_OUT")
+    },
+    async getArticle(context) {
+      await axios({
         method: 'get',
         url: `${Django_API_URL}/api/v1/community/free/`,
         headers:{
@@ -124,15 +160,14 @@ export default new Vuex.Store({
         }
       })
       .then((res) => {
-        // console.log(context, res)
         context.commit('GET_ARTICLES', res.data)
       })
       .catch((err) => {
         console.log(err)
       })
     },
-    getReview(context) {
-      axios({
+    async getReview(context) {
+      await axios({
         method: 'get',
         url: `${Django_API_URL}/api/v1/community/review/`,
         headers:{
@@ -140,7 +175,6 @@ export default new Vuex.Store({
         }
       })
       .then((res) => {
-        console.log(context, res)
         context.commit('GET_REVIEW', res.data)
       })
       .catch((err) => {
