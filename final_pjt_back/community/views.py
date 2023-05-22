@@ -16,9 +16,6 @@ def article_list(request):
       return Response(serializer.data)
     elif request.method=='POST':
        serializer = ArticleDetailSerializer(data=request.data)
-       print(request.data)
-       print(request.user)
-       print(serializer.is_valid())
        if serializer.is_valid(raise_exception=True):
           serializer.save(user=request.user)
           return Response(serializer.data)
@@ -65,7 +62,7 @@ def comment_detail(request, comment_pk):
     elif request.method == 'PUT':
         serializer = CommentSerializer(comment, data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+            serializer.save()
             return Response(serializer.data)
 
     
@@ -104,7 +101,7 @@ def Review_detail(request, review_pk):
    elif request.method=='PUT':
       serializer = ReviewDetailSerializer(review,data=request.data)
       if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+            serializer.save()
             return Response(serializer.data)
       
    elif request.method == 'DELETE':
@@ -136,7 +133,7 @@ def reviewcomment_detail(request, reviewcomment_pk):
     elif request.method == 'PUT':
         serializer = ReviewCommentSerializer(reviewcomment, data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+            serializer.save()
             return Response(serializer.data)
 
     
@@ -150,3 +147,31 @@ def reviewcomment_create(request, review_pk):
         serializer.save(user=request.user,review=review)
         return Response(serializer.data)
 
+
+@api_view(['POST'])
+def like_article(request, article_pk,my_pk):
+    article = get_object_or_404(Article, article_pk =article_pk)
+    user = get_object_or_404(get_user_model(),pk=my_pk)
+    if user.like_article.filter(pk=article_pk).exists():
+        user.like_article.remove(article_pk)
+        like = False
+    
+    else:
+        user.like_article.add(article_pk)
+        like = True
+
+    return Response(True)
+
+@api_view(['POST'])
+def like_review(request, review_pk,my_pk):
+    review = get_object_or_404(Review, review_pk =review_pk)
+    user = get_object_or_404(get_user_model(),pk=my_pk)
+    if user.like_review.filter(pk=review_pk).exists():
+        user.like_review.remove(review_pk)
+        like = False
+    
+    else:
+        user.like_review.add(review_pk)
+        like = True
+
+    return Response(True)

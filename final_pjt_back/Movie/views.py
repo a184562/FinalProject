@@ -51,20 +51,7 @@ def movie_data(request):
     
     
     return Response(serializer.data)
-        # movie_dict = {
-        #     "pk" : obj['movie_id'],
-        #     "model" : "Movie.movie",
-        #     "fields":{
-        #         "title":obj['title'],
-        #         "original_title":obj['original_title'],
-        #         "poster_path": obj['poster_path'],
-        #         "overview": obj['overview'],
-        #         "vote_average": obj['vote_average'],
-        #         "release_date": obj['release_date'],
-        #         "popularity": obj['popularity'],
-        #         "genres": obj['genres'],
-        #     }
-        # }
+
 @api_view(['GET'])
 def comment_list(request):
     if request.method == 'GET':

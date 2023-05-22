@@ -8,7 +8,7 @@ class Article(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_article')
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_article')
 
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments" )
@@ -25,6 +25,7 @@ class Review(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_review')
 
 
 class ReviewComment(models.Model):

@@ -3,7 +3,8 @@ from django.contrib.auth import get_user_model
 from .models import User
 
 
-# class UserDetailSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('username','email','id')
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
