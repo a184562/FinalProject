@@ -16,6 +16,8 @@ export default new Vuex.Store({
     review_articles: [],
     genre_list: [],
     movie_num : 0,
+    user_id : null,
+    username : null,
   },
   getters: {
     isLogin(state){
@@ -26,8 +28,11 @@ export default new Vuex.Store({
     SIGN_UP(state, token) {
       state.token = token
     },
-    SAVE_TOKEN(state,token){
-      state.token = token
+    SAVE_TOKEN(state,payload){
+      // state.user_id = 
+      state.token = payload.token
+      state.username = payload.username
+      // state.user_id = 
     },
     GET_ARTICLES(state, articles) {
       state.free_articles = articles
@@ -41,7 +46,9 @@ export default new Vuex.Store({
       }
       state.movie_num = 1
     },
-    
+    GET_USER(state, data) {
+      state.user_id = data.pk
+    }
   },
   
 
@@ -86,11 +93,28 @@ export default new Vuex.Store({
         }
       })
       .then(res=>{
-        context.commit('SAVE_TOKEN', res.data.key)
+        console.log(res)
+        const payload_1 = {
+          token : res.data.key,
+          username : payload.username
+        
+        }
+        context.commit('SAVE_TOKEN', payload_1)
+        context.dispatch('getUser')
       })
       .catch(err=>console.log(err))
     },
-    
+    getUser(context) {
+      axios({
+        method: 'get',
+        url: `${Django_API_URL}/accounts/user/`,
+        headers: {
+          Authorization: `Token ${context.state.token}`
+        }
+      })
+      .then((res) => context.commit('GET_USER', res.data))
+      .catch((err) => console.log(err))
+    },
     getArticle(context) {
       axios({
         method: 'get',

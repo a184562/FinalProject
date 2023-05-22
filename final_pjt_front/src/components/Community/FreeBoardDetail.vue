@@ -6,6 +6,8 @@
 		<p>내용 : {{ free_article?.content }}</p>
 		<p>작성시간 : {{ free_article?.created_at }}</p>
 		<p>수정시간 : {{ free_article?.updated_at }}</p>
+		<button v-if="!is_liked" @click="Like" >좋아요</button>
+		<button v-else >좋아요 취소</button>
 	</div>
 </template>
 
@@ -19,6 +21,7 @@ export default {
 	data() {
 		return {
 			free_article: null,
+			is_liked : false,
 		}
 	},
 	// axios로 Django 데이터베이스 서버에 연결 후 작업
@@ -36,7 +39,16 @@ export default {
 				this.free_article = res.data
 			})
 			.catch((err) => console.log(err))
-		}	
+		},
+		Like() {
+			axios({
+				method: 'post',
+				url: `${Django_API_URL}/api/v1/community/free/${this.$store.state.user_id}/${this.free_article.id}/likes/`,
+
+			})
+			.then((res) => console.log(res))
+			.catch((err) => console.log(err))
+		}
 	}
 }
 </script>

@@ -1,6 +1,9 @@
 <template>
   <div id="app">
+    <h1>{{$store.state.username}}</h1>
+    <h1>{{$store.state.user_id}}</h1>
     <nav>
+      
       <a href="http://localhost:8080/login">Login</a> |
       <a href="http://localhost:8080/signup">Signup</a> |
       <a href="#">Profile</a> |

@@ -150,18 +150,19 @@ def reviewcomment_create(request, review_pk):
 
 
 @api_view(['POST'])
-def like_article(request, article_pk,my_pk):
-    article = get_object_or_404(Article, article_pk =article_pk)
-    user = get_object_or_404(get_user_model(),pk=my_pk)
-    if user.like_article.filter(pk=article_pk).exists():
-        user.like_article.remove(article_pk)
+def like_article(request, article_pk, my_pk):
+    
+    article = get_object_or_404(Article, pk=article_pk)
+    user = get_object_or_404(get_user_model(), pk = my_pk)
+    if article.like_users.filter(pk=my_pk).exists():
+        article.like_users.remove(my_pk)
         like = False
     
     else:
-        user.like_article.add(article_pk)
+        article.like_users.add(my_pk)
         like = True
 
-    return Response(True)
+    return Response(like)
 
 @api_view(['POST'])
 def like_review(request, review_pk,my_pk):

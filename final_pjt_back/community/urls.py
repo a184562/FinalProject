@@ -9,7 +9,7 @@ urlpatterns = [
     path('community/free/comment/', views.comment_list),
     path('community/free/comment/<int:comment_pk>/', views.comment_detail),
     path('community/free/<int:article_pk>/comments/', views.comment_create),
-    path('community/free/<int:my_pk>/<int:article_pk>/', views.like_article),
+    path('community/free/<int:my_pk>/<int:article_pk>/likes/', views.like_article),
 
     path('community/review/', views.Review_list),
     path('community/review/<int:review_pk>/', views.Review_detail),
