@@ -90,6 +90,7 @@ def comment_create(request, movie_pk):
             serializer.save(user=request.user,movie=movie)
             return Response(serializer.data)
 
+<<<<<<< HEAD
 
 @api_view(['POST'])
 def like_movie(request, movie_pk, my_pk):
@@ -104,3 +105,7 @@ def like_movie(request, movie_pk, my_pk):
         like = True
 
     return Response(like)
+=======
+# @api_view(['POST'])
+# def genre_create(request):
+>>>>>>> 80a2890bf188d992f8618c2ceedf7cae7ebcb7ae
