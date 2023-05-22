@@ -1,12 +1,17 @@
 <template>
   <div id="app">
-    <h1>{{$store.state.username}}</h1>
-    <h1>{{$store.state.user_id}}</h1>
-    <nav>
-      
-      <a href="http://localhost:8080/login">Login</a> |
-      <a href="http://localhost:8080/signup">Signup</a> |
-      <a href="#">Profile</a> |
+    <nav v-if="$store.state.user_data === null">
+      <router-link to="/login">Login</router-link> |
+      <router-link to="/signup">Signup</router-link> |
+      <router-link to="/search">Search</router-link>
+    </nav>
+    <nav v-else>
+      <router-link @click.native="logout" to="/logout">LogOUT</router-link> |
+      <router-link to="/signup">Signup</router-link> |
+      <router-link :to="{
+        name: 'profile',
+        params: {id: $store.state.user_data.pk}
+      }">Profile</router-link> |
       <router-link to="/search">Search</router-link>
     </nav>
     <nav>
@@ -19,18 +24,14 @@
 </template>
 
 <script>
-// export default ({
-//   created() {
-//     if (this.$store.state.movie_num === 0){
-// 			this.getMovie()
-// 		}
-//   },
-//   methods: {
-//     getMovie() {
-// 			return this.$store.dispatch('getMovie')
-// 		},
-//   }
-// })
+  export default {
+    methods: {
+      logout() {
+        this.$store.dispatch('logout')
+        this.$router.push({name: 'movies'})
+      }
+    }
+  }
 </script>
 
 

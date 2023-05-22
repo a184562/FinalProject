@@ -20,9 +20,17 @@ export default {
 	},
 	data() {
 		return {
-			review_articles: this.$store.state.review_articles
+			review_articles: null,
 		}
-		
+	},
+	created() {
+		this.getReview()
+	},
+	methods: {
+		async getReview() {
+			await this.$store.dispatch('getReview')
+			this.review_articles = this.$store.state.review_articles
+		}
 	}
 }
 </script>

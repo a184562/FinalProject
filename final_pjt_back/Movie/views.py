@@ -89,3 +89,5 @@ def comment_create(request, movie_pk):
             serializer.save(user=request.user,movie=movie)
             return Response(serializer.data)
 
+# @api_view(['POST'])
+# def genre_create(request):
