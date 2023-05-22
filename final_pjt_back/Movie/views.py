@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .models import Movie,Comment
 from .serializers import MovieDetailSerializer,MovieListSerializer,CommentSerializer
@@ -89,3 +90,17 @@ def comment_create(request, movie_pk):
             serializer.save(user=request.user,movie=movie)
             return Response(serializer.data)
 
+
+@api_view(['POST'])
+def like_movie(request, movie_pk, my_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    user = get_object_or_404(get_user_model(), pk = my_pk)
+    if movie.like_users.filter(pk=my_pk).exists():
+        movie.like_users.remove(my_pk)
+        like = False
+    
+    else:
+        movie.like_users.add(my_pk)
+        like = True
+
+    return Response(like)

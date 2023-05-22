@@ -9,6 +9,7 @@
 			<label for="movie_title">영화 제목 : </label>
 			<input type="text" id="movie_title"><br>
 			<input type="submit" id="제출">
+		</form>
 	</div>
 </template>
 

@@ -20,7 +20,8 @@ class Movie(models.Model):
     release_date = models.DateField(null=True)
     popularity = models.FloatField(null=True)
     genres = models.ManyToManyField(Genre, blank=True)
-
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
+    
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="moviecomments")
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)

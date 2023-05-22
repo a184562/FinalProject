@@ -164,16 +164,17 @@ def like_article(request, article_pk, my_pk):
 
     return Response(like)
 
+
 @api_view(['POST'])
-def like_review(request, review_pk,my_pk):
-    review = get_object_or_404(Review, review_pk =review_pk)
-    user = get_object_or_404(get_user_model(),pk=my_pk)
-    if user.like_review.filter(pk=review_pk).exists():
-        user.like_review.remove(review_pk)
+def like_review(request, review_pk, my_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    user = get_object_or_404(get_user_model(), pk = my_pk)
+    if review.like_users.filter(pk=my_pk).exists():
+        review.like_users.remove(my_pk)
         like = False
     
     else:
-        user.like_review.add(review_pk)
+        review.like_users.add(my_pk)
         like = True
 
-    return Response(True)
+    return Response(like)

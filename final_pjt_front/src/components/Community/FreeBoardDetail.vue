@@ -7,7 +7,7 @@
 		<p>작성시간 : {{ free_article?.created_at }}</p>
 		<p>수정시간 : {{ free_article?.updated_at }}</p>
 		<button v-if="!is_liked" @click="Like" >좋아요</button>
-		<button v-else >좋아요 취소</button>
+		<button v-else @click="Like">좋아요 취소</button>
 	</div>
 </template>
 
@@ -15,7 +15,7 @@
 import axios from 'axios'
 const Django_API_URL = 'http://127.0.0.1:8000'
 
-
+// is_liked 처음 들어왔을 때, user에 따라 false, true 구현
 export default {
 	name: "FreeBoardDetail",
 	data() {
@@ -46,7 +46,8 @@ export default {
 				url: `${Django_API_URL}/api/v1/community/free/${this.$store.state.user_id}/${this.free_article.id}/likes/`,
 
 			})
-			.then((res) => console.log(res))
+			.then((res) => {
+				this.is_liked=res.data})
 			.catch((err) => console.log(err))
 		}
 	}
