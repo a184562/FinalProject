@@ -11,7 +11,7 @@ class Article(models.Model):
     # like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_article')
 
 class Comment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments" )
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -28,7 +28,7 @@ class Review(models.Model):
 
 
 class ReviewComment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="reviewcomments")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviewcomments')
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

@@ -11,7 +11,7 @@
       <label for="password2"> password confirmation : </label>
       <input type="password" id="password2" v-model="password2">
       
-      <input type="submit" value="SignUp" @click="GoToHome">
+      <input type="submit" value="SignUp">
     </form>
   </div>
 </template>

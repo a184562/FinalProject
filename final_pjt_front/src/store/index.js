@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import router from '../router'
 import axios from 'axios'
 // import router from '@/router'
 
@@ -23,6 +23,9 @@ export default new Vuex.Store({
     genre_list: []
   },
   getters: {
+    isLogin(state){
+      return state.token ? true : false
+    }
   },
   mutations: {
     SIGN_UP(state, token) {
@@ -30,6 +33,7 @@ export default new Vuex.Store({
     },
     SAVE_TOKEN(state,token){
       state.token = token
+      router.push({name:'movies'})
     },
     GET_ARTICLES(state, articles) {
       state.free_articles = articles
@@ -56,8 +60,8 @@ export default new Vuex.Store({
         }
       })
       .then((res) => {
-        // context.commit('SIGN_UP', res.data.key)
-        context.commit('SAVE_TOKEN',res.data.key)
+        context.commit('SIGN_UP', res.data.key)
+        // context.commit('SAVE_TOKEN',res.data.key)
       })
       .catch(() => console.log('hi'))
     },
@@ -91,18 +95,25 @@ export default new Vuex.Store({
       axios({
         method: 'get',
         url: `${Django_API_URL}/api/v1/community/free/`,
+        headers:{
+          Authorization: `Token ${ context.state.token }`
+        }
       })
       .then((res) => {
         // console.log(context, res)
         context.commit('GET_ARTICLES', res.data)
       })
       .catch((err) => {
-        console.log(err)})
+        console.log(err)
+      })
     },
     getReview(context) {
       axios({
         method: 'get',
         url: `${Django_API_URL}/api/v1/community/review/`,
+        headers:{
+          Authorization: `Token ${ context.state.token }`
+        }
       })
       .then((res) => {
         console.log(context, res)

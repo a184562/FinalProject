@@ -55,7 +55,10 @@ export default {
 				url: `${Django_API_URL}/api/v1/community/review/`,
 				data: {
 					title, content, movie_title
-				}
+				},
+				headers:{
+						Authorization : `Token ${this.$store.state.token}`
+					}
 			})
 			.then(() => {
 				this.$router.push({name: 'review'}).catch(() => {})

@@ -15,6 +15,24 @@
 <script>
 export default {
 	name: 'CommunityView',
+	computed:{
+		isLogin(){
+			return this.$store.getters.isLogin
+		}
+	},
+	created(){
+		this.getArticles()
+	},
+	methods:{
+		getArticles(){
+			if (this.isLogin){
+				this.$store.dispatch('getArticle')
+			}else{
+				alert('로그인이 필요한 서비스 입니다.')
+				this.$router.push({name:'login'})
+			}
+		}
+	}
 }
 </script>
 

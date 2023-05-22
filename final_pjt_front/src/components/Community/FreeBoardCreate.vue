@@ -45,8 +45,11 @@ export default {
 				method: 'post',
 				url: `${Django_API_URL}/api/v1/community/free/`,
 				data: {
-					title, content
-				}
+					title, content,
+				},
+				headers:{
+						Authorization : `Token ${this.$store.state.token}`
+					}
 			})
 			.then((res) => {
 				console.log(res)

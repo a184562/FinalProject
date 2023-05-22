@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.permissions import IsAuthenticated
 from .models import Article,Comment,Review,ReviewComment
 from .serializers import ArticleListSerializer,ArticleDetailSerializer,CommentSerializer,ReviewListSerializer,ReviewCommentSerializer,ReviewDetailSerializer
-
+from django.contrib.auth import get_user_model
  # 기사
 @api_view(['GET','POST'])
 @permission_classes([IsAuthenticated])
@@ -14,9 +14,11 @@ def article_list(request):
       article = get_list_or_404(Article)
       serializer = ArticleListSerializer(article, many=True)
       return Response(serializer.data)
-    
     elif request.method=='POST':
        serializer = ArticleDetailSerializer(data=request.data)
+       print(request.data)
+       print(request.user)
+       print(serializer.is_valid())
        if serializer.is_valid(raise_exception=True):
           serializer.save(user=request.user)
           return Response(serializer.data)
@@ -33,7 +35,7 @@ def article_detail(request, article_pk):
    elif request.method=='PUT':
       serializer = ArticleDetailSerializer(article,data=request.data)
       if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+            serializer.save()
             return Response(serializer.data)
    elif request.method == 'DELETE':
       article.delete()
