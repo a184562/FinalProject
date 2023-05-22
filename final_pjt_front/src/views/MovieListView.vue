@@ -27,6 +27,7 @@
 import GenreRecommend from '../components/Movie/GenreRecommend.vue'
 import NowPlaying from '../components/Movie/NowPlaying.vue'
 
+
 export default {
 	name: 'MovieListView',
 	components: {
@@ -35,6 +36,7 @@ export default {
 	},
 	data() {
 		return {
+			temp_movie_list : null,
 			nowplaying_movies: [],
 			genres_1: [],
 			genres_2: [],
@@ -44,15 +46,18 @@ export default {
 			genre_3 : null,
 		}
 	},
+	// beforeCreate() {
+		
+	// },
+
 	created() {
 		this.getMovie()
+		
 		// this.getGenre()
 		
-		this.nowplaying_Movies()
+		// this.nowplaying_movies = this.nowplaying_Movies()
 		
-		this.genres_Movie_1()
-		this.genres_Movie_2()
-		this.genres_Movie_3()
+		
 		// if (this.genres_3.length < 25) {
 		// 	while(this.genres_3.length < 25) {
 		// 		this.genres_Movie_3()
@@ -63,47 +68,64 @@ export default {
 		// getGenre() {
 		// 	return this.$stroe.dispatch('getGenre')
 		// },
-		getMovie() {
-			return this.$store.dispatch('getMovie')
+		async getMovie() {
+			await this.$store.dispatch('getMovie')
+			this.nowplaying_movies = this.nowplaying_Movies(this.$store.state.movie_list)
+			this.genres_1 = this.genres_Movie_1(this.$store.state.movie_list)
+			this.genres_2 = this.genres_Movie_2(this.$store.state.movie_list)
+			this.genres_3 = this.genres_Movie_3(this.$store.state.movie_list)
+			this.temp_movie_list = JSON.stringify(this.$store.state.movie_list)
+			localStorage.setItem('movie_list', this.temp_movie_list)
+			localStorage.setItem('movie_list_length', this.$store.state.movie_list.length)
 		},
-		nowplaying_Movies() {
+		nowplaying_Movies(array) {
 			let release_date_1 = '2023'
+			let nowplaying_movies_list = []
 			
-			for(const movie of this.$store.state.movie_list) {
-				if(movie.release_date.indexOf(release_date_1) !== -1 && this.nowplaying_movies.length < 25){
-					this.nowplaying_movies.push(movie)
+			for(const movie of array) {
+				if(movie.release_date.indexOf(release_date_1) !== -1 && nowplaying_movies_list.length < 25){
+					nowplaying_movies_list.push(movie)
 				}
 			}
-			
-			console.log(this.nowplaying_movies.length)
-			},
-		genres_Movie_1() {
-			this.genre_1 = 35
-
-			for(const movie of this.$store.state.movie_list) {
-				if (movie.genres.indexOf(this.genre_1) !== -1 && this.genres_1.length < 25) {
-					this.genres_1.push(movie)
-				}
-			}
-			console.log(this.genres_1.length)
-		},		
-		genres_Movie_2() {
-			this.genre_2 = 14
-			for(const movie of this.$store.state.movie_list) {
-				if (movie.genres.indexOf(this.genre_2) !== -1 && this.genres_2.length < 25) {
-					this.genres_2.push(movie)
-				}
-			}
-			console.log(this.genres_2.length)
+			console.log(nowplaying_movies_list.length)
+			return nowplaying_movies_list
 		},
-		genres_Movie_3() {
-			this.genre_3 = 10770
-			for(const movie of this.$store.state.movie_list) {
-				if (movie.genres.indexOf(this.genre_3) !== -1 && this.genres_3.length < 25) {
-					this.genres_3.push(movie)
+		genres_Movie_1(array) {
+			let genre_1_list = []
+
+			let temp_genre_1 = 35
+
+			for(const movie of array) {
+				if (movie.genres.indexOf(temp_genre_1) !== -1 && genre_1_list.length < 25) {
+					genre_1_list.push(movie)
 				}
 			}
-			console.log(this.genres_3.length)
+			console.log(genre_1_list.length)
+			return genre_1_list
+		},		
+		genres_Movie_2(array) {
+			let genre_2_list = []
+
+			let temp_genre_2 = 14
+			for(const movie of array) {
+				if (movie.genres.indexOf(temp_genre_2) !== -1 && genre_2_list.length < 25) {
+					genre_2_list.push(movie)
+				}
+			}
+			console.log(genre_2_list.length)
+			return genre_2_list
+		},
+		genres_Movie_3(array) {
+			let genre_3_list = []
+
+			let temp_genre_3 = 10770
+			for(const movie of array) {
+				if (movie.genres.indexOf(temp_genre_3) !== -1 && genre_3_list.length < 25) {
+					genre_3_list.push(movie)
+				}
+			}
+			console.log(genre_3_list.length)
+			return genre_3_list
 		}		
 	}
 }

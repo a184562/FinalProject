@@ -35,12 +35,8 @@ export default {
       const payload = {
         username, password1, password2
       }
+      
 
-      this.$store.dispatch('signUp', payload)
-
-    },
-    GoToHome(){
-      console.log(this.username)
       if(this.username==""){
         alert('아이디를 입력해주세요')
         return false
@@ -51,9 +47,28 @@ export default {
         alert('비밀번호가 일치하지 않습니다')
         return false
       }else{
+        this.$store.dispatch('signUp', payload)
         this.$router.push({ name: 'movies'})
       }
-    }
+
+      
+
+    },
+    // GoToHome(){
+    //   console.log(this.username)
+    //   if(this.username==""){
+    //     alert('아이디를 입력해주세요')
+    //     return false
+    //   }else if(this.password1==""){
+    //     alert('비밀번호를 입력해주세요')
+    //     return false
+    //   }else if(this.password1 != this.password2){
+    //     alert('비밀번호가 일치하지 않습니다')
+    //     return false
+    //   }else{
+    //     this.$router.push({ name: 'movies'})
+    //   }
+    // }
   }
 }
 </script>
