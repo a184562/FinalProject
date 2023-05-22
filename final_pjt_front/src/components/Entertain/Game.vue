@@ -26,7 +26,7 @@ export default {
 	},
 	data() {
 		return {
-			movie_list : this.$store.state.movie_list,
+			movie_list : null,
 			movie_1: null,
 			movie_2: null,
 			idx_1 : 0,
@@ -36,7 +36,9 @@ export default {
 	},
 	created() {
 		console.log(this.movie_list)
-		
+		const temp_movie_list = localStorage.getItem('movie_list')
+		const parsed_temp_movie_list = JSON.parse(temp_movie_list)
+		this.movie_list = parsed_temp_movie_list
 		this.shuffle(this.movie_list)
 
 		
@@ -57,12 +59,14 @@ export default {
 				this.idx_2 += 1
 				this.movie_1 = this.movie_list[this.idx_1]
 				this.movie_2 = this.movie_list[this.idx_2]
+				console.log(this.movie_1)
 			}
 			else {
 				alert("틀렸습니다.")
 				this.$router.push({name: 'entertain'})
 			}
-		},
+		}
+		,
 		selectCard_right() {
 			if (this.movie_1.popularity < this.movie_2.popularity) {
 				this.score += 1
@@ -70,6 +74,7 @@ export default {
 				this.idx_2 += 1
 				this.movie_1 = this.movie_list[this.idx_1]
 				this.movie_2 = this.movie_list[this.idx_2]
+				console.log(this.movie_1)
 			}
 			else {
 				alert("틀렸습니다.")

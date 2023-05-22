@@ -15,6 +15,20 @@
   </div>
 </template>
 
+<script>
+// export default ({
+//   created() {
+//     if (this.$store.state.movie_num === 0){
+// 			this.getMovie()
+// 		}
+//   },
+//   methods: {
+//     getMovie() {
+// 			return this.$store.dispatch('getMovie')
+// 		},
+//   }
+// })
+</script>
 
 
 

@@ -4,11 +4,6 @@ import Vuex from 'vuex'
 import axios from 'axios'
 // import router from '@/router'
 
-
-// const API_KEY = process.env.VUE_APP_MOVIE_API_KEY
-// const movie_URL_1 = 'https://api.themoviedb.org/3/movie/'
-// const movie_URL_2 = `?api_key=${API_KEY}`
-
 const Django_API_URL = 'http://127.0.0.1:8000'
 
 Vue.use(Vuex)
@@ -20,7 +15,8 @@ export default new Vuex.Store({
     movie_list: [],
     free_articles: [],
     review_articles: [],
-    genre_list: []
+    genre_list: [],
+    movie_num : 0,
   },
   getters: {
   },
@@ -38,11 +34,27 @@ export default new Vuex.Store({
       state.review_articles = articles
     },
     GET_MOVIE(state, movie_data) {
-      movie_data.forEach(movies => state.movie_list.push(movies))
+      if(state.movie_num === 0) {
+        movie_data.forEach(movies => state.movie_list.push(movies))
+      }
+      state.movie_num = 1
     },
     
   },
+  
+
   actions: {
+    async getMovie(context) {
+      await axios({
+        method: 'get',
+        url: `${Django_API_URL}/api/v1/movies/`,
+      })
+      .then((res) => {
+        console.log(res, context)
+        context.commit('GET_MOVIE', res.data)
+      })
+      .catch((err) => console.log(err))
+    },
     signUp(context, payload) {
       const username = payload.username
       const password1 = payload.password1
@@ -76,17 +88,7 @@ export default new Vuex.Store({
       })
       .catch(err=>console.log(err))
     },
-    getMovie(context) {
-      axios({
-        method: 'get',
-        url: `${Django_API_URL}/api/v1/movies/`,
-      })
-      .then((res) => {
-        console.log(res, context)
-        context.commit('GET_MOVIE', res.data)
-      })
-      .catch((err) => console.log(err))
-    },
+    
     getArticle(context) {
       axios({
         method: 'get',
