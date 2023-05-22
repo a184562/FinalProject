@@ -59,7 +59,7 @@ export default new Vuex.Store({
         // context.commit('SIGN_UP', res.data.key)
         context.commit('SAVE_TOKEN',res.data.key)
       })
-      .catch(() => console.log('hi'))
+      .catch((err) => console.log(err))
     },
     logIn(context,payload){
       const username = payload.username
