@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<h1>영화 리뷰 글</h1>
 		<MovieReviewArticle
 		v-for="review_article in review_articles"
 		:key="review_article.id"

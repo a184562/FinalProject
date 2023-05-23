@@ -1,11 +1,17 @@
 <template>
-	<div>
-		<h1>Detail</h1>
-		<p>글 번호 : {{ free_article?.id }}</p>
-		<p>글 제목 : {{ free_article?.title }}</p>
-		<p>내용 : {{ free_article?.content }}</p>
-		<p>작성시간 : {{ free_article?.created_at }}</p>
-		<p>수정시간 : {{ free_article?.updated_at}}</p>
+	<div class="detail">
+		<div class="mt-5">
+			<h3 class="articletitle">{{ free_article?.title }}</h3>
+			<div class="articleContent">
+				<p>내용 : {{ free_article?.content }}</p>
+			</div>
+			<div>
+				<p>작성시간 : {{ created_at }}</p>
+				<p>수정시간 : {{ free_article?.updated_at}}</p>
+			</div>
+			
+		</div>
+		
 		<div v-if="free_article?.user==user_id">
 			<input type="submit" value="게시글 삭제" @click="deleteArticle">
 			<input type="submit" value="게시글 수정" @click="putArticle">
@@ -60,12 +66,14 @@ export default {
 			free_article: null,
 			is_liked : false,
 			content : '',
-
+			created_at : "",
+			updated_at : "",
 		}
 	},
 	// axios로 Django 데이터베이스 서버에 연결 후 작업
 	created() {
 		this.getArticleDetail()
+
 	},
 	methods: {
 		getArticleDetail() {
@@ -76,6 +84,32 @@ export default {
 			.then((res) => {
 				console.log(res)
 				this.free_article = res.data
+				for (let i = 0; i < res.data.created_at.length; i++) {
+					if (i < 4) {
+						this.created_at += res.data.created_at[i]
+					}
+					if (i === 4) {
+						this.created_at += '년'
+					}
+					if (i === 5 || i === 6 ) {
+						this.created_at += res.data.created_at[i]
+					}
+					if (i === 7) {
+						this.created_at += '월'
+					}
+					if (i === 8 || i === 9 ) {
+						this.created_at += res.data.created_at[i]
+					}
+					if (i === 7) {
+						this.created_at += '일'
+					}
+					if (i < 19) {
+						this.created_at += res.data.created_at[i]
+					}
+					
+				}
+				// this.created_at = res.data.created_at
+				// this.updated_at = res.data.updated_at
 			})
 			.catch((err) => console.log(err))
 		},
@@ -135,6 +169,28 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.detail {
+	border-radius: 0.5rem;
+	margin: auto;
+	width: 1000px;
+	height: 75%;
+	box-shadow: 4px 4px 4px grey;
+	background-color: #141414;
+	margin-bottom: 15rem;
+	margin-top: 5rem;
+}
+.articletitle {
+	padding-top: 1.5rem;
+	padding-left: 1.5rem;
+	text-align: start;
+	padding-bottom: 20px;
+	border-bottom: solid grey 2px;
+}
+.articleContent {
+	margin: auto;
+	width: 95%;
+	height: 400px;
+	background-color: #383838;
+}
 </style>

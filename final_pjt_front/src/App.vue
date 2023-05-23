@@ -7,7 +7,7 @@
       <router-link to="/search">Search</router-link>
     </nav>
     <nav v-else>
-      <router-link @click.native="logout" to="/logout">LogOUT</router-link> |
+      <router-link @click.native="logout" to="/logout">Logout</router-link> |
       <router-link to="/signup">Signup</router-link> |
       <router-link :to="{
         name: 'profile',
@@ -42,7 +42,9 @@
 
 <style>
 html {
-  background: linear-gradient(#000000, #0c0c0c)
+  background: linear-gradient(#000000, #0c0c0c);
+  background-size: cover;
+  height: 100vh;
 }
 
 #app {
@@ -51,7 +53,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: white;
-  background: linear-gradient(#000000, #0c0c0c)
+  background: linear-gradient(#000000, #0c0c0c);
+  height: 100vh;
 }
 .title {
   text-align: left;
