@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import User
-
+from .serializers import UserGenreSerializer
 # 팔로우 기능/ 팔로워나 팔로우 갯수 확인할려면, 요청으로 갯수 가져오기
 @api_view(['POST'])
 def follow(request, me_pk, user_pk):
@@ -32,4 +32,22 @@ def follow_check(request, me_pk, user_pk):
             following = False
 
         return Response(following)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def user_genre(request):
+    users = User(request.user)
+    print(request.user)
+    if request.method == 'POST':
+        serializer = UserGenreSerializer(User,data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user, genres=request.user.genres)
+            return Response(serializer.data)
+    # print(request.data['genre'])
+    # for genre in request.data['genre']:
+    #     print(genre)
+    #     users.genres.add(genre)
+    # serializer = UserGenreSerializer(users, many=True)
+    # return Response(serializer.data)
+
 
