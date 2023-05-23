@@ -30,7 +30,7 @@ const routes = [
     component: MovieListView
   },
   {
-    path: '/movie/:id',
+    path: '/movie/:movie_id',
     name: 'movie',
     component: MovieDetailView
   },

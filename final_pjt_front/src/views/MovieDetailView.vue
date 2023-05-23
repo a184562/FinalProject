@@ -171,8 +171,8 @@ export default {
 					Authorization : `Token ${this.$store.state.token}`
 				}
 			})
-			.then((res)=>{
-				console.log(res)
+			.then(()=>{
+				this.$router.go(0)
 			})
 			.catch((err)=>{
 				console.log(err)
