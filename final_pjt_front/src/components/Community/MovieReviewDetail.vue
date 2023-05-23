@@ -8,6 +8,10 @@
 		<p>수정시간 : {{ review_article?.updated_at }}</p>
 		<p>작성자 : {{review_article?.username}}</p>
 		<div>
+		<div v-if="review_article?.user==user_id">
+			<input type="submit" value="게시글 삭제" @click="deleteArticle">
+			<input type="submit" value="게시글 수정" @click="putArticle">
+		</div>
 		<button v-if="!is_liked" @click="Like" >좋아요</button>
 		<button v-else @click="Like">좋아요 취소</button>
 		</div>
@@ -18,8 +22,11 @@
 				<input type="submit" id="제출">
 			</form>			
 		</div>
-		<div>
-			{{review_article}}
+
+		<div v-for="(contents,index) in review_article['reviewcomment_set']" :key="index">
+			{{contents['content']}}
+			{{contents['username']}}
+			{{contents['created_at']}}
 		</div>
 	</div>
 </template>
@@ -32,6 +39,7 @@ export default {
 	name: "MovieReviewDetail",
 	data() {
 		return {
+			user_id: this.$store.state.user_data.pk,
 			review_article: null,
 			is_liked :false,
 			content : '',
@@ -75,7 +83,22 @@ export default {
 					Authorization : `Token ${this.$store.state.token}`
 				}	
 			})
-		}	
+			.then(()=>{
+				this.$router.go(this.$router.currentRout).catch(() => {})
+			})
+			.catch(()=>{})
+		},
+		deleteArticle(){
+			axios({
+				method:'delete',
+				url:`${Django_API_URL}/api/v1/community/review/${this.review_article.id}/`
+			})
+			.then(()=>{
+			})
+		},
+		putArticle(){
+
+		}
 	}
 	
 }

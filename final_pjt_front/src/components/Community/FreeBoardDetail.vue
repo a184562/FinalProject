@@ -5,7 +5,11 @@
 		<p>글 제목 : {{ free_article?.title }}</p>
 		<p>내용 : {{ free_article?.content }}</p>
 		<p>작성시간 : {{ free_article?.created_at }}</p>
-		<p>수정시간 : {{ free_article?.updated_at }}</p>
+		<p>수정시간 : {{ free_article?.updated_at}}</p>
+		<div v-if="free_article?.user==user_id">
+			<input type="submit" value="게시글 삭제" @click="deleteArticle">
+			<input type="submit" value="게시글 수정" @click="putArticle">
+		</div>
 		<div>
 			<label for="profile">작성자 : </label>
 			<router-link :to="{
@@ -13,7 +17,6 @@
 				params: {id: free_article?.user, username: free_article?.username}
 			}">{{free_article?.username}}</router-link>
 		</div>
-		<p>작성자 : {{free_article?.username}}</p>
 		<div>
 		<button v-if="!is_liked" @click="Like" >좋아요</button>
 		<button v-else @click="Like">좋아요 취소</button>
@@ -26,7 +29,20 @@
 			</form>			
 		</div>
 		<div>
-			{{free_article}}
+		<div v-for="(contents,index) in free_article['comment_set']" :key="index">
+			<div v-if="contents['user']==user_id">
+			{{contents['content']}}
+			{{contents['username']}}
+			{{contents['created_at']}}
+			<input type="submit" value="댓글 삭제" @click="commentDelete">
+			<input type="submit" value="댓글 수정" @click="commentPut">
+			</div>
+			<div v-else>
+			{{contents['content']}}
+			{{contents['username']}}
+			{{contents['created_at']}}
+			</div>
+		</div>
 		</div>
 	</div>
 </template>
@@ -40,6 +56,7 @@ export default {
 	name: "FreeBoardDetail",
 	data() {
 		return {
+			user_id : this.$store.state.user_data.pk,
 			free_article: null,
 			is_liked : false,
 			content : '',
@@ -63,6 +80,7 @@ export default {
 			.catch((err) => console.log(err))
 		},
 		Like() {
+			console.log(this.user_id)
 			axios({
 				method: 'post',
 				url: `${Django_API_URL}/api/v1/community/free/${this.$store.state.user_data.pk}/${this.free_article.id}/likes/`,
@@ -85,6 +103,33 @@ export default {
 					Authorization : `Token ${this.$store.state.token}`
 				}				
 			})
+			.then(()=>{
+				this.$router.go(this.$router.currentRout).catch(() => {})
+			})
+			.catch(()=>{})
+		},
+		deleteArticle(){
+			axios({
+				method:'delete',
+				url:`${Django_API_URL}/api/v1/community/free/${this.free_article.id}/`
+			})
+			.then((res) => {
+				console.log(res)
+				this.$router.push({name: 'free'}).catch(() => {})
+			})
+		},
+		putArticle(){
+			this.$router.push({name:'free'})
+		},
+		commentDelete(a){
+			console.log(a)
+			// axios({
+			// 	method:'delete',
+			// 	url:`${Django_API_URL}/api/v1/community/review/comment/${this.free_article.comment_set.}/`
+			// })
+		},
+		commentPut(){
+
 		}
 	}
 }
