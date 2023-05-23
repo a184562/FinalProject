@@ -115,15 +115,17 @@ export default {
 		},
 		createMovieComment(){
 			const content = this.movie_comment
+			const radioValue = document.getElementsByName('btnradio')
 			let rank = this.rank
 			const radioValue = document.getElementByName('btnradio')
-			console.log(content)
 			radioValue.forEach((radio) => {
 				if(radio.checked) {
-					rank = radio.value
+					this.rank = Number(radio.value)
 				}
 			})
-
+			console.log(this.rank)
+			console.log(typeof(this.rank))
+			
 			axios({
 				method:'post',
 				url: `${Django_API_URL}/api/v1/movie/${this.$route.params.movie_id}/comments/`,

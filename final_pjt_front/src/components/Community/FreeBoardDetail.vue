@@ -1,54 +1,78 @@
 <template>
 	<div class="detail">
 		<div class="mt-5">
-			<h3 class="articletitle">{{ free_article?.title }}</h3>
-			<div class="articleContent">
-				<p>내용 : {{ free_article?.content }}</p>
-			</div>
-			<div>
-				<p>작성시간 : {{ created_at }}</p>
-				<p>수정시간 : {{ free_article?.updated_at}}</p>
+			<div class="articletitle d-flex justify-content-between">
+				<h1>{{ free_article?.title }}</h1>
+				<div class="me-4 mt-4">
+					<label for="profile">작성자</label> :
+					<router-link :to="{
+						name: 'otherprofile',
+						params: {id: free_article?.user, username: free_article?.username}
+					}">{{free_article?.username}}</router-link>
+				</div>
 			</div>
 			
+			<div class="articleContent mt-4">
+				<p>{{ free_article?.content }}</p>
+			</div>
+			<div class="articleTime mt-4 ms-4">
+				<p>작성시간 : {{ created_at }}</p>
+				<p>수정시간 : {{ updated_at}}</p>
+			</div>
 		</div>
 		
-		<div v-if="free_article?.user==user_id">
-			<input type="submit" value="게시글 삭제" @click="deleteArticle">
-			<input type="submit" value="게시글 수정" @click="putArticle">
+		<div v-if="free_article?.user==user_id" class="articleBtn d-flex mt-4">
+			<button class="btn btn-dark ms-3" @click="$router.push({name:'free'})">목록으로</button>
+			<button class="btn btn-dark ms-3" @click="putArticle">게시글 수정</button>
+			<button class="btn btn-dark ms-3" @click="deleteArticle">게시글 삭제</button>
 		</div>
+		
+		<div class="d-flex ms-3 mt-3">
+			<button class="btn btn-dark" v-if="!is_liked" @click="Like" >좋아요</button>
+			<button class="btn btn-dark" v-else @click="Like">좋아요 취소</button>
+		</div>
+		<form @submit.prevent="createComment" class="pb-3">
+			<div class="input-group mb-3 ms-3 me-3 mt-3" style="width: 95%;">
+			<span class="input-group-text">댓글</span>
+			<input class="form-control" type="text" v-model="content">
+			<input class="btn btn-dark" type="submit" style="width: 75px;" value="작성">
+		</div>
+		</form>
+		
+		
 		<div>
-			<label for="profile">작성자 : </label>
-			<router-link :to="{
-				name: 'otherprofile',
-				params: {id: free_article?.user, username: free_article?.username}
-			}">{{free_article?.username}}</router-link>
-		</div>
-		<div>
-		<button v-if="!is_liked" @click="Like" >좋아요</button>
-		<button v-else @click="Like">좋아요 취소</button>
-		</div>
-		<div>
-			<form @submit.prevent="createComment">
-				<label for="content">내용</label>
-				<input type="text" v-model="content">
-				<input type="submit" id="제출">
-			</form>			
-		</div>
-		<div>
-		<div v-for="(contents,index) in free_article['comment_set']" :key="index">
-			<div v-if="contents['user']==user_id">
-			{{contents['content']}}
-			{{contents['username']}}
-			{{contents['created_at']}}
-			<input type="submit" value="댓글 삭제" @click="commentDelete">
-			<input type="submit" value="댓글 수정" @click="commentPut">
-			</div>
-			<div v-else>
-			{{contents['content']}}
-			{{contents['username']}}
-			{{contents['created_at']}}
-			</div>
-		</div>
+			<ul v-for="(contents,index) in free_article['comment_set']" :key="index" class="commentlist">
+				<p>댓글 수 : {{ free_article['comment_set'].length }}</p>
+				<li v-if="contents['user']==user_id" class="comment">
+					<div class="me-4 mt-4">
+						<router-link :to="{
+							name: 'otherprofile',
+							params: {id: free_article?.user, username: free_article?.username}
+						}">{{contents['username']}}</router-link>
+					</div>
+					<div class="d-flex justify-content-between mt-3">
+						<p>{{contents['content']}}</p>
+						<p class="me-5">{{contents['created_at']}}</p>
+					</div>
+					<div class="pb-4">
+						<input class="btn btn-dark btn-sm me-2" type="submit" value="댓글 수정" @click="commentPut">
+						<input class="btn btn-dark btn-sm" type="submit" value="댓글 삭제" @click="commentDelete">
+					</div>
+				
+				</li>
+				<li v-else>
+					<div class="me-4 mt-4">
+						<router-link :to="{
+							name: 'otherprofile',
+							params: {id: free_article?.user, username: free_article?.username}
+						}">{{contents['username']}}</router-link>
+					</div>
+					<div class="d-flex justify-content-between mt-3">
+						<p>{{contents['content']}}</p>
+						<p class="me-5">{{contents['created_at']}}</p>
+					</div>
+				</li>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -84,28 +108,57 @@ export default {
 			.then((res) => {
 				console.log(res)
 				this.free_article = res.data
+				console.log(res.data.created_at)
 				for (let i = 0; i < res.data.created_at.length; i++) {
+					console.log(res.data.created_at[i])
 					if (i < 4) {
-						this.created_at += res.data.created_at[i]
+						this.created_at = this.created_at + res.data.created_at[i]
 					}
 					if (i === 4) {
-						this.created_at += '년'
+						this.created_at = this.created_at + '년 '
 					}
 					if (i === 5 || i === 6 ) {
-						this.created_at += res.data.created_at[i]
+						this.created_at = this.created_at + res.data.created_at[i]
 					}
 					if (i === 7) {
-						this.created_at += '월'
+						this.created_at = this.created_at + '월 '
 					}
 					if (i === 8 || i === 9 ) {
-						this.created_at += res.data.created_at[i]
+						this.created_at = this.created_at + res.data.created_at[i]
+					}
+					if (i === 10) {
+						this.created_at = this.created_at + '일 '
+					}
+					if (i < 19 && i >10) {
+						this.created_at = this.created_at + res.data.created_at[i]
+					}
+					console.log(this.created_at)
+					
+				}
+				for (let i = 0; i < res.data.updated_at.length; i++) {
+					console.log(res.data.updated_at[i])
+					if (i < 4) {
+						this.updated_at = this.updated_at + res.data.updated_at[i]
+					}
+					if (i === 4) {
+						this.updated_at = this.updated_at + '년 '
+					}
+					if (i === 5 || i === 6 ) {
+						this.updated_at = this.updated_at + res.data.updated_at[i]
 					}
 					if (i === 7) {
-						this.created_at += '일'
+						this.updated_at = this.updated_at + '월 '
 					}
-					if (i < 19) {
-						this.created_at += res.data.created_at[i]
+					if (i === 8 || i === 9 ) {
+						this.updated_at = this.updated_at + res.data.updated_at[i]
 					}
+					if (i === 10) {
+						this.updated_at = this.updated_at + '일 '
+					}
+					if (i < 19 && i >10) {
+						this.updated_at = this.updated_at + res.data.updated_at[i]
+					}
+					console.log(this.created_at_Time)
 					
 				}
 				// this.created_at = res.data.created_at
@@ -113,6 +166,7 @@ export default {
 			})
 			.catch((err) => console.log(err))
 		},
+		
 		Like() {
 			console.log(this.user_id)
 			axios({
@@ -173,7 +227,7 @@ export default {
 	border-radius: 0.5rem;
 	margin: auto;
 	width: 1000px;
-	height: 75%;
+	/* height: 75%; */
 	box-shadow: 4px 4px 4px grey;
 	background-color: #141414;
 	margin-bottom: 15rem;
@@ -191,5 +245,26 @@ export default {
 	width: 95%;
 	height: 400px;
 	background-color: #383838;
+	padding: 15px;
+	text-align: start;
+	border-radius: .5rem;
+}
+.articleTime {
+	text-align: start;
+}
+.articleBtn {
+	align-content: start;
+}
+div a {
+	font-weight: bold;
+	font-size: 20px;
+	color: #ffffff;
+	text-decoration-line: none;
+}
+.commentlist {
+	text-align: start;
+}
+.comment {
+	border-bottom: solid grey 1px;
 }
 </style>
