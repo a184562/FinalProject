@@ -86,23 +86,35 @@ def comment_detail(request, comment_pk):
 @permission_classes([IsAuthenticated])
 def comment_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
+    print(request.user)
     if request.method == 'POST':
         serializer = CommentSerializer(data=request.data)
+        print(serializer.is_valid())
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user,movie=movie)
             return Response(serializer.data,status=status.HTTP_201_CREATED)
 
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def like_movie(request, movie_pk, my_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    user = get_object_or_404(get_user_model(), pk = my_pk)
-    if movie.like_users.filter(pk=my_pk).exists():
-        movie.like_users.remove(my_pk)
-        like = False
-    
-    else:
-        movie.like_users.add(my_pk)
-        like = True
+    if request.method=='GET':
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        user = get_object_or_404(get_user_model(), pk = my_pk)
+        if movie.like_users.filter(pk=my_pk):
+            like = True
+            return Response(like)
+        else:
+            like = False
+            return Response(like)
+    if request.method=='POST':
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        user = get_object_or_404(get_user_model(), pk = my_pk)
+        if movie.like_users.filter(pk=my_pk).exists():
+            movie.like_users.remove(my_pk)
+            like = False
+        
+        else:
+            movie.like_users.add(my_pk)
+            like = True
 
-    return Response(like)
+        return Response(like)

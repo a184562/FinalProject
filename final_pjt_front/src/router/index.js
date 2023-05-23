@@ -108,7 +108,8 @@ const routes = [
     path: '/profile/:id',
     name: 'otherprofile',
     component: OtherUserProfile
-  }
+  },
+  
 ]
 
 const router = new VueRouter({

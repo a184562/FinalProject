@@ -42,6 +42,25 @@
 				<input class="btn btn-secondary" type="submit" value="제출">
 			</form>
 		</div>
+		<div>
+			{{ movie['comment_set'] }}
+			<div v-for="(contents,index) in movie['comment_set']" :key="index">
+				<div v-if="contents['user']==user_id">
+				{{contents['content']}}
+				{{contents['username']}}
+				{{contents['rank']}}
+				{{contents['created_at']}}
+				<input type="submit" value="댓글 삭제" @click="commentDelete">
+				<input type="submit" value="댓글 수정" @click="commentPut">
+				</div>
+				<div v-else>
+				{{contents['content']}}
+				{{contents['username']}}
+				{{contents['created_at']}}
+				{{contents['rank']}}
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -57,7 +76,7 @@ export default {
 		return {
 			movie: '',
 			poster_URL: '',
-			is_liked: false,
+			is_liked: null,
 			movie_comment:null,
 			rank: 1,
 			genre_list:{12:'모험',28:'액션',16:'애니메이션',35:'코미디',80:'범죄',99:'다큐멘터리',18:'드라마',10751:'가족',14:'판타지',36:'역사',27:'공포',10402:'음악',9648:'미스터리',10749:'로맨스',878:'SF',10770:'TV 영화',53:'스릴러',10752:'전쟁',37:'서부'},
@@ -66,6 +85,11 @@ export default {
 	},
 	created() {
 		this.getMovieDetail()
+		axios({
+				method:'get',
+				url : `${Django_API_URL}/api/v1/movie/${this.$store.state.user_data.pk}/${this.$route.params.movie_id}/likes/`
+			})
+			.then((res)=>this.is_liked= res)
 	},
 	methods: {
 		getMovieDetail() {
@@ -93,6 +117,7 @@ export default {
 			const content = this.movie_comment
 			let rank = this.rank
 			const radioValue = document.getElementByName('btnradio')
+			console.log(content)
 			radioValue.forEach((radio) => {
 				if(radio.checked) {
 					rank = radio.value
