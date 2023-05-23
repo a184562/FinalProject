@@ -43,7 +43,6 @@
 			</form>
 		</div>
 		<div>
-			{{ movie['comment_set'] }}
 			<div v-for="(contents,index) in movie['comment_set']" :key="index">
 				<div v-if="contents['user']==user_id">
 				{{contents['content']}}
@@ -116,8 +115,8 @@ export default {
 		createMovieComment(){
 			const content = this.movie_comment
 			const radioValue = document.getElementsByName('btnradio')
+			const movie = this.movie.id
 			let rank = this.rank
-			const radioValue = document.getElementByName('btnradio')
 			radioValue.forEach((radio) => {
 				if(radio.checked) {
 					this.rank = Number(radio.value)
@@ -130,7 +129,7 @@ export default {
 				method:'post',
 				url: `${Django_API_URL}/api/v1/movie/${this.$route.params.movie_id}/comments/`,
 				data:{
-					content,rank
+					content,rank,movie
 				},
 				headers:{
 					Authorization : `Token ${this.$store.state.token}`
