@@ -56,7 +56,7 @@ export default {
 	// beforeCreate() {
 		
 	// },
-
+	
 	created() {
 		this.getMovie()
 		
@@ -76,7 +76,7 @@ export default {
 		// 	return this.$stroe.dispatch('getGenre')
 		// },
 		async getMovie() {
-			await this.$store.dispatch('getMovie')
+			this.$store.dispatch('getMovie')
 			this.nowplaying_movies = this.nowplaying_Movies(this.$store.state.movie_list)
 			this.genres_1 = this.genres_Movie_1(this.$store.state.movie_list)
 			this.genres_2 = this.genres_Movie_2(this.$store.state.movie_list)
@@ -85,7 +85,7 @@ export default {
 			
 			localStorage.setItem('movie_list', this.temp_movie_list)
 			localStorage.setItem('movie_list_length', this.$store.state.movie_list.length)
-
+			
 		},
 		nowplaying_Movies(array) {
 			let release_date_1 = '2023'

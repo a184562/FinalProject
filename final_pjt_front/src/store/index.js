@@ -58,10 +58,13 @@ export default new Vuex.Store({
       })
     },
     GET_MOVIE(state, movie_data) {
+      console.log(movie_data)
+      console.log(this.movie_num)
       if(state.movie_num === 0) {
         movie_data.forEach(movies => state.movie_list.push(movies))
         state.movie_num = 1
-      } 
+      }
+      
       
     },
     GET_USER(state, data) {
@@ -79,17 +82,21 @@ export default new Vuex.Store({
   actions: {
     async getMovie(context) {
       if (context.state.movie_num === 0) {
-        context.dispatch('postMovie')
+        // context.dispatch('postMovie')
         
         await axios({
-            method: 'get',
-            url: `${Django_API_URL}/api/v1/movies/`,
-          })
-          .then((res) => {
-            console.log(res, context)
+          method: 'get',
+          url: `${Django_API_URL}/api/v1/movies/`,
+        })
+        .then((res) => {
+          console.log(res, context)
+          setTimeout(()=> {
             context.commit('GET_MOVIE', res.data)
-          })
-          .catch((err) => console.log(err))
+          }, 10000)
+          
+        })
+        .catch((err) => console.log(err))
+         
       }
     },
     postMovie() {
