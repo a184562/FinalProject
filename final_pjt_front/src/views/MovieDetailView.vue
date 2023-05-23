@@ -51,7 +51,7 @@
 		<div class="commentlist">
 			<p>댓글 수 : {{ movie['comment_set'].length }}</p>
 			<ul v-for="(contents,index) in movie['comment_set']" :key="index">
-				<li v-if="contents['id']==user_id" class="comment">
+				<li v-if="contents['user']==user_id" class="comment">
 					<div class="me-4 mt-4">
 						<router-link :to="{
 							name: 'otherprofile',
@@ -66,8 +66,15 @@
 						<p class="me-5">{{contents['created_at']}}</p>
 					</div>
 					<div class="pb-4">
-						<input class="btn btn-dark btn-sm me-2" type="submit" value="댓글 수정" @click="commentPut">
-						<input class="btn btn-dark btn-sm" type="submit" value="댓글 삭제" @click="commentDelete">
+						<button class="btn btn-dark btn-sm me-2" type="submit" value="댓글 수정"  @click="commentPutOn" :data="index">댓글 수정</button>
+						<button class="btn btn-dark btn-sm" type="submit" value="댓글 삭제"  @click="commentDelete" :data="index">댓글 삭제</button>
+						<form @submit.prevent="commentPut" class="pb-3" v-if="put_check" :data="index">
+							<div class="input-group mb-3 ms-3 me-3 mt-3" style="width: 95%;">
+							<span class="input-group-text">댓글</span>
+							<input class="form-control" type="text" v-model="new_content">
+							<input class="btn btn-dark" type="submit" style="width: 75px;" value="작성">
+							</div>
+						</form>
 					</div>
 					
 				</li>
@@ -108,7 +115,9 @@ export default {
 			movie_comment:null,
 			rank: 1,
 			genre_list:{12:'모험',28:'액션',16:'애니메이션',35:'코미디',80:'범죄',99:'다큐멘터리',18:'드라마',10751:'가족',14:'판타지',36:'역사',27:'공포',10402:'음악',9648:'미스터리',10749:'로맨스',878:'SF',10770:'TV 영화',53:'스릴러',10752:'전쟁',37:'서부'},
-			user_id : this.$store.state.user_data.pk
+			user_id : this.$store.state.user_data.pk,
+			put_check:false,
+			new_content:'',
 		}
 	},
 	created() {
@@ -168,6 +177,43 @@ export default {
 			.catch((err)=>{
 				console.log(err)
 			})
+		},
+		commentPutOn(){
+			if (this.put_check){
+				return this.put_check = false
+			}else{
+				return this.put_check = true
+			}
+		},
+		commentDelete(a){
+			const index = a.target.getAttribute('data')
+			const comment_data = this.movie['comment_set'][index]['id']
+			axios({
+				method:'delete',
+				url:`${Django_API_URL}/api/v1/comment/${comment_data}/`,
+			})
+			.then(()=>{this.$router.go(0)})
+			.catch(()=>{})
+		},
+		commentPut(a){
+			const index = a.target.getAttribute('data')
+			const comment_data = this.movie['comment_set'][index]['id']
+			const content = this.new_content
+			const movie = this.movie['id']
+			const rank = this.rank
+			if (!content){
+				alert('변경할 내용을 입력해주세요')
+				return
+			}
+			axios({
+				method:'put',
+				url:`${Django_API_URL}/api/v1/comment/${comment_data}/`,
+				data:{
+					content,movie,rank
+				}
+			})
+			.then(()=>{this.$router.go(0)})
+			.catch(()=>{})
 		}
 	}
 }

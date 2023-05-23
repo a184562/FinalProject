@@ -233,11 +233,11 @@ export default {
 		},
 		commentDelete(a){
 			const index = a.target.getAttribute('data')
-			const comment_data = this.free_article['comment_set'][index]
-			console.log(comment_data.id)
+			const comment_data = this.free_article['comment_set'][index]['id']
+
 			axios({
 				method:'delete',
-				url:`${Django_API_URL}/api/v1/community/free/comment/${comment_data.id}/`
+				url:`${Django_API_URL}/api/v1/community/free/comment/${comment_data}/`
 			})
 			.then(()=>{this.$router.go(0)})
 			.catch(()=>{})
