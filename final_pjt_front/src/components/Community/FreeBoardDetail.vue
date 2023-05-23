@@ -6,6 +6,14 @@
 		<p>내용 : {{ free_article?.content }}</p>
 		<p>작성시간 : {{ free_article?.created_at }}</p>
 		<p>수정시간 : {{ free_article?.updated_at }}</p>
+		<div>
+			<label for="profile">작성자 : </label>
+			<router-link :to="{
+				name: 'otherprofile',
+				params: {id: free_article?.user, username: free_article?.username}
+			}">{{free_article?.username}}</router-link>
+		</div>
+		<p>작성자 : {{free_article?.username}}</p>
 		<button v-if="!is_liked" @click="Like" >좋아요</button>
 		<button v-else @click="Like">좋아요 취소</button>
 	</div>
@@ -43,7 +51,7 @@ export default {
 		Like() {
 			axios({
 				method: 'post',
-				url: `${Django_API_URL}/api/v1/community/free/${this.$store.state.user_id}/${this.free_article.id}/likes/`,
+				url: `${Django_API_URL}/api/v1/community/free/${this.$store.state.user_data.pk}/${this.free_article.id}/likes/`,
 
 			})
 			.then((res) => {
