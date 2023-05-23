@@ -91,7 +91,7 @@ def comment_create(request, movie_pk):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user,movie=movie)
-            return Response(serializer.data)
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])

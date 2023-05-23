@@ -14,8 +14,20 @@
 			}">{{free_article?.username}}</router-link>
 		</div>
 		<p>작성자 : {{free_article?.username}}</p>
+		<div>
 		<button v-if="!is_liked" @click="Like" >좋아요</button>
 		<button v-else @click="Like">좋아요 취소</button>
+		</div>
+		<div>
+			<form @submit.prevent="createComment">
+				<label for="content">내용</label>
+				<input type="text" v-model="content">
+				<input type="submit" id="제출">
+			</form>			
+		</div>
+		<div>
+			{{free_article}}
+		</div>
 	</div>
 </template>
 
@@ -30,6 +42,8 @@ export default {
 		return {
 			free_article: null,
 			is_liked : false,
+			content : '',
+
 		}
 	},
 	// axios로 Django 데이터베이스 서버에 연결 후 작업
@@ -57,6 +71,20 @@ export default {
 			.then((res) => {
 				this.is_liked=res.data})
 			.catch((err) => console.log(err))
+		},
+		createComment(){
+			const content = this.content
+			const article = this.free_article.id
+			axios({
+				method:'post',
+				url:`${Django_API_URL}/api/v1/community/free/${this.free_article.id}/comments/`,
+				data:{
+					content, article
+				},
+				headers:{
+					Authorization : `Token ${this.$store.state.token}`
+				}				
+			})
 		}
 	}
 }
