@@ -9,17 +9,17 @@
 			<h1>Genre1</h1>
 			<div >
 				<!-- <h1>{{ genre_1.name }}</h1> -->
-				<GenreRecommend :genre="genres_1" />
+				<GenreRecommend1 :genre="genres_1" :num="1" />
 			</div>
 			<h1>Genre2</h1>
 			<div >
 				<!-- <h1>{{ genre_2.name }}</h1> -->
-				<GenreRecommend :genre="genres_2" />
+				<GenreRecommend2 :genre="genres_2" :num="2" />
 			</div>
 			<h1>Genre3</h1>
 			<div >
 				<!-- <h1>{{ genre_3.name }}</h1> -->
-				<GenreRecommend :genre="genres_3" />
+				<GenreRecommend3 :genre="genres_3" :num="3" />
 			</div>
 		</div>
 	</div>
@@ -27,7 +27,9 @@
 </template>
 
 <script>
-import GenreRecommend from '../components/Movie/GenreRecommend.vue'
+import GenreRecommend1 from '../components/Movie/GenreRecommend_1.vue'
+import GenreRecommend2 from '../components/Movie/GenreRecommend_2.vue'
+import GenreRecommend3 from '../components/Movie/GenreRecommend_3.vue'
 import NowPlaying from '../components/Movie/NowPlaying.vue'
 
 
@@ -35,7 +37,9 @@ export default {
 	name: 'MovieListView',
 	components: {
 		NowPlaying,
-		GenreRecommend,
+		GenreRecommend1,
+		GenreRecommend2,
+		GenreRecommend3,
 	},
 	data() {
 		return {
@@ -88,7 +92,7 @@ export default {
 			let nowplaying_movies_list = []
 			
 			for(const movie of array) {
-				if(movie.release_date.indexOf(release_date_1) !== -1 && nowplaying_movies_list.length < 25){
+				if(movie.release_date.indexOf(release_date_1) !== -1 && nowplaying_movies_list.length < 30){
 					nowplaying_movies_list.push(movie)
 				}
 			}
@@ -101,7 +105,7 @@ export default {
 			let temp_genre_1 = 35
 
 			for(const movie of array) {
-				if (movie.genres.indexOf(temp_genre_1) !== -1 && genre_1_list.length < 25) {
+				if (movie.genres.indexOf(temp_genre_1) !== -1 && genre_1_list.length < 30) {
 					genre_1_list.push(movie)
 				}
 			}
@@ -113,7 +117,7 @@ export default {
 
 			let temp_genre_2 = 14
 			for(const movie of array) {
-				if (movie.genres.indexOf(temp_genre_2) !== -1 && genre_2_list.length < 25) {
+				if (movie.genres.indexOf(temp_genre_2) !== -1 && genre_2_list.length < 30) {
 					genre_2_list.push(movie)
 				}
 			}
@@ -125,7 +129,7 @@ export default {
 
 			let temp_genre_3 = 10770
 			for(const movie of array) {
-				if (movie.genres.indexOf(temp_genre_3) !== -1 && genre_3_list.length < 25) {
+				if (movie.genres.indexOf(temp_genre_3) !== -1 && genre_3_list.length < 30) {
 					genre_3_list.push(movie)
 				}
 			}

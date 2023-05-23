@@ -1,14 +1,12 @@
 <template>
   <div id="app">
     <nav v-if="$store.state.user_data === null">
-      <h1 class="title">TITLE</h1>
-      <p>1234564</p>
+      
       <router-link to="/login">Login</router-link> |
       <router-link to="/signup">Signup</router-link> |
       <router-link to="/search">Search</router-link>
     </nav>
     <nav v-else>
-      <h1 class="title">TITLE</h1>
       <router-link @click.native="logout" to="/logout">LogOUT</router-link> |
       <router-link to="/signup">Signup</router-link> |
       <router-link :to="{
@@ -43,13 +41,17 @@
 
 
 <style>
+html {
+  background: linear-gradient(#000000, #0c0c0c)
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: white;
-  background-color: #000000;
+  background: linear-gradient(#000000, #0c0c0c)
 }
 .title {
   text-align: left;
@@ -60,7 +62,7 @@ nav {
   padding: 15px;
   border: solid black 2px;
   height: 3rem;
-  /* background-color: #E50914; */
+  box-shadow: 2px 2px 2px grey;
 }
 
 nav a {
@@ -69,7 +71,7 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #ffffff;
 }
 
 

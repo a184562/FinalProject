@@ -1,7 +1,10 @@
 <template>
-	<div class="card" @click="GoToMovieDetail">
-		<img :src="poster_URL" alt="">
-		<h2>{{ movie.title }}</h2>
+	<div class="card my-2" @click="GoToMovieDetail">
+		<p>{{ movie_rank }}</p>
+		<img :src="poster_URL" alt="" class="card-img-top">
+		<div class="card-body">
+			<p>{{ movie.title }}</p>
+		</div>
 	</div>
 </template>
 
@@ -10,6 +13,7 @@ export default {
 	name: 'MovieCard',
 	props: {
 		movie: Object,
+		movie_rank: Number,
 	},
 	
 	data() {
@@ -30,14 +34,11 @@ export default {
 
 <style scoped>
 .card {
-	border: solid black 2px;
 	cursor: pointer;
-	border-radius: 0.5rem;
 	height: 25rem;
-	margin: 2px;
+	width: 100%;
+	background-color: #0c0c0c;
+	box-shadow: 4px 4px 4px rgb(54, 54, 54);
 }
-img {
-	width: 80%;
-	height: 50%;
-}
+
 </style>

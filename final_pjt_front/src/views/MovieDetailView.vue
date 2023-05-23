@@ -1,22 +1,43 @@
 <template>
-	<div>
-		<div>
-		<img :src="poster_URL" alt="">
-		<h3>{{movie.title}}</h3>
-		<h4>{{movie.release_date}}</h4>
-		<h4>{{movie.genres}}</h4>
-		<h4>{{movie.overview}}</h4>
-		<h4>{{movie.like_users}}</h4>
-		<h4>{{movie.comment_set}}</h4>
-		<button v-if="!is_liked" @click="Like" >좋아요</button>
-		<button v-else @click="Like">좋아요 취소</button>
+	<div class="detail container">
+		<div class="row">
+			<img class="col-6 mt-4 ms-3" :src="poster_URL" alt="">
+			<div class="col-6 mt-5">
+				<h3>{{movie.title}}</h3><br><hr>
+				<h5>개봉일 : {{movie.release_date}}</h5><br>
+				<h5>{{movie.genres}}</h5><br>
+				<hr>
+				<p>{{movie.overview}}</p>
+			</div>
+			<div class="comment">
+				<p class="mt-3">좋아요 : {{movie.like_users.length}}</p>
+				<p>댓글 : {{movie.comment_set.length}}</p>
+				<button class="btn btn-secondary" v-if="!is_liked" @click="Like" >좋아요</button>
+				<button class="btn btn-secondary" v-else @click="Like">좋아요 취소</button>
+			</div>
+			
 		</div>
 		<div>
-			<form @submit.prevent="createMovieComment">
-				<label for="movie_comment">한줄평</label>
-				<input type="text" v-model="movie_comment">
-				<input type="number" name="rank" min="1" max="5" v-model="rank">
-				<input type="submit" value="제출">
+			<form class="mt-4 mb-5 comment" @submit.prevent="createMovieComment">
+				<label class="me-2" for="movie_comment">한줄평 : </label>
+				<input class="me-3" type="text" v-model="movie_comment">
+				<div class="btn-group me-3" role="rank" aria-label="Basic radio toggle button group">
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio1" value=1 autocomplete="off">
+					<label class="btn btn-outline-secondary" for="btnradio1">1</label>
+
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio2" value=2 autocomplete="off">
+					<label class="btn btn-outline-secondary" for="btnradio2">2</label>
+
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio3" value=3 autocomplete="off">
+					<label class="btn btn-outline-secondary" for="btnradio3">3</label>
+
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio4" value=4 autocomplete="off">
+					<label class="btn btn-outline-secondary" for="btnradio4">4</label>
+
+					<input type="radio" class="btn-check" name="btnradio" id="btnradio5" value=5 autocomplete="off">
+					<label class="btn btn-outline-secondary" for="btnradio5">5</label>
+				</div>
+				<input class="btn btn-secondary" type="submit" value="제출">
 			</form>
 		</div>
 	</div>
@@ -25,6 +46,7 @@
 <script>
 import axios from 'axios'
 const Django_API_URL = 'http://127.0.0.1:8000'
+
 
 export default {
 	name: 'MovieDetailView',
@@ -65,7 +87,14 @@ export default {
 		},
 		createMovieComment(){
 			const content = this.movie_comment
-			const rank = this.rank
+			let rank = this.rank
+			const radioValue = document.getElementByName('btnradio')
+
+			radioValue.forEach((radio) => {
+				if(radio.checked) {
+					rank = radio.value
+				}
+			})
 
 			axios({
 				method:'post',
@@ -89,6 +118,29 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+
+img {
+	border-radius: 1rem;
+	width: 450px;
+	height: 600px;
+}
+.detail {
+	border-radius: 0.5rem;
+	margin: auto;
+	width: 1000px;
+	height: 75%;
+	box-shadow: 4px 4px 4px grey;
+	background-color: #141414;
+	margin-bottom: 15rem;
+	margin-top: 5rem;
+}
+.comment {
+	text-align: start;
+	margin-top: 3px;
+	padding-bottom: 25px;
+	margin-left: 15px;
+}
 
 </style>
