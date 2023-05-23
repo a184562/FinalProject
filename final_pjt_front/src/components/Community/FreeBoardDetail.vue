@@ -121,12 +121,11 @@ export default {
 		putArticle(){
 			this.$router.push({name:'free'})
 		},
-		commentDelete(a){
-			console.log(a)
-			// axios({
-			// 	method:'delete',
-			// 	url:`${Django_API_URL}/api/v1/community/review/comment/${this.free_article.comment_set.}/`
-			// })
+		commentDelete(){
+			axios({
+				method:'delete',
+				// url:`${Django_API_URL}/api/v1/community/review/comment/${}/`
+			})
 		},
 		commentPut(){
 

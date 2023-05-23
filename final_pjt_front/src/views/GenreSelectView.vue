@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<button v-for="genre in genre_list" :key="genre.id">{{genre.name}}</button>
+		<input type="submit" @click="genres" value="으아악">
 	</div>
 </template>
 
@@ -15,6 +16,7 @@ export default {
 	data() {
 		return {
 			genre_list : null,
+			genre :[14,80,18],
 		}
 	},
 	created() {
@@ -26,6 +28,21 @@ export default {
 			this.genre_list = res.data.genres
 		})
 		.catch((err) => console.log(err))
+	},
+	methods:{
+		genres(){
+			const genre = this.genre
+			axios({
+				method:'post',
+				url : 'http://127.0.0.1:8000/api/v1/usergenre/',
+				data:{
+					genre
+				},
+				headers:{
+					Authorization : `Token ${this.$store.state.token}`					
+				}
+			})
+		}
 	}
 }
 </script>

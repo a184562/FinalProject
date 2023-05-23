@@ -5,7 +5,9 @@
 			<div class="col-6 mt-5">
 				<h3>{{movie.title}}</h3><br><hr>
 				<h5>개봉일 : {{movie.release_date}}</h5><br>
-				<h5>{{movie.genres}}</h5><br>
+				<div v-for="(genre,index) in movie.genres" :key="index">
+					<h5>{{genre_list[genre]}}</h5>
+				</div>
 				<hr>
 				<p>{{movie.overview}}</p>
 			</div>
@@ -58,6 +60,8 @@ export default {
 			is_liked: false,
 			movie_comment:null,
 			rank: 1,
+			genre_list:{12:'모험',28:'액션',16:'애니메이션',35:'코미디',80:'범죄',99:'다큐멘터리',18:'드라마',10751:'가족',14:'판타지',36:'역사',27:'공포',10402:'음악',9648:'미스터리',10749:'로맨스',878:'SF',10770:'TV 영화',53:'스릴러',10752:'전쟁',37:'서부'},
+
 		}
 	},
 	created() {
