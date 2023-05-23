@@ -42,6 +42,8 @@ export default {
 					Authorization : `Token ${this.$store.state.token}`					
 				}
 			})
+			.then(()=>{})
+			.catch(()=>{})
 		}
 	}
 }

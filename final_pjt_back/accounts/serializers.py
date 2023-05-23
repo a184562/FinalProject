@@ -11,11 +11,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserGenreSerializer(serializers.ModelSerializer):
-    class GenreSerializer(serializers.ModelSerializer):
-        class Meta:
-            model = Genre
-            fields = "__all__"
-    genres = GenreSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
