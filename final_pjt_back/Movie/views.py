@@ -94,7 +94,6 @@ def comment_create(request, movie_pk):
             return Response(serializer.data)
 
 
-
 @api_view(['POST'])
 def like_movie(request, movie_pk, my_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
@@ -108,4 +107,3 @@ def like_movie(request, movie_pk, my_pk):
         like = True
 
     return Response(like)
-
