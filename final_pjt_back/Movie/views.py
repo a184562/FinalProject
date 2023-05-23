@@ -1,11 +1,13 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model
+from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .models import Movie,Comment
 from .serializers import MovieDetailSerializer,MovieListSerializer,CommentSerializer
 from .api import ans
+
 
 
 
@@ -82,6 +84,7 @@ def comment_detail(request, comment_pk):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def comment_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     if request.method == 'POST':
@@ -90,9 +93,7 @@ def comment_create(request, movie_pk):
             serializer.save(user=request.user,movie=movie)
             return Response(serializer.data)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 
 @api_view(['POST'])
 def like_movie(request, movie_pk, my_pk):
@@ -107,15 +108,4 @@ def like_movie(request, movie_pk, my_pk):
         like = True
 
     return Response(like)
-=======
-# @api_view(['POST'])
-# def genre_create(request):
->>>>>>> 80a2890bf188d992f8618c2ceedf7cae7ebcb7ae
-=======
-# @api_view(['POST'])
-# def genre_create(request):
->>>>>>> refs/remotes/origin/main
-=======
-# @api_view(['POST'])
-# def genre_create(request):
->>>>>>> refs/remotes/origin/main
+

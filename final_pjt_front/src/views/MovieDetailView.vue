@@ -15,7 +15,7 @@
 			<form @submit.prevent="createMovieComment">
 				<label for="movie_comment">한줄평</label>
 				<input type="text" v-model="movie_comment">
-				<input type="number" name="rank" min="1" max="5" v-model="rank">
+				<input type="number" name="rank">
 				<input type="submit" value="제출">
 			</form>
 		</div>
@@ -35,7 +35,7 @@ export default {
 			poster_URL: '',
 			is_liked: false,
 			movie_comment:null,
-			rank:1,
+			rank: 1,
 		}
 	},
 	created() {
@@ -57,7 +57,7 @@ export default {
 		Like(){
 			axios({
 				method:'post',
-				url : `${Django_API_URL}/api/v1/movie/${this.$store.state.user_id}/${this.$route.params.movie_id}/likes/`
+				url : `${Django_API_URL}/api/v1/movie/${this.$store.state.user_data.pk}/${this.$route.params.movie_id}/likes/`
 			})
 			.then((res) =>{
 				this.is_liked = res.data
@@ -66,17 +66,16 @@ export default {
 		createMovieComment(){
 			const content = this.movie_comment
 			const rank = this.rank
-
+			const movie = this.movie.id
 			axios({
 				method:'post',
 				url: `${Django_API_URL}/api/v1/movie/${this.$route.params.movie_id}/comments/`,
 				data:{
-					content,rank
+					content,rank,movie
 				},
-
-				// headers: {
-				// 	Authorization: `Token ${this.$store.state.token}`
-				// }		
+				headers:{
+					Authorization : `Token ${this.$store.state.token}`
+				}
 			})
 			.then((res)=>{
 				console.log(res)
