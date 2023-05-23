@@ -42,8 +42,8 @@
 		</form>
 
 		<div>
+			<p>댓글 수 : {{ review_article['reviewcomment_set'].length }}</p>
 			<ul v-for="(contents,index) in review_article['reviewcomment_set']" :key="index" class="commentlist">
-				<p>댓글 수 : {{ review_article['reviewcomment_set'].length }}</p>
 				<li v-if="contents['user']==user_id" class="comment">
 					<div class="me-4 mt-4">
 						<router-link :to="{
@@ -56,8 +56,15 @@
 						<p class="me-5">{{contents['created_at']}}</p>
 					</div>
 					<div class="pb-4">
-						<input class="btn btn-dark btn-sm me-2" type="submit" value="댓글 수정" @click="commentPut">
-						<input class="btn btn-dark btn-sm" type="submit" value="댓글 삭제" @click="commentDelete">
+						<button class="btn btn-dark btn-sm me-2" type="submit" value="댓글 수정"  @click="commentPutOn" :data="index">댓글 수정</button>
+						<button class="btn btn-dark btn-sm" type="submit" value="댓글 삭제"  @click="commentDelete" :data="index">댓글 삭제</button>
+						<form @submit.prevent="commentPut" class="pb-2" v-if="put_check" :data="index">
+							<div class="input-group mb-3 ms-3 me-3 mt-3" style="width: 95%;">
+								<span class="input-group-text">댓글</span>
+								<input class="form-control" type="text" v-model="new_content">
+								<input class="btn btn-dark" type="submit" style="width: 75px;" value="작성">
+							</div>
+						</form>	
 					</div>
 				
 				</li>
@@ -92,6 +99,8 @@ export default {
 			content : '',
 			created_at : "",
 			updated_at : "",
+			new_content : "",
+			put_check : false,
 		}
 	},
 	// axios로 Django 데이터베이스 서버에 연결 후 작업
@@ -199,7 +208,44 @@ export default {
 			})
 		},
 		putArticle(){
-
+			const review = this.review_article.id
+			this.$router.push({name:'moviereviewedit',params:{id:review}})
+		},
+		commentPutOn(){
+			if (this.put_check){
+				return this.put_check = false
+			}else{
+				return this.put_check = true
+			}
+		},
+		commentDelete(a){
+			const index = a.target.getAttribute('data')
+			const comment_data = this.review_article['reviewcomment_set'][index]['id']
+			axios({
+				method:'delete',
+				url:`${Django_API_URL}/api/v1/community/review/comment/${comment_data}/`
+			})
+			.then(()=>{this.$router.go(0)})
+			.catch(()=>{})
+		},
+		commentPut(a){
+			const index = a.target.getAttribute('data')
+			const comment_data = this.review_article['reviewcomment_set'][index]['id']
+			const content = this.new_content
+			const review = this.review_article['id']
+			if (!content){
+				alert('변경할 내용을 입력해주세요')
+				return
+			}
+			axios({
+				method:'put',
+				url:`${Django_API_URL}/api/v1/community/review/comment/${comment_data}/`,
+				data:{
+					content,review
+				}
+			})
+			.then(()=>{this.$router.go(0)})
+			.catch(()=>{})
 		}
 	}
 	

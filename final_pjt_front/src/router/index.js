@@ -17,8 +17,8 @@ import LogIn from '../views/Login.vue'
 import SignUp from '../views/Signup.vue'
 import ProfileView from '../views/ProfileView.vue'
 import OtherUserProfile from '../views/OtherUserProfile.vue'
-
-
+import FreeBoardEdit from '../components/Community/FreeBoardEdit.vue'
+import MovieReviewEdit from '../components/Community/MovieReviewEdit'
 
 
 Vue.use(VueRouter)
@@ -50,6 +50,11 @@ const routes = [
     component: FreeBoardDetail
   },
   {
+    path:'/community/free//edit/:id',
+    name: 'FreeBoardEdit',
+    component:FreeBoardEdit
+  },
+  {
     path: '/community/free/create',
     name: 'freecreate',
     component: FreeBoardCreate
@@ -63,6 +68,11 @@ const routes = [
     path: '/community/review/:id',
     name: 'reviewdetail',
     component: MovieReviewDetail
+  },
+  {
+    path:'/community/review/edit/:id',
+    name:'moviereviewedit',
+    component: MovieReviewEdit,
   },
   {
     path: '/community/review/create',
