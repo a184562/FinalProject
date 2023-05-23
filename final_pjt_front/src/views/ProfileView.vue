@@ -3,6 +3,7 @@
     <div class="mt-5">
       <div class="userName">
         <h1>{{ user_data.username }}</h1>
+		{{ user_data.pk }}
       </div>
       <div class="userContent mt-4">
         <h3>e-mail : {{ user_data.email }}</h3><br>

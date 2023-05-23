@@ -50,7 +50,7 @@
 					<div class="me-4 mt-4">
 						<router-link :to="{
 							name: 'otherprofile',
-							params: {id: free_article?.user, username: free_article?.username}
+							params: {id: contents?.user, username: contents?.username}
 						}">{{contents['username']}}</router-link>
 					</div>
 					<div class="d-flex justify-content-between mt-3">
@@ -74,7 +74,7 @@
 					<div class="me-4 mt-4">
 						<router-link :to="{
 							name: 'otherprofile',
-							params: {id: free_article?.user, username: free_article?.username}
+							params: {id: contents?.user, username: contents?.username}
 						}">{{contents['username']}}</router-link>
 					</div>
 					<div class="d-flex justify-content-between mt-3">
