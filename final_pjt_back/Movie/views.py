@@ -1,11 +1,13 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model
+from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .models import Movie,Comment
 from .serializers import MovieDetailSerializer,MovieListSerializer,CommentSerializer
 from .api import ans
+
 
 
 
@@ -82,13 +84,14 @@ def comment_detail(request, comment_pk):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def comment_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     if request.method == 'POST':
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user,movie=movie)
-            return Response(serializer.data)
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])

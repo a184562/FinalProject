@@ -18,26 +18,11 @@
 			
 		</div>
 		<div>
-			<form class="mt-4 mb-5 comment" @submit.prevent="createMovieComment">
-				<label class="me-2" for="movie_comment">한줄평 : </label>
-				<input class="me-3" type="text" v-model="movie_comment">
-				<div class="btn-group me-3" role="rank" aria-label="Basic radio toggle button group">
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio1" value=1 autocomplete="off">
-					<label class="btn btn-outline-secondary" for="btnradio1">1</label>
-
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio2" value=2 autocomplete="off">
-					<label class="btn btn-outline-secondary" for="btnradio2">2</label>
-
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio3" value=3 autocomplete="off">
-					<label class="btn btn-outline-secondary" for="btnradio3">3</label>
-
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio4" value=4 autocomplete="off">
-					<label class="btn btn-outline-secondary" for="btnradio4">4</label>
-
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio5" value=5 autocomplete="off">
-					<label class="btn btn-outline-secondary" for="btnradio5">5</label>
-				</div>
-				<input class="btn btn-secondary" type="submit" value="제출">
+			<form @submit.prevent="createMovieComment">
+				<label for="movie_comment">한줄평</label>
+				<input type="text" v-model="movie_comment">
+				<input type="number" name="rank" min="1" max="5" v-model="rank">
+				<input type="submit" value="제출">
 			</form>
 		</div>
 	</div>
@@ -57,7 +42,7 @@ export default {
 			poster_URL: '',
 			is_liked: false,
 			movie_comment:null,
-			rank:1,
+			rank: 1,
 		}
 	},
 	created() {
@@ -79,7 +64,7 @@ export default {
 		Like(){
 			axios({
 				method:'post',
-				url : `${Django_API_URL}/api/v1/movie/${this.$store.state.user_id}/${this.$route.params.movie_id}/likes/`
+				url : `${Django_API_URL}/api/v1/movie/${this.$store.state.user_data.pk}/${this.$route.params.movie_id}/likes/`
 			})
 			.then((res) =>{
 				this.is_liked = res.data
@@ -87,25 +72,17 @@ export default {
 		},
 		createMovieComment(){
 			const content = this.movie_comment
-			let rank = this.rank
-			const radioValue = document.getElementByName('btnradio')
-
-			radioValue.forEach((radio) => {
-				if(radio.checked) {
-					rank = radio.value
-				}
-			})
+			const rank = this.rank
 
 			axios({
 				method:'post',
 				url: `${Django_API_URL}/api/v1/movie/${this.$route.params.movie_id}/comments/`,
 				data:{
-					content,rank
+					content,rank,movie
 				},
-
-				// headers: {
-				// 	Authorization: `Token ${this.$store.state.token}`
-				// }		
+				headers:{
+					Authorization : `Token ${this.$store.state.token}`
+				}
 			})
 			.then((res)=>{
 				console.log(res)
