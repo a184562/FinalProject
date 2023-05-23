@@ -1,22 +1,22 @@
 <template>
-	<div>
-		<div class="container">
+	<div class="gameTable">
+		<div class="container justify-content-around pt-5">
 			<div @click="selectCard_left">
 				<GameCard class="Card" :movie="movie_1" />
-				<div id="popularity_1">
+				<div id="popularity_1" class="mt-5 popularity">
 					0
 				</div>
 			</div>
 			<div @click="selectCard_right">
 				<GameCard class="Card" :movie="movie_2" />
-				<div id="popularity_2">
+				<div id="popularity_2" class="mt-5 popularity">
 					0
 				</div>
 			</div>
 		</div>
 		
 		
-		<h2>{{ score }}</h2>
+		<h1 class="mt-5">점수 : {{ score }}</h1>
 	</div>
 </template>
 
@@ -54,8 +54,8 @@ export default {
 		
 		this.movie_1 = this.movie_list[this.idx_1]
 		this.movie_2 = this.movie_list[this.idx_2]
-		this.counting_num_1 = this.movie_1.popularity
-		this.counting_num_2 = this.movie_2.popularity
+		this.counting_num_1 = this.movie_1.popularity * 1000
+		this.counting_num_2 = this.movie_2.popularity * 1000
 		console.log(this.movie_1)
 		console.log(this.movie_2)
 	},
@@ -64,7 +64,8 @@ export default {
 			array.sort(() => Math.random() -0.5)
 		},
 		async selectCard_left() {
-			await this.countingNum_1(this.counting_num_1)
+			this.countingNum_1(this.counting_num_1)
+			this.countingNum_2(this.counting_num_2)
 
 			setTimeout(() => {
 				if (this.movie_1.popularity > this.movie_2.popularity) {
@@ -74,9 +75,9 @@ export default {
 					this.movie_1 = this.movie_list[this.idx_1]
 					this.movie_2 = this.movie_list[this.idx_2]
 					console.log(this.movie_1)
-					this.counting_num_1 = this.movie_1.popularity
-					this.counting_num_2 = this.movie_2.popularity
-					document.querySelector("#popularity_1").innerHTML = 0
+					this.counting_num_1 = Math.round(this.movie_1.popularity * 1000)
+					this.counting_num_2 = Math.round(this.movie_2.popularity * 1000)
+					document.querySelector("#popularity_1").innerHTML = this.counting_num_1
 					document.querySelector("#popularity_2").innerHTML = 0
 				}
 				else {
@@ -88,7 +89,8 @@ export default {
 		}
 		,
 		async selectCard_right() {
-			await this.countingNum_2(this.counting_num_2)
+			this.countingNum_1(this.counting_num_1)
+			this.countingNum_2(this.counting_num_2)
 
 			setTimeout(() => {
 				if (this.movie_1.popularity < this.movie_2.popularity) {
@@ -98,9 +100,9 @@ export default {
 					this.movie_1 = this.movie_list[this.idx_1]
 					this.movie_2 = this.movie_list[this.idx_2]
 					console.log(this.movie_1)
-					this.counting_num_1 = this.movie_1.popularity
-					this.counting_num_2 = this.movie_2.popularity
-					document.querySelector("#popularity_1").innerHTML = 0
+					this.counting_num_1 = Math.round(this.movie_1.popularity * 1000)
+					this.counting_num_2 = Math.round(this.movie_2.popularity * 1000)
+					document.querySelector("#popularity_1").innerHTML = this.counting_num_1
 					document.querySelector("#popularity_2").innerHTML = 0
 				}
 				else {
@@ -166,10 +168,25 @@ export default {
 .container {
 	display: flex;
 	margin: auto;
+	
+	height: 850px;
 }
 
 .Card {
 	cursor: pointer;
+	border-radius: 1rem;
+	background-color: #313131;
 }
-
+.gameTable {
+	border-radius: 0.5rem;
+	margin: auto;
+	width: 1200px;
+	box-shadow: 4px 4px 4px grey;
+	background-color: #141414;
+	margin-bottom: 15rem;
+	margin-top: 5rem;
+}
+.popularity {
+	font-size: 30px;
+}
 </style>
