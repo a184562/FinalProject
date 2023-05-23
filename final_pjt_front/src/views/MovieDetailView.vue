@@ -11,55 +11,84 @@
 				<hr>
 				<p>{{movie.overview}}</p>
 			</div>
-			<div class="comment">
+			<div class="articleBtn d-flex mt-4">
+				<button class="btn btn-dark ms-3" @click="$router.push({name:'movies'})">목록으로</button>
+			</div>
+			<div class="like">
 				<p class="mt-3">좋아요 : {{movie.like_users.length}}</p>
-				<p>댓글 : {{movie.comment_set.length}}</p>
 				<button class="btn btn-secondary" v-if="!is_liked" @click="Like" >좋아요</button>
 				<button class="btn btn-secondary" v-else @click="Like">좋아요 취소</button>
 			</div>
 			
 		</div>
-		<div>
-			<form class="mt-4 mb-5 comment" @submit.prevent="createMovieComment">
-				<label class="me-2" for="movie_comment">한줄평 : </label>
-				<input class="me-3" type="text" v-model="movie_comment">
-				<div class="btn-group me-3" role="rank" aria-label="Basic radio toggle button group">
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio1" value=1 autocomplete="off">
-					<label class="btn btn-outline-secondary" for="btnradio1">1</label>
-
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio2" value=2 autocomplete="off">
-					<label class="btn btn-outline-secondary" for="btnradio2">2</label>
-
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio3" value=3 autocomplete="off">
-					<label class="btn btn-outline-secondary" for="btnradio3">3</label>
-
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio4" value=4 autocomplete="off">
-					<label class="btn btn-outline-secondary" for="btnradio4">4</label>
-
-					<input type="radio" class="btn-check" name="btnradio" id="btnradio5" value=5 autocomplete="off">
-					<label class="btn btn-outline-secondary" for="btnradio5">5</label>
-				</div>
-				<input class="btn btn-secondary" type="submit" value="제출">
-			</form>
-		</div>
-		<div>
-			<div v-for="(contents,index) in movie['comment_set']" :key="index">
-				<div v-if="contents['user']==user_id">
-				{{contents['content']}}
-				{{contents['username']}}
-				{{contents['rank']}}
-				{{contents['created_at']}}
-				<input type="submit" value="댓글 삭제" @click="commentDelete">
-				<input type="submit" value="댓글 수정" @click="commentPut">
-				</div>
-				<div v-else>
-				{{contents['content']}}
-				{{contents['username']}}
-				{{contents['created_at']}}
-				{{contents['rank']}}
-				</div>
+		<form @submit.prevent="createMovieComment" class="pb-3">
+			<div class="input-group mb-3 ms-3 me-3 mt-3" style="width: 95%;">
+				<span class="input-group-text">한줄평</span>
+				<input class="form-control" type="text" v-model="movie_comment">
+				
+				<input class="btn btn-dark" type="submit" style="width: 75px;" value="작성">
 			</div>
+			<div class="btn-group me-3 rank mb-3 ms-3 me-3 mt-3" role="rank" aria-label="Basic radio toggle button group">
+				<label class="btn btn-outline-secondary disabled" aria-disabled="true">별점</label>
+				<input type="radio" class="btn-check" name="btnradio" id="btnradio1" value=1 autocomplete="off">
+				<label class="btn btn-outline-secondary" for="btnradio1">1</label>
+
+				<input type="radio" class="btn-check" name="btnradio" id="btnradio2" value=2 autocomplete="off">
+				<label class="btn btn-outline-secondary" for="btnradio2">2</label>
+
+				<input type="radio" class="btn-check" name="btnradio" id="btnradio3" value=3 autocomplete="off">
+				<label class="btn btn-outline-secondary" for="btnradio3">3</label>
+
+				<input type="radio" class="btn-check" name="btnradio" id="btnradio4" value=4 autocomplete="off">
+				<label class="btn btn-outline-secondary" for="btnradio4">4</label>
+
+				<input type="radio" class="btn-check" name="btnradio" id="btnradio5" value=5 autocomplete="off">
+				<label class="btn btn-outline-secondary" for="btnradio5">5</label>
+			</div>
+		</form>
+		
+		
+		<div class="commentlist">
+			<p>댓글 수 : {{ movie['comment_set'].length }}</p>
+			<ul v-for="(contents,index) in movie['comment_set']" :key="index">
+				<li v-if="contents['id']==user_id" class="comment">
+					<div class="me-4 mt-4">
+						<router-link :to="{
+							name: 'otherprofile',
+							params: {id: contents?.id, username: contents?.username}
+						}">{{contents['username']}}</router-link>
+					</div>
+					<div class="d-flex justify-content-between mt-3">
+						<div class="d-flex">
+							<p class="me-4">별점 : {{ contents['rank'] }}</p>
+							<p>{{contents['content']}}</p>
+						</div>
+						<p class="me-5">{{contents['created_at']}}</p>
+					</div>
+					<div class="pb-4">
+						<input class="btn btn-dark btn-sm me-2" type="submit" value="댓글 수정" @click="commentPut">
+						<input class="btn btn-dark btn-sm" type="submit" value="댓글 삭제" @click="commentDelete">
+					</div>
+					
+				</li>
+				<li v-else class="comment">
+					<div class="me-4 mt-4">
+						<router-link :to="{
+							name: 'otherprofile',
+							params: {id: contents?.user, username: contents?.username}
+						}">{{contents['username']}}</router-link>
+					</div>
+					<div class="d-flex justify-content-between mt-3">
+						<div class="d-flex">
+							<p class="me-4">별점 : {{ contents['rank'] }}</p>
+							<p>{{contents['content']}}</p>
+						</div>
+						<p class="me-5">{{contents['created_at']}}</p>
+					</div>
+				</li>
+			</ul>
 		</div>
+		
 	</div>
 </template>
 
@@ -79,7 +108,7 @@ export default {
 			movie_comment:null,
 			rank: 1,
 			genre_list:{12:'모험',28:'액션',16:'애니메이션',35:'코미디',80:'범죄',99:'다큐멘터리',18:'드라마',10751:'가족',14:'판타지',36:'역사',27:'공포',10402:'음악',9648:'미스터리',10749:'로맨스',878:'SF',10770:'TV 영화',53:'스릴러',10752:'전쟁',37:'서부'},
-
+			user_id : this.$store.state.user_data.pk
 		}
 	},
 	created() {
@@ -116,14 +145,12 @@ export default {
 			const content = this.movie_comment
 			const radioValue = document.getElementsByName('btnradio')
 			const movie = this.movie.id
-			let rank = this.rank
 			radioValue.forEach((radio) => {
 				if(radio.checked) {
 					this.rank = Number(radio.value)
 				}
 			})
-			console.log(this.rank)
-			console.log(typeof(this.rank))
+			const rank = this.rank
 			
 			axios({
 				method:'post',
@@ -158,17 +185,32 @@ img {
 	border-radius: 0.5rem;
 	margin: auto;
 	width: 1000px;
-	height: 75%;
+	/* height: 75%; */
 	box-shadow: 4px 4px 4px grey;
 	background-color: #141414;
 	margin-bottom: 15rem;
 	margin-top: 5rem;
 }
-.comment {
+div a {
+	font-weight: bold;
+	font-size: 20px;
+	color: #ffffff;
+	text-decoration-line: none;
+}
+.like {
 	text-align: start;
 	margin-top: 3px;
 	padding-bottom: 25px;
 	margin-left: 15px;
 }
-
+.rank {
+	display: flex;
+	width: 30%;
+}
+.commentlist {
+	text-align: start;
+}
+.comment {
+	border-bottom: solid grey 1px;
+}
 </style>

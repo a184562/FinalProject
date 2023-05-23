@@ -26,6 +26,9 @@
 			<button class="btn btn-dark ms-3" @click="putArticle">게시글 수정</button>
 			<button class="btn btn-dark ms-3" @click="deleteArticle">게시글 삭제</button>
 		</div>
+		<div v-else class="articleBtn d-flex mt-4">
+			<button class="btn btn-dark ms-3" @click="$router.push({name:'free'})">목록으로</button>
+		</div>
 		
 		<div class="d-flex ms-3 mt-3">
 			<button class="btn btn-dark" v-if="!is_liked" @click="Like" >좋아요</button>
