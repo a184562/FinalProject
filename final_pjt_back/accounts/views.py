@@ -33,7 +33,7 @@ def follow_check(request, me_pk, user_pk):
 
         return Response(following)
 
-@api_view(['GET','POST'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def user_genre(request):
     genres = request.data['genre']
