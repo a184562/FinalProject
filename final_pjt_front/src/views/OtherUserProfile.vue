@@ -55,6 +55,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.detail {
+	border-radius: 0.5rem;
+	margin: auto;
+	width: 1000px;
+	/* height: 75%; */
+	box-shadow: 4px 4px 4px grey;
+	background-color: #141414;
+	margin-bottom: 15rem;
+	margin-top: 5rem;
+}
+
 
 </style>

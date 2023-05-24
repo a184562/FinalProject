@@ -1,5 +1,31 @@
 <template>
-	<div>
+	<div class="detail">
+		<div class="mt-5">
+			<div class="articletitle pt-4">
+				<h1>자유게시판 게시글 작성</h1><hr>
+				<form @submit.prevent="createArticle">
+					<div  style="width: 95%; margin:auto;">
+						<div class="d-flex">
+							<label id="title" class="form-label" for="title">제목 : </label>
+						</div>
+						<input class="form-control inputTitle" type="text" id="title" v-model.trim="title"><br>
+						<div class="d-flex">
+							<label id="content" class="form-label" for="content">내용 : </label>
+						</div>
+						<textarea class="form-control inputContent" id="content"  rows="10" v-model.trim="content"></textarea><br>
+						<div class="d-flex">
+							<input class="btn btn-dark mb-4" type="submit" value="글 작성">
+							<button class="btn btn-dark ms-3 mb-4" @click="goToFree">글 쓰기 취소</button>
+						</div>
+						
+					</div>
+					
+				</form>
+			</div>
+
+		</div>
+	</div>
+	<!-- <div>
 		<h1>자유게시판 게시글 작성</h1>
 		<form @submit.prevent="createArticle">
 			<label for="title">제목 : </label>
@@ -9,7 +35,7 @@
 			<input type="submit" id="제출">
 		</form>
 		
-	</div>
+	</div> -->
 </template>
 
 <script>
@@ -57,11 +83,28 @@ export default {
 			})
 			.catch((err) => console.log(err))
 
+	},
+	goToFree() {
+		this.$router.push({name: 'free'})
 	}
 }
 }
 </script>
 
 <style>
+.inputTitle {
+	width: 750px;
+	margin: auto;
+}
+.inputContent {
+	width: 75%;
+	margin: auto;
+}
+</style>
 
+<style scoped>
+.form-label {
+	font-weight: bold;
+	font-size: 20px;
+}
 </style>
