@@ -28,3 +28,13 @@ class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
         fields ='__all__'
+        
+class UserSerializer(serializers.ModelSerializer):
+    class MovieLikeSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = get_user_model()
+            fields = ('id',)
+    like_movies = MovieLikeSerializer(many=True, read_only=True)
+    class Meta:
+        model = get_user_model()
+        fields ='__all__'
