@@ -30,9 +30,10 @@
 			<button class="btn btn-dark ms-3" @click="$router.push({name:'free'})">목록으로</button>
 		</div>
 		
-		<div class="d-flex ms-3 mt-3">
-			<button class="btn btn-dark" v-if="!is_liked" @click="Like" >좋아요</button>
-			<button class="btn btn-dark" v-else @click="Like">좋아요 취소</button>
+		<div class="like">
+			<p class="mt-3">좋아요 : {{free_article.like_users.length}}</p>
+			<button class="btn btn-secondary" v-if="!is_liked" @click="Like" >좋아요</button>
+			<button class="btn btn-secondary" v-if="is_liked" @click="Like">좋아요 취소</button>
 		</div>
 		<form @submit.prevent="createComment" class="pb-3">
 			<div class="input-group mb-3 ms-3 me-3 mt-3" style="width: 95%;">
@@ -56,7 +57,6 @@
 					<div class="d-flex justify-content-between mt-3">
 						<p>{{contents['content']}}</p>
 						<p class="me-5">{{contents['created_at']}}</p>
-						{{contents}}
 					</div>
 					<div class="pb-4">
 						<button class="btn btn-dark btn-sm me-2" type="submit" value="댓글 수정"  @click="commentPutOn" :data="index">댓글 수정</button>
@@ -99,18 +99,24 @@ export default {
 		return {
 			user_id : this.$store.state.user_data.pk,
 			free_article: null,
-			is_liked : false,
+			is_liked : null,
 			content : '',
 			created_at : "",
 			updated_at : "",
 			new_content : "",
 			put_check : false,
 			put_index: null,
+
 		}
 	},
 	// axios로 Django 데이터베이스 서버에 연결 후 작업
 	created() {
 		this.getArticleDetail()
+		axios({
+			method: 'get',
+			url: `${Django_API_URL}/api/v1/community/free/${this.$store.state.user_data.pk}/${this.$route.params.id}/likes/`,
+		})
+		.then((res)=>this.is_liked = res.data)
 	},
 	methods: {
 		getArticleDetail() {
@@ -119,11 +125,9 @@ export default {
 				url: `${Django_API_URL}/api/v1/community/free/${this.$route.params.id}/`,
 			})
 			.then((res) => {
-				console.log(res)
 				this.free_article = res.data
-				console.log(res.data.created_at)
 				for (let i = 0; i < res.data.created_at.length; i++) {
-					console.log(res.data.created_at[i])
+					
 					if (i < 4) {
 						this.created_at = this.created_at + res.data.created_at[i]
 					}
@@ -145,11 +149,11 @@ export default {
 					if (i < 19 && i >10) {
 						this.created_at = this.created_at + res.data.created_at[i]
 					}
-					console.log(this.created_at)
+					
 					
 				}
 				for (let i = 0; i < res.data.updated_at.length; i++) {
-					console.log(res.data.updated_at[i])
+					
 					if (i < 4) {
 						this.updated_at = this.updated_at + res.data.updated_at[i]
 					}
@@ -171,25 +175,26 @@ export default {
 					if (i < 19 && i >10) {
 						this.updated_at = this.updated_at + res.data.updated_at[i]
 					}
-					console.log(this.created_at_Time)
 					
-				}
-				// this.created_at = res.data.created_at
-				// this.updated_at = res.data.updated_at
+			}	
+			// this.created_at = res.data.created_at
+			// this.updated_at = res.data.updated_at
 			})
 			.catch((err) => console.log(err))
+
 		},
 		
 		Like() {
-			console.log(this.user_id)
 			axios({
 				method: 'post',
 				url: `${Django_API_URL}/api/v1/community/free/${this.$store.state.user_data.pk}/${this.free_article.id}/likes/`,
-
 			})
 			.then((res) => {
-				this.is_liked=res.data})
-			.catch((err) => console.log(err))
+				console.log(res)
+				this.is_liked = res.data
+				this.$router.go(0)
+			})
+
 		},
 		createComment(){
 			const content = this.content
@@ -315,5 +320,11 @@ div a {
 }
 .comment {
 	border-bottom: solid grey 1px;
+}
+.like {
+	text-align: start;
+	margin-top: 3px;
+	padding-bottom: 25px;
+	margin-left: 15px;
 }
 </style>

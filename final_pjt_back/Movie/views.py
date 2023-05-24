@@ -100,12 +100,11 @@ def like_movie(request, movie_pk, my_pk):
     if request.method=='GET':
         movie = get_object_or_404(Movie, pk=movie_pk)
         user = get_object_or_404(get_user_model(), pk = my_pk)
-        if movie.like_users.filter(pk=my_pk):
+        if movie.like_users.filter(pk=my_pk).exists():
             like = True
-            return Response(like)
         else:
             like = False
-            return Response(like)
+        return Response(like)
     if request.method=='POST':
         movie = get_object_or_404(Movie, pk=movie_pk)
         user = get_object_or_404(get_user_model(), pk = my_pk)

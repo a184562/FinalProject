@@ -3,7 +3,7 @@
     <p>{{ $route.params.id }}</p>
     <p>{{ $route.params.username }}</p>
     {{ this.$store.state.user_data.pk }}
-    <p>팔로워 수: {{ user_data.followings.length}}명</p>
+    <p>팔로워 수: {{ user_data.followings.length }}명</p>
     <p>팔로잉 수: {{}} 명</p>
     <div>
       <button @click="Follow" v-if="follow_check==false">팔로우</button>
