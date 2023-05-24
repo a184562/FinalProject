@@ -28,7 +28,7 @@ export default {
     created(){
       axios({
         method:'get',
-        url:`${Django_API_URL}/api/v1/otheruser/${this.$route.params.id}`
+        url:`${Django_API_URL}/api/v1/user/${this.$route.params.id}`
       })
       .then(res=>{
         this.user_data=res.data

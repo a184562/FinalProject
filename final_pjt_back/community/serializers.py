@@ -64,14 +64,15 @@ class ReviewDetailSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class ArticleSerializer(serializers.ModelSerializer):
         class Meta:
-            model = Article
-            fields = ('article',)
+            model = get_user_model()
+            fields = ('id',)
     class ReviewSerializer(serializers.ModelSerializer):
         class Meta:
-            model = Review
-            fields = ('review',)
-    review = ReviewSerializer(many=True, read_only=True)
-    article = ArticleSerializer(many=True, read_only=True)
+            model = get_user_model()
+            fields = ('id',)
+    reviews = ReviewSerializer(many=True, read_only=True)
+    articles = ArticleSerializer(many=True, read_only=True)
+    
     class Meta:
         model = get_user_model()
         fields = '__all__'    

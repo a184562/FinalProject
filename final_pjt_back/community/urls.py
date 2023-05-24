@@ -17,5 +17,5 @@ urlpatterns = [
     path('community/review/comment/<int:reviewcomment_pk>/', views.reviewcomment_detail),
     path('community/review/<int:review_pk>/comments/', views.reviewcomment_create),
     path('community/review/<int:my_pk>/<int:review_pk>/likes/', views.like_review),
-    
+    path('community/<int:user_pk>/' ,views.get_user),
 ]
