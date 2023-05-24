@@ -66,11 +66,11 @@
 						<p class="me-5">{{contents['created_at']}}</p>
 					</div>
 					<div class="pb-4">
-						<button class="btn btn-dark btn-sm me-2" type="submit" value="댓글 수정"  @click="commentPutOn" :data="index">댓글 수정</button>
-						<button class="btn btn-dark btn-sm" type="submit" value="댓글 삭제"  @click="commentDelete" :data="index">댓글 삭제</button>
-						<form @submit.prevent="commentPut" class="pb-3" v-if="put_check" :data="index">
+						<button class="btn btn-dark btn-sm me-2" type="submit" value="한줄평 수정"  @click="commentPutOn" :data="index">한줄평 수정</button>
+						<button class="btn btn-dark btn-sm" type="submit" value="한줄평 삭제"  @click="commentDelete" :data="index">한줄평 삭제</button>
+						<form @submit.prevent="commentPut" class="pb-3" v-if="put_check & put_index==index" :data="index">
 							<div class="input-group mb-3 ms-3 me-3 mt-3" style="width: 95%;">
-							<span class="input-group-text">댓글</span>
+							<span class="input-group-text">한줄평</span>
 							<input class="form-control" type="text" v-model="new_content">
 							<input class="btn btn-dark" type="submit" style="width: 75px;" value="작성">
 							</div>
@@ -118,6 +118,7 @@ export default {
 			user_id : this.$store.state.user_data.pk,
 			put_check:false,
 			new_content:'',
+			put_index:null,
 		}
 	},
 	created() {
@@ -150,6 +151,7 @@ export default {
 			.then((res) =>{
 				console.log(res.data)
 				this.is_liked = res.data
+				this.$router.go(0)
 			})
 		},
 		createMovieComment(){
@@ -180,10 +182,13 @@ export default {
 				console.log(err)
 			})
 		},
-		commentPutOn(){
+		commentPutOn(a){
 			if (this.put_check){
+				this.put_index = null
 				return this.put_check = false
 			}else{
+				const index = a.target.getAttribute('data')
+				this.put_index = index
 				return this.put_check = true
 			}
 		},
