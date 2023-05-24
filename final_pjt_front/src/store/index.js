@@ -75,6 +75,7 @@ export default new Vuex.Store({
     LOG_OUT(state) {
       state.token = null
       state.user_data = null
+      localStorage.clear()
     }
   },
   

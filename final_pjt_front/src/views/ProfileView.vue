@@ -9,9 +9,9 @@
         <h3>e-mail : {{ user_data.email }}</h3><br>
         <h3>name : {{ user_data.first_name }}{{ user_data.last_name }}</h3><br>
         <h3>선호 장르 : {{  }}</h3><br>
-        <h3>작성 글 : {{  }}</h3><br>
-        <h5>팔로잉 : {{  }}명</h5>
-        <h5>팔로워 : {{  }}명</h5>
+        <h3>작성 글 : {{ user_article }}</h3><br>
+        <h5>팔로잉 : {{ user_follow.followings.length}}명</h5>
+        <h5>팔로워 : {{ user_follow.followers.length}}명</h5>
       </div>
     </div>
     <p>팔로잉 버튼 만들 곳</p>
@@ -19,13 +19,34 @@
 </template>
 
 <script>
+import axios from 'axios'
+const Django_API_URL = 'http://127.0.0.1:8000'
 export default {
     name: 'ProfileView',
+    created(){
+      axios({
+        method:'get',
+        url:`${Django_API_URL}/api/v1/otheruser/${this.user_data.pk}/`
+      })
+      .then(res=>{
+        this.user_follow=res.data
+      })
+      axios({
+        method:'get',
+        url:`${Django_API_URL}/api/v1/community/user/${this.user_data.pk}/`
+      })
+      .then(res=>{
+        this.user_article = res.data
+      })
+    },
     data() {
         return{
-            user_data : this.$store.state.user_data
+            user_data : this.$store.state.user_data,
+            user_follow: null,
+            user_article : null,
         }
     },
+    
     method:{
       
     }

@@ -1,10 +1,11 @@
 <template>
   <div>
     <p>{{ $route.params.id }}</p>
-    <p>{{ $route.params.username }}</p>
+    <h1>{{ $route.params.username }}</h1>
     {{ this.$store.state.user_data.pk }}
+    {{user_data}}
     <p>팔로워 수: {{ user_data.followings.length }}명</p>
-    <p>팔로잉 수: {{}} 명</p>
+    <p>팔로잉 수: {{user_data.followers.length}} 명</p>
     <div>
       <button @click="Follow" v-if="follow_check==false">팔로우</button>
       <button @click="Follow" v-else-if="follow_check==true">언팔로우</button>
