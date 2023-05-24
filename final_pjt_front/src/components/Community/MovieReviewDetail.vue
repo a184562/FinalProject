@@ -29,9 +29,10 @@
 		<div v-else class="articleBtn d-flex mt-4">
 			<button class="btn btn-dark ms-3" @click="$router.push({name:'review'})">목록으로</button>
 		</div>
-		<div class="d-flex ms-3 mt-3">
-			<button class="btn btn-dark" v-if="!is_liked" @click="Like" >좋아요</button>
-			<button class="btn btn-dark" v-else @click="Like">좋아요 취소</button>
+		<div class="like">
+			<p class="mt-3">좋아요 : {{review_article.like_users.length}}</p>
+			<button class="btn btn-secondary" v-if="!is_liked" @click="Like" >좋아요</button>
+			<button class="btn btn-secondary" v-if="is_liked" @click="Like">좋아요 취소</button>
 		</div>
 		<form @submit.prevent="createComment" class="pb-2">
 			<div class="input-group mb-3 ms-3 me-3 mt-3" style="width: 95%;">
@@ -95,7 +96,7 @@ export default {
 		return {
 			user_id: this.$store.state.user_data.pk,
 			review_article: null,
-			is_liked :false,
+			is_liked :null,
 			content : '',
 			created_at : "",
 			updated_at : "",
@@ -107,6 +108,11 @@ export default {
 	// axios로 Django 데이터베이스 서버에 연결 후 작업
 	created() {
 		this.getReviewDetail()
+		axios({
+			method:'get',
+			url:`${Django_API_URL}/api/v1/community/review/${this.$store.state.user_data.pk}/${this.$route.params.id}/likes/`
+		})
+		.then((res)=> this.is_liked = res.data)
 	},
 	methods: {
 		getReviewDetail() {
@@ -115,10 +121,8 @@ export default {
 				url: `${Django_API_URL}/api/v1/community/review/${this.$route.params.id}/`,
 			})
 			.then((res) => {
-				console.log(res)
 				this.review_article = res.data
 				for (let i = 0; i < res.data.created_at.length; i++) {
-					console.log(res.data.created_at[i])
 					if (i < 4) {
 						this.created_at = this.created_at + res.data.created_at[i]
 					}
@@ -140,11 +144,9 @@ export default {
 					if (i < 19 && i >10) {
 						this.created_at = this.created_at + res.data.created_at[i]
 					}
-					console.log(this.created_at)
 					
 				}
 				for (let i = 0; i < res.data.updated_at.length; i++) {
-					console.log(res.data.updated_at[i])
 					if (i < 4) {
 						this.updated_at = this.updated_at + res.data.updated_at[i]
 					}
@@ -166,7 +168,6 @@ export default {
 					if (i < 19 && i >10) {
 						this.updated_at = this.updated_at + res.data.updated_at[i]
 					}
-					console.log(this.created_at_Time)
 					
 				}
 			})
@@ -179,6 +180,7 @@ export default {
 			})
 			.then((res) =>{
 				this.is_liked = res.data
+				this.$router.go(0)
 			})
 		},
 		createComment(){
@@ -300,5 +302,11 @@ div a {
 }
 .comment {
 	border-bottom: solid grey 1px;
+}
+.like {
+	text-align: start;
+	margin-top: 3px;
+	padding-bottom: 25px;
+	margin-left: 15px;
 }
 </style>

@@ -1,19 +1,10 @@
 <template>
-  <div class="detail">
-    <div class="mt-5">
-      <div class="userName">
-        <h1>{{ $route.params.username }}</h1>
-      </div>
-      <div class="userContent mt-4">
-        <h3>e-mail : {{ $route.params.email }}</h3><br>
-        <h3>name : {{ $route.params.first_name }}{{ $route.params.last_name }}</h3><br>
-        <h3>선호 장르 : {{  }}</h3><br>
-        <h3>작성 글 : {{  }}</h3><br>
-        <h5>팔로잉 : {{  }}명</h5>
-        <h5>팔로워 : {{  }}명</h5>
-      </div>
-    </div>
-    
+  <div>
+    <p>{{ $route.params.id }}</p>
+    <p>{{ $route.params.username }}</p>
+    {{ this.$store.state.user_data.pk }}
+    <p>팔로워 수: {{ user_data.followings.length }}명</p>
+    <p>팔로잉 수: {{}} 명</p>
     <div>
       <button @click="Follow" v-if="follow_check==false">팔로우</button>
       <button @click="Follow" v-else-if="follow_check==true">언팔로우</button>

@@ -17,7 +17,7 @@
 			<div class="like">
 				<p class="mt-3">좋아요 : {{ movie.like_users.length }}</p>
 				<button class="btn btn-secondary" v-if="!is_liked" @click="Like" >좋아요</button>
-				<button class="btn btn-secondary" v-else @click="Like">좋아요 취소</button>
+				<button class="btn btn-secondary" v-if="is_liked" @click="Like">좋아요 취소</button>
 			</div>
 			
 		</div>
@@ -127,7 +127,7 @@ export default {
 				method:'get',
 				url : `${Django_API_URL}/api/v1/movie/${this.$store.state.user_data.pk}/${this.$route.params.movie_id}/likes/`
 			})
-			.then((res)=>this.is_liked= res)
+			.then((res)=>this.is_liked= res.data)
 	},
 	methods: {
 		

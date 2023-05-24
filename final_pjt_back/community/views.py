@@ -149,32 +149,47 @@ def reviewcomment_create(request, review_pk):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def like_article(request, article_pk, my_pk):
-    
     article = get_object_or_404(Article, pk=article_pk)
     user = get_object_or_404(get_user_model(), pk = my_pk)
-    if article.like_users.filter(pk=my_pk).exists():
-        article.like_users.remove(my_pk)
-        like = False
-    
-    else:
-        article.like_users.add(my_pk)
-        like = True
+    if request.method =='GET':
+        if article.like_users.filter(pk=my_pk).exists():
+            like = True
+        else:
+            like = False
+        return Response(like)
 
-    return Response(like)
+    elif request.method =='POST':
+        if article.like_users.filter(pk=my_pk).exists():
+            article.like_users.remove(my_pk)
+            like = False
+        
+        else:
+            article.like_users.add(my_pk)
+            like = True
+
+        return Response(like)
 
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def like_review(request, review_pk, my_pk):
     review = get_object_or_404(Review, pk=review_pk)
     user = get_object_or_404(get_user_model(), pk = my_pk)
-    if review.like_users.filter(pk=my_pk).exists():
-        review.like_users.remove(my_pk)
-        like = False
-    
-    else:
-        review.like_users.add(my_pk)
-        like = True
+    if request.method =='GET':
+        if review.like_users.filter(pk=my_pk).exists():
+            like = True
+        else:
+            like = False
+        return Response(like)
 
-    return Response(like)
+    elif request.method =='POST':
+        if review.like_users.filter(pk=my_pk).exists():
+            review.like_users.remove(my_pk)
+            like = False
+        
+        else:
+            review.like_users.add(my_pk)
+            like = True
+
+        return Response(like)
