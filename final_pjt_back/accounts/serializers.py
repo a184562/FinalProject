@@ -5,6 +5,13 @@ from .models import User, Genre
 
 
 class UserSerializer(serializers.ModelSerializer):
+    class FollowSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = get_user_model()
+            fields = ('id',)
+            
+    followers = FollowSerializer(many=True, read_only=True)
     class Meta:
         model = User
         fields = '__all__'

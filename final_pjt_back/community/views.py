@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework.permissions import IsAuthenticated
 from .models import Article,Comment,Review,ReviewComment
-from .serializers import ArticleListSerializer,ArticleDetailSerializer,CommentSerializer,ReviewListSerializer,ReviewCommentSerializer,ReviewDetailSerializer
+from .serializers import ArticleListSerializer,ArticleDetailSerializer,CommentSerializer,ReviewListSerializer,ReviewCommentSerializer,ReviewDetailSerializer,UserSerializer
 from django.contrib.auth import get_user_model
  # 기사
 @api_view(['GET','POST'])
@@ -193,3 +193,10 @@ def like_review(request, review_pk, my_pk):
             like = True
 
         return Response(like)
+    
+
+@api_view(['GET'])
+def get_user(request,user_pk):
+    user = get_object_or_404(get_user_model(),pk=user_pk)
+    serializer = UserSerializer(user)
+    return Response(serializer.data)

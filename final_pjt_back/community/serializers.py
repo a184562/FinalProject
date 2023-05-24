@@ -61,3 +61,18 @@ class ReviewDetailSerializer(serializers.ModelSerializer):
         read_only_fields = ('user','like_users',)
 
 
+class UserSerializer(serializers.ModelSerializer):
+    class ArticleSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Article
+            fields = ('article',)
+    class ReviewSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Review
+            fields = ('review',)
+    review = ReviewSerializer(many=True, read_only=True)
+    article = ArticleSerializer(many=True, read_only=True)
+    class Meta:
+        model = get_user_model()
+        fields = '__all__'    
+

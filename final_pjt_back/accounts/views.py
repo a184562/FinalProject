@@ -33,18 +33,21 @@ def follow_check(request, me_pk, user_pk):
 
         return Response(following)
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 @permission_classes([IsAuthenticated])
 def user_genre(request):
-    genres = request.data['genre']
-    print(request.user.id)
-    user = User(id=request.user.id,
-                password=request.user.password,
-                )
-    for genre in genres:
-        user.genres.add(genre)
-    serializer = UserGenreSerializer(user)
-    return Response(serializer.data)
+    if request.method=="GET":
+        pass
+    elif request.method =='POST':
+        genres = request.data['genre']
+        print(request.user.id)
+        user = User(id=request.user.id,
+                    password=request.user.password,
+                    )
+        for genre in genres:
+            user.genres.add(genre)
+        serializer = UserGenreSerializer(user)
+        return Response(serializer.data)
     # users = User(request.user)
     # if request.method == 'POST':
     #     serializer = UserGenreSerializer(users,data=request.data)
