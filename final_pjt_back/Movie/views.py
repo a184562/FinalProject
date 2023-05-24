@@ -4,8 +4,8 @@ from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404, get_list_or_404
-from .models import Movie,Comment
-from .serializers import MovieDetailSerializer,MovieListSerializer,CommentSerializer
+from .models import Movie,Comment, Genre
+from .serializers import MovieDetailSerializer,MovieListSerializer,CommentSerializer,GenreSerializer
 from .api import ans
 
 
@@ -117,3 +117,9 @@ def like_movie(request, movie_pk, my_pk):
             like = True
 
         return Response(like)
+
+@api_view(['GET'])
+def genres(request):
+    genre = get_list_or_404(Genre)
+    serializer = GenreSerializer(genre, many=True)
+    return Response(serializer.data)

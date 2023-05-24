@@ -10,5 +10,5 @@ urlpatterns = [
     path('comments/', views.comment_list),
     path('comment/<int:comment_pk>/', views.comment_detail),
     path('movie/<int:movie_pk>/comments/', views.comment_create),
-
+    path('movie/genres/', views.genres),
 ]
