@@ -11,7 +11,6 @@
 					}">{{free_article?.username}}</router-link>
 				</div>
 			</div>
-			
 			<div class="articleContent mt-4">
 				<p>{{ free_article?.content }}</p>
 			</div>
@@ -36,10 +35,10 @@
 		</div>
 		<form @submit.prevent="createComment" class="pb-3">
 			<div class="input-group mb-3 ms-3 me-3 mt-3" style="width: 95%;">
-			<span class="input-group-text">댓글</span>
-			<input class="form-control" type="text" v-model="content">
-			<input class="btn btn-dark" type="submit" style="width: 75px;" value="작성">
-		</div>
+				<span class="input-group-text">댓글</span>
+				<input class="form-control" type="text" v-model="content">
+				<input class="btn btn-dark" type="submit" style="width: 75px;" value="작성">
+			</div>
 		</form>
 		
 		

@@ -15,7 +15,7 @@
 				<button class="btn btn-dark ms-3" @click="$router.push({name:'movies'})">목록으로</button>
 			</div>
 			<div class="like">
-				<p class="mt-3">좋아요 : {{movie.like_users.length}}</p>
+				<p class="mt-3">좋아요 : {{ movie.like_users.length }}</p>
 				<button class="btn btn-secondary" v-if="!is_liked" @click="Like" >좋아요</button>
 				<button class="btn btn-secondary" v-else @click="Like">좋아요 취소</button>
 			</div>
@@ -111,7 +111,7 @@ export default {
 		return {
 			movie: '',
 			poster_URL: '',
-			is_liked: null,
+			is_liked: false,
 			movie_comment:null,
 			rank: 1,
 			genre_list:{12:'모험',28:'액션',16:'애니메이션',35:'코미디',80:'범죄',99:'다큐멘터리',18:'드라마',10751:'가족',14:'판타지',36:'역사',27:'공포',10402:'음악',9648:'미스터리',10749:'로맨스',878:'SF',10770:'TV 영화',53:'스릴러',10752:'전쟁',37:'서부'},
@@ -129,6 +129,7 @@ export default {
 			.then((res)=>this.is_liked= res)
 	},
 	methods: {
+		
 		getMovieDetail() {
 			axios({
 				method: 'get',
@@ -147,6 +148,7 @@ export default {
 				url : `${Django_API_URL}/api/v1/movie/${this.$store.state.user_data.pk}/${this.$route.params.movie_id}/likes/`
 			})
 			.then((res) =>{
+				console.log(res.data)
 				this.is_liked = res.data
 			})
 		},

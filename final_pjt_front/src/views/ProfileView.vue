@@ -3,7 +3,7 @@
     <div class="mt-5">
       <div class="userName">
         <h1>{{ user_data.username }}</h1>
-		{{ user_data.pk }}
+		
       </div>
       <div class="userContent mt-4">
         <h3>e-mail : {{ user_data.email }}</h3><br>
@@ -32,7 +32,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .detail {
 	border-radius: 0.5rem;
 	margin: auto;
@@ -59,22 +59,14 @@ export default {
 	text-align: start;
 	border-radius: .5rem;
 }
-.articleTime {
-	text-align: start;
-}
-.articleBtn {
-	align-content: start;
-}
+
+</style>
+
+<style scoped>
 div a {
 	font-weight: bold;
 	font-size: 20px;
 	color: #ffffff;
 	text-decoration-line: none;
-}
-.commentlist {
-	text-align: start;
-}
-.comment {
-	border-bottom: solid grey 1px;
 }
 </style>
