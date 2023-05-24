@@ -195,8 +195,8 @@ def like_review(request, review_pk, my_pk):
         return Response(like)
     
 
-@api_view(['GET'])
-def get_user(request,user_pk):
-    user = get_object_or_404(get_user_model(),pk=user_pk)
-    serializer = UserSerializer(user)
-    return Response(serializer.data)
+# @api_view(['GET'])
+# def get_user(request,user_pk):
+#     user = get_object_or_404(get_user_model(),pk=user_pk)
+#     serializer = UserSerializer(user)
+#     return Response(serializer.data)

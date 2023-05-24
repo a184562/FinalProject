@@ -6,15 +6,20 @@
 		
       </div>
       <div class="userContent mt-4">
-        <h3>e-mail : {{ user_data.email }}</h3><br>
-        <h3>name : {{ user_data.first_name }}{{ user_data.last_name }}</h3><br>
-        <h3>선호 장르 : {{  }}</h3><br>
-        <h3>작성 글 : {{ user_article }}</h3><br>
-        <h5>팔로잉 : {{ user_follow.followings.length}}명</h5>
-        <h5>팔로워 : {{ user_follow.followers.length}}명</h5>
+        <h3 class="ms-1">e-mail : {{ user_data.email }}</h3><br>
+        <h3 class="ms-1">name : {{ user_data.first_name }}{{ user_data.last_name }}</h3><br>
+				<div class="d-flex">
+					<h3>선호 장르 : </h3>
+					<div v-for="(genre,index) in genre_data" :key="index" class="ms-3">
+						<h3>{{genre}}</h3>
+					</div>
+				</div>
+        <h3 class="mt-3">작성 글 : {{  }}</h3><br>
+        <h5 class="mb-4">팔로잉 : {{ user_data.followings.length}}명</h5>
+        <h5>팔로워 : {{ user_data.followers.length}}명</h5>
       </div>
     </div>
-    <p>팔로잉 버튼 만들 곳</p>
+		<br>
   </div>
 </template>
 
@@ -24,31 +29,46 @@ const Django_API_URL = 'http://127.0.0.1:8000'
 export default {
     name: 'ProfileView',
     created(){
+      // axios({
+      //   method:'get',
+      //   url:`${Django_API_URL}/api/v1/otheruser/${this.user_data.pk}/`
+      // })
+      // .then(res=>{
+      //   this.user_follow=res.data
+      // })
       axios({
         method:'get',
-        url:`${Django_API_URL}/api/v1/otheruser/${this.user_data.pk}/`
+        url:`${Django_API_URL}/api/v1/user/${this.$store.state.user_data.pk}/`
       })
       .then(res=>{
-        this.user_follow=res.data
-      })
-      axios({
-        method:'get',
-        url:`${Django_API_URL}/api/v1/community/user/${this.user_data.pk}/`
-      })
-      .then(res=>{
-        this.user_article = res.data
+        this.user_data = res.data
+				for(const obj of this.genre_list){
+					for(const userobj of this.user_data.genres){
+						if (obj['id'] === userobj){
+							this.genre_data.push(obj['name'])
+						}
+					}
+				}
       })
     },
     data() {
         return{
-            user_data : this.$store.state.user_data,
-            user_follow: null,
-            user_article : null,
+            user_data : null,
+						genre_list : this.$store.state.genre_list,
+						genre_data : [],
         }
     },
     
     method:{
-      
+      genreName(genre) {
+				for (let i = 0; i < this.genre_list.length; i++) {
+					// console.log(genreObj)
+					// console.log(genre)
+					if (this.genre_list[i].id === genre) {
+						return this.genre_list[i].name
+					}
+				}
+			}
     }
 }
 </script>

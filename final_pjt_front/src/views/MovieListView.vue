@@ -59,6 +59,7 @@ export default {
 	
 	created() {
 		this.getMovie()
+		this.getGenre()
 		
 		// this.getGenre()
 		
@@ -135,7 +136,10 @@ export default {
 			}
 			console.log(genre_3_list.length)
 			return genre_3_list
-		}		
+		},
+		getGenre() {
+			this.$store.dispatch('getGenre')
+			}		
 	}
 }
 

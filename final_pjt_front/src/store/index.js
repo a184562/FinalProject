@@ -18,7 +18,7 @@ export default new Vuex.Store({
     movie_list: [],
     free_articles: [],
     review_articles: [],
-    genre_list: [],
+    genre_list: null,
     movie_num : 0,
     user_data : null,
     is_loggedin : false,
@@ -76,6 +76,9 @@ export default new Vuex.Store({
       state.token = null
       state.user_data = null
       localStorage.clear()
+    },
+    GETGENRE(state, data) {
+      state.genre_list = data
     }
   },
   
@@ -199,6 +202,19 @@ export default new Vuex.Store({
       .catch((err) => {
         console.log(err)})
     },
+    getGenre(context) {
+      axios({
+				method: 'get',
+				url: `${Django_API_URL}/api/v1/movie/genres/`,
+			})
+			.then((res) => {
+				console.log(res.data)
+        // console.log(context)
+        context.commit('GETGENRE', res.data)
+				// this.genre_list = res.data
+			})
+			.catch((err) => console.log(err))
+    }
   },
   modules: {
   }
