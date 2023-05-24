@@ -6,7 +6,7 @@
 					<div class="row">
 						<div class="col-2"
 						v-for="(movie, index) in genre"	:key="index">
-							<MovieCard v-show="index >= 0 && index < 6" :movie="movie" :movie_rank="index+1" class="card"/>
+							<MovieCard v-if="index >= 0 && index < 6" :movie="movie" :movie_rank="index+1" class="card"/>
 						</div>
 					</div>
 				</div>
@@ -16,41 +16,11 @@
 					<div class="row">
 						<div class="col-2"
 						v-for="(movie, index) in genre" :key="index">
-							<MovieCard v-show="index >= 6 && index < 12" :movie="movie" :movie_rank="index+1" class="card"/>
+							<MovieCard v-if="index >= 6 && index < 12" :movie="movie" :movie_rank="index+1" class="card"/>
 						</div>
 					</div>
 				</div>
 			</div>				
-			<div class="carousel-item">
-				<div class="container">
-					<div class="row">
-						<div class="col-2"
-						v-for="(movie, index) in nowplaying_movies" :key="index">
-							<MovieCard v-if="index >= 12 && index < 18" :movie="movie" :movie_rank="index+1" class="card"/>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="carousel-item">
-				<div class="container">
-					<div class="row">
-						<div class="col-2"
-						v-for="(movie, index) in nowplaying_movies" :key="index">
-							<MovieCard v-if="index >= 18 && index < 24" :movie="movie" :movie_rank="index+1" class="card"/>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="carousel-item">
-				<div class="container">
-					<div class="row">
-						<div class="col-2"
-						v-for="(movie, index) in nowplaying_movies" :key="index">
-							<MovieCard v-if="index >= 24" :movie="movie" :movie_rank="index+1" class="card"/>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying_1" data-bs-slide="prev">
 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -83,6 +53,9 @@ export default {
 </script>
 
 <style scoped>
+.carousel {
+	height: 466px;
+}
 .container {
 	display: flex;
 	flex-wrap: wrap;

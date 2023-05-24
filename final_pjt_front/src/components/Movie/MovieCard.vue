@@ -1,9 +1,17 @@
 <template>
-	<div class="card my-2" @click="GoToMovieDetail">
+	
+	<div v-if="movie.title" class="card my-2" @click="GoToMovieDetail">
 		<p>{{ movie_rank }}</p>
 		<img :src="poster_URL" alt="" class="card-img-top">
 		<div class="card-body">
 			<p>{{ movie.title }}</p>
+		</div>
+	</div>
+	<div v-else class="card my-2" @click="GoToMovieDetail">
+		<p>[No Data]</p>
+		<img src="../../assets/logo.png" alt="" class="card-img-top">
+		<div class="card-body">
+			<p>[No Data]</p>
 		</div>
 	</div>
 </template>
@@ -35,8 +43,8 @@ export default {
 <style scoped>
 .card {
 	cursor: pointer;
-	height: 25rem;
-	width: 100%;
+	height: 450px;
+	width: 200px;
 	background-color: #0c0c0c;
 	box-shadow: 4px 4px 4px rgb(54, 54, 54);
 }

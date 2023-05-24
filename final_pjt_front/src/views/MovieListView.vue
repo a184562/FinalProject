@@ -134,7 +134,7 @@ export default {
 			}
 
 			for(const movie of array) {
-				if (movie.genres.indexOf(temp_genre_1) !== -1 && genre_1_list.length < 30) {
+				if (movie.genres.indexOf(temp_genre_1) !== -1 && genre_1_list.length < 12) {
 					genre_1_list.push(movie)
 				}
 			}
@@ -150,7 +150,7 @@ export default {
 			}
 
 			for(const movie of array) {
-				if (movie.genres.indexOf(temp_genre_2) !== -1 && genre_2_list.length < 30) {
+				if (movie.genres.indexOf(temp_genre_2) !== -1 && genre_2_list.length < 12) {
 					genre_2_list.push(movie)
 				}
 			}
@@ -167,7 +167,7 @@ export default {
 
 
 			for(const movie of array) {
-				if (movie.genres.indexOf(temp_genre_3) !== -1 && genre_3_list.length < 30) {
+				if (movie.genres.indexOf(temp_genre_3) !== -1 && genre_3_list.length < 12) {
 					genre_3_list.push(movie)
 				}
 			}
