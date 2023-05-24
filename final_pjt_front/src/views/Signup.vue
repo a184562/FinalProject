@@ -91,7 +91,7 @@ export default {
         return false
       }else{
         this.$store.dispatch('signUp', payload)
-        this.$router.push({ name: 'movies'})
+        this.$router.push({ name: 'genre'})
       }
 
       

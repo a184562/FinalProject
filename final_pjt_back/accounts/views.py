@@ -37,12 +37,14 @@ def follow_check(request, me_pk, user_pk):
 @permission_classes([IsAuthenticated])
 def user_genre(request):
     genres = request.data['genre']
-    print(request.user.id)
+ 
     user = User(id=request.user.id,
                 password=request.user.password,
                 )
     for genre in genres:
         user.genres.add(genre)
+    print(user.genres)
+
     serializer = UserGenreSerializer(user)
     return Response(serializer.data)
     # users = User(request.user)
