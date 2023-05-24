@@ -56,11 +56,12 @@
 					<div class="d-flex justify-content-between mt-3">
 						<p>{{contents['content']}}</p>
 						<p class="me-5">{{contents['created_at']}}</p>
+						{{contents}}
 					</div>
 					<div class="pb-4">
 						<button class="btn btn-dark btn-sm me-2" type="submit" value="댓글 수정"  @click="commentPutOn" :data="index">댓글 수정</button>
 						<button class="btn btn-dark btn-sm" type="submit" value="댓글 삭제"  @click="commentDelete" :data="index">댓글 삭제</button>
-						<form @submit.prevent="commentPut" class="pb-3" v-if="put_check" :data="index">
+						<form @submit.prevent="commentPut" class="pb-3" v-if="put_check & put_index == index" :data="index">
 							<div class="input-group mb-3 ms-3 me-3 mt-3" style="width: 95%;">
 							<span class="input-group-text">댓글</span>
 							<input class="form-control" type="text" v-model="new_content">
@@ -104,6 +105,7 @@ export default {
 			updated_at : "",
 			new_content : "",
 			put_check : false,
+			put_index: null,
 		}
 	},
 	// axios로 Django 데이터베이스 서버에 연결 후 작업
@@ -224,10 +226,13 @@ export default {
 				params:{id : article_id},
 			})
 		},
-		commentPutOn(){
+		commentPutOn(a){
 			if (this.put_check){
+				this.put_index = null
 				return this.put_check = false
 			}else{
+				const index = a.target.getAttribute('data')
+				this.put_index = index
 				return this.put_check = true
 			}
 		},
