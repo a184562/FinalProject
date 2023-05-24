@@ -11,7 +11,12 @@
 				<div class="d-flex">
 					<h3>선호 장르 : </h3>
 					<div v-for="(genre,index) in genre_data" :key="index" class="ms-3">
-						<h3>{{genre}}</h3>
+                  <router-link :to="{
+                  name: 'freeboarddetail',
+                  params: {id: genre.index.id}}">
+                </router-link>
+        </div>
+		<div class="p-2 me-3">
 					</div>
 				</div>
         <h3 class="mt-3">작성 글 : {{  }}</h3><br>

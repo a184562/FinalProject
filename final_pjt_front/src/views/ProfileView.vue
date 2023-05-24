@@ -14,7 +14,8 @@
 						<h3>{{genre}}</h3>
 					</div>
 				</div>
-        <h3 class="mt-3">작성 글 : {{  }}</h3><br>
+        <h3>좋아요한 영화</h3>
+        <div v-for="(content,index) of user_movie" :key="index"><h3>{{content.id}}</h3></div>
         <h5 class="mb-4">팔로잉 : {{ user_data.followings.length}}명</h5>
         <h5>팔로워 : {{ user_data.followers.length}}명</h5>
       </div>
@@ -25,17 +26,19 @@
 
 <script>
 import axios from 'axios'
+
 const Django_API_URL = 'http://127.0.0.1:8000'
 export default {
     name: 'ProfileView',
     created(){
-      // axios({
-      //   method:'get',
-      //   url:`${Django_API_URL}/api/v1/otheruser/${this.user_data.pk}/`
-      // })
-      // .then(res=>{
-      //   this.user_follow=res.data
-      // })
+      axios({
+        method:'get',
+        url:`${Django_API_URL}/api/v1/movies/${this.$store.state.user_data.pk}/`
+      })
+      .then(res =>{
+        this.user_movie = res.data.like_movies
+        })
+      .catch((err)=>console.log(err))
       axios({
         method:'get',
         url:`${Django_API_URL}/api/v1/user/${this.$store.state.user_data.pk}/`
@@ -56,6 +59,7 @@ export default {
             user_data : null,
 						genre_list : this.$store.state.genre_list,
 						genre_data : [],
+            user_movie:null,
         }
     },
     
