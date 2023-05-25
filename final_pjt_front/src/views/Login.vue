@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import axios from'axios'
+const Django_API_URL = 'http://127.0.0.1:8000'
 export default {
   name: 'LogIn',
   data() {
@@ -43,6 +45,14 @@ export default {
       username : null,
       password : null,
     }
+  },
+  created() {
+    axios({
+        method:'post',
+        url:`${Django_API_URL}/api/v1/accounts/genre/`
+      })
+      .then(() => {})
+      .catch(() => {})
   },
   methods: {
     login() {
