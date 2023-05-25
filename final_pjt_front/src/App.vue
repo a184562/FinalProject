@@ -2,7 +2,7 @@
   <div id="app">
     <nav v-if="$store.state.user_data === null">
       
-      <router-link to="/login">Login</router-link> |
+      <router-link to="/">Login</router-link> |
       <router-link to="/signup">Signup</router-link> |
       <router-link to="/search">Search</router-link>
     </nav>
@@ -12,26 +12,46 @@
       <router-link :to="{
         name: 'profile',
         params: {id: $store.state.user_data.pk}
-      }">Profile</router-link> |
-      <router-link to="/search">Search</router-link>
+      }">Profile</router-link>
     </nav>
-    <nav>
-      <router-link to="/">Movie</router-link> |
+
+    <nav v-if="this.$store.state.user_data">
+      <router-link to="/movies">Movie</router-link> |
       <router-link to="/community">Community</router-link> |
-      <router-link to="/entertain">Entertainment</router-link>
+      <router-link to="/entertain">Entertainment</router-link> |
+      <router-link to="/search">Search</router-link>
     </nav>
     <router-view/>
   </div>
 </template>
 
 <script>
+import axios from'axios'
+const Django_API_URL = 'http://127.0.0.1:8000'
   export default {
     methods: {
       logout() {
         this.$store.dispatch('logout')
-        this.$router.push({name: 'movies'})
-      }
+        this.$router.push({name: 'login'})
+      },
+      
+    },
+    created(){
+      axios({
+        method:'post',
+        url:`${Django_API_URL}/api/v1/accounts/genre/`
+      })
+      .then(() => {})
+      .catch(() => {})
+
+      axios({
+        method:'post',
+        url:`${Django_API_URL}/api/v1/movie/genres/`
+      })
+      .then(() => {})
+      .catch(() => {})
     }
+    
   }
 </script>
 

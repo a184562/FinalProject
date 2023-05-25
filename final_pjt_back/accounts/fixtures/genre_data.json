@@ -1,135 +1,135 @@
 [
-      {
-          "pk": 28,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Action"
-          }
-      },
-      {
-          "pk": 12,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Adventure"
-          }
-      },
-      {
-          "pk": 16,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Animation"
-          }
-      },
-      {
-          "pk": 35,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Comedy"
-          }
-      },
-      {
-          "pk": 80,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Crime"
-          }
-      },
-      {
-          "pk": 99,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Documentary"
-          }
-      },
-      {
-          "pk": 18,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Drama"
-          }
-      },
-      {
-          "pk": 10751,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Family"
-          }
-      },
-      {
-          "pk": 14,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Fantasy"
-          }
-      },
-      {
-          "pk": 36,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "History"
-          }
-      },
-      {
-          "pk": 27,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Horror"
-          }
-      },
-      {
-          "pk": 10402,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Music"
-          }
-      },
-      {
-          "pk": 9648,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Mystery"
-          }
-      },
-      {
-          "pk": 10749,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Romance"
-          }
-      },
-      {
-          "pk": 878,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Science Fiction"
-          }
-      },
-      {
-          "pk": 10770,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "TV movie"
-          }
-      },
-      {
-          "pk": 53,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Thriller"
-          }
-      },
-      {
-          "pk": 10752,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "War"
-          }
-      },
-      {
-          "pk": 37,
-          "model": "accounts.genre",
-          "fields": {
-              "name": "Western"
-          }
-      }
-  ]
+    {
+        "pk": 28,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "액션"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "모험"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "애니메이션"
+        }
+    },
+    {
+        "pk": 35,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "코메디"
+        }
+    },
+    {
+        "pk": 80,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "범죄"
+        }
+    },
+    {
+        "pk": 99,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "다큐멘터리"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "드라마"
+        }
+    },
+    {
+        "pk": 10751,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "가족"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "판타지"
+        }
+    },
+    {
+        "pk": 36,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "역사"
+        }
+    },
+    {
+        "pk": 27,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "공포"
+        }
+    },
+    {
+        "pk": 10402,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "음악"
+        }
+    },
+    {
+        "pk": 9648,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "미스터리"
+        }
+    },
+    {
+        "pk": 10749,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "로맨스"
+        }
+    },
+    {
+        "pk": 878,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "SF"
+        }
+    },
+    {
+        "pk": 10770,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "TV 영화"
+        }
+    },
+    {
+        "pk": 53,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "스릴러"
+        }
+    },
+    {
+        "pk": 10752,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "전쟁"
+        }
+    },
+    {
+        "pk": 37,
+        "model": "accounts.genre",
+        "fields": {
+            "name": "서부"
+        }
+    }
+]

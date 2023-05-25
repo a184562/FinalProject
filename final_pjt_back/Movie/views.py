@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .models import Movie,Comment, Genre
 from .serializers import MovieDetailSerializer,MovieListSerializer,CommentSerializer,GenreSerializer,UserSerializer
-from .api import ans
+from .api import ans,gen
 
 
 
@@ -30,8 +30,7 @@ def movie_data(request):
     movies = []
     for objs in ans:
         for obj in objs:
-        # print(obj)
-            if obj['id']==730629:
+            if 'release_date' not in obj:
                 pass
             else:
                 movie = Movie(id=obj['id'], 
@@ -49,11 +48,11 @@ def movie_data(request):
                     movie.genres.add(genre)
                 movie.save()
                 movies.append(movie)
-    serializer = MovieListSerializer(movies, many=True)
-    
-    
-    return Response(serializer.data)
 
+    serializer = MovieListSerializer(movies, many=True)
+    return Response(serializer.data)
+        
+            
 @api_view(['GET'])
 def comment_list(request):
     if request.method == 'GET':
@@ -118,11 +117,23 @@ def like_movie(request, movie_pk, my_pk):
 
         return Response(like)
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def genres(request):
-    genre = get_list_or_404(Genre)
-    serializer = GenreSerializer(genre, many=True)
-    return Response(serializer.data)
+    
+    
+    if request.method=='GET':
+        genre = get_list_or_404(Genre)
+        serializer = GenreSerializer(genre, many=True)
+        return Response(serializer.data)
+    
+    else:
+        genres = []
+        for i in gen:
+            genre=Genre(id = i['id'],
+                        name=i['name'])
+            genres.append(genre)
+        serializer = GenreSerializer(genres, many=True)
+        return Response(serializer.data)
 
 
 @api_view(['GET'])

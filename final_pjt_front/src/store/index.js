@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-// import router from '@/router'
+import router from '../router'
 
 import axios from 'axios'
 const Django_API_URL = 'http://127.0.0.1:8000'
@@ -10,9 +10,11 @@ Vue.use(Vuex)
 
 
 export default new Vuex.Store({
-  plugins:[
-    createPersistedState(),
-  ],
+
+  plugins: [
+    createPersistedState({
+      storage: window.sessionStorage,
+    })],
   state: {
     token: null,
     movie_list: [],
@@ -75,7 +77,7 @@ export default new Vuex.Store({
     LOG_OUT(state) {
       state.token = null
       state.user_data = null
-      localStorage.clear()
+      sessionStorage.clear()
     },
     GETGENRE(state, data) {
       state.genre_list = data
@@ -86,9 +88,12 @@ export default new Vuex.Store({
   actions: {
     async getMovie(context) {
       if (context.state.movie_num === 0) {
-        // context.dispatch('postMovie')
+        context.dispatch('postMovie')
         
-        await axios({
+        setTimeout(()=>{
+        }, 2500)
+        
+        axios({
           method: 'get',
           url: `${Django_API_URL}/api/v1/movies/`,
         })
@@ -157,7 +162,11 @@ export default new Vuex.Store({
         context.commit('SAVE_TOKEN', payload_1)
         context.dispatch('getUser')
       })
-      .catch(err=>console.log(err))
+      .catch(err=>{
+        console.log(err)
+        alert('아이디나 비밀번호가 일치하지 않습니다.')
+        router.push({ name: 'login'})
+      })
     },
     getUser(context) {
       axios({
@@ -203,17 +212,20 @@ export default new Vuex.Store({
         console.log(err)})
     },
     getGenre(context) {
-      axios({
-				method: 'get',
-				url: `${Django_API_URL}/api/v1/movie/genres/`,
-			})
-			.then((res) => {
-				console.log(res.data)
-        // console.log(context)
-        context.commit('GETGENRE', res.data)
-				// this.genre_list = res.data
-			})
-			.catch((err) => console.log(err))
+      if (context.state.movie_num === 0) {
+        axios({
+          method: 'get',
+          url: `${Django_API_URL}/api/v1/movie/genres/`,
+        })
+        .then((res) => {
+          console.log(res.data)
+          // console.log(context)
+          context.commit('GETGENRE', res.data)
+          // this.genre_list = res.data
+        })
+        .catch((err) => console.log(err))
+      }
+      
     }
   },
   modules: {
