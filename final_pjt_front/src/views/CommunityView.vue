@@ -19,6 +19,7 @@
 export default {
 	name: 'CommunityView',
 	computed:{
+		// 로그인이 되어 있어야만 접속할 수 있도록 처리
 		isLogin(){
 			return this.$store.getters.isLogin
 		}

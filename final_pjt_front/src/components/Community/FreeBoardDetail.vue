@@ -174,27 +174,22 @@ export default {
 					if (i < 19 && i >10) {
 						this.updated_at = this.updated_at + res.data.updated_at[i]
 					}
-					
-			}	
-			// this.created_at = res.data.created_at
-			// this.updated_at = res.data.updated_at
-			})
-			.catch((err) => console.log(err))
+			}})
+			.catch(() => {})
 
 		},
-		
+		// 현재 로그인한 유저의 데이터가 필요하므로 axios 사용
 		Like() {
 			axios({
 				method: 'post',
 				url: `${Django_API_URL}/api/v1/community/free/${this.$store.state.user_data.pk}/${this.free_article.id}/likes/`,
 			})
 			.then((res) => {
-				console.log(res)
 				this.is_liked = res.data
 				this.$router.go(0)
 			})
-
 		},
+		// 현재 로그인한 유저의 데이터가 필요하므로 axios 사용
 		createComment(){
 			const content = this.content
 			const article = this.free_article.id
@@ -213,13 +208,13 @@ export default {
 			})
 			.catch(()=>{})
 		},
+		// 현재 로그인한 유저의 데이터가 필요하므로 axios 사용
 		deleteArticle(){
 			axios({
 				method:'delete',
 				url:`${Django_API_URL}/api/v1/community/free/${this.free_article.id}/`
 			})
-			.then((res) => {
-				console.log(res)
+			.then(() => {
 				this.$router.go(0)
 			})
 		},
@@ -230,18 +225,18 @@ export default {
 				params:{id : article_id},
 			})
 		},
-		commentPutOn(a){
+		commentPutOn(comment){
 			if (this.put_check){
 				this.put_index = null
 				return this.put_check = false
 			}else{
-				const index = a.target.getAttribute('data')
+				const index = comment.target.getAttribute('data')
 				this.put_index = index
 				return this.put_check = true
 			}
 		},
-		commentDelete(a){
-			const index = a.target.getAttribute('data')
+		commentDelete(comment){
+			const index = comment.target.getAttribute('data')
 			const comment_data = this.free_article['comment_set'][index]['id']
 
 			axios({
@@ -252,8 +247,8 @@ export default {
 			.catch(()=>{})
 			
 		},
-		commentPut(a){
-			const index = a.target.getAttribute('data')
+		commentPut(comment){
+			const index = comment.target.getAttribute('data')
 			const comment_data = this.free_article['comment_set'][index]['id']
 			const content = this.new_content
 			const article = this.free_article['id']

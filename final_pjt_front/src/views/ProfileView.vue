@@ -3,20 +3,17 @@
     <div class="mt-5">
       <div class="userName">
         <h1>{{ user_data.username }}</h1>
-		
       </div>
       <div class="userContent mt-4">
         <h3 class="ms-1">e-mail : {{ user_data.email }}</h3><br>
-        <h3 class="ms-1">name : {{ user_data.first_name }}{{ user_data.last_name }}</h3><br>
+        <h3 class="ms-1">name : {{ user_data.last_name }}{{ user_data.first_name }}</h3><br>
 				<div class="d-flex">
 					<h3>선호 장르 : </h3>
 					<div v-for="(genre,index) in genre_data" :key="index" class="ms-3">
 						<h3>{{genre}}</h3>
 					</div>
 				</div>
-        <h3>좋아요한 영화</h3>
-        <div v-for="(content,index) of user_movie" :key="index"><h3>{{content.id}}</h3></div>
-        <h5 class="mb-4">팔로잉 : {{ user_data.followings.length}}명</h5>
+        <h5 class="mt-3 mb-4">팔로잉 : {{ user_data.followings.length}}명</h5>
         <h5>팔로워 : {{ user_data.followers.length}}명</h5>
       </div>
     </div>
@@ -25,26 +22,26 @@
 </template>
 
 <script>
+// 유저의 정보는 프로필 페이지가 자신의 프로필인지 다른 유저의 프로필인지에 따라 달라지므로 개별 페이지에서 관리
 import axios from 'axios'
-
 const Django_API_URL = 'http://127.0.0.1:8000'
 export default {
     name: 'ProfileView',
+		data() {
+        return{
+            user_data : null,
+						genre_list : this.$store.state.genre_list,
+						genre_data : [],
+        }
+    },
     created(){
-      axios({
-        method:'get',
-        url:`${Django_API_URL}/api/v1/movies/${this.$store.state.user_data.pk}/`
-      })
-      .then(res =>{
-        this.user_movie = res.data.like_movies
-        })
-      .catch((err)=>console.log(err))
       axios({
         method:'get',
         url:`${Django_API_URL}/api/v1/user/${this.$store.state.user_data.pk}/`
       })
       .then(res=>{
         this.user_data = res.data
+				// 장르의 정보는 Many To Many DB에서 가져와야 하므로 for문을 돌려 처리
 				for(const obj of this.genre_list){
 					for(const userobj of this.user_data.genres){
 						if (obj['id'] === userobj){
@@ -54,20 +51,10 @@ export default {
 				}
       })
     },
-    data() {
-        return{
-            user_data : null,
-						genre_list : this.$store.state.genre_list,
-						genre_data : [],
-            user_movie:null,
-        }
-    },
-    
     method:{
+			// 받아온 genre 데이터가 id로 되어있으므로 name으로 바꿔주는 과정
       genreName(genre) {
 				for (let i = 0; i < this.genre_list.length; i++) {
-					// console.log(genreObj)
-					// console.log(genre)
 					if (this.genre_list[i].id === genre) {
 						return this.genre_list[i].name
 					}
@@ -82,7 +69,6 @@ export default {
 	border-radius: 0.5rem;
 	margin: auto;
 	width: 1000px;
-	/* height: 75%; */
 	box-shadow: 4px 4px 4px grey;
 	background-color: #141414;
 	margin-bottom: 15rem;
@@ -104,7 +90,6 @@ export default {
 	text-align: start;
 	border-radius: .5rem;
 }
-
 </style>
 
 <style scoped>

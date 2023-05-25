@@ -132,6 +132,7 @@ def genres(request):
             genre=Genre(id = i['id'],
                         name=i['name'])
             genres.append(genre)
+            genre.save()
         serializer = GenreSerializer(genres, many=True)
         return Response(serializer.data)
 

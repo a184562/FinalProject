@@ -3,17 +3,19 @@
 		<div class="container justify-content-around pt-5">
 			<div @click="selectCard_left">
 				<GameCard class="Card" :movie="movie_1" />
-				<div id="popularity_1" class="mt-5 popularity">
+				<div id="rate_1" class="mt-5 rate">
 					0
 				</div>
 			</div>
 			<div @click="selectCard_right">
 				<GameCard class="Card" :movie="movie_2" />
-				<div id="popularity_2" class="mt-5 popularity">
+				<div id="rate_2" class="mt-5 rate">
 					0
 				</div>
 			</div>
 		</div>
+		
+		
 		<h1 class="mt-5">점수 : {{ score }}</h1>
 	</div>
 </template>
@@ -23,7 +25,7 @@ import GameCard from './GameCard.vue'
 
 
 export default {
-	name: 'GamePlay',
+	name: 'GamePlayRate',
 	components: {
 		GameCard,
 	},
@@ -49,9 +51,8 @@ export default {
 		this.shuffle(this.movie_list)
 		this.movie_1 = this.movie_list[this.idx_1]
 		this.movie_2 = this.movie_list[this.idx_2]
-		// popularity 데이터가 소수점이므로 소수점의 자리수를 올려줌
-		this.counting_num_1 = this.movie_1.popularity * 1000
-		this.counting_num_2 = this.movie_2.popularity * 1000
+		this.counting_num_1 = this.movie_1.vote_average
+		this.counting_num_2 = this.movie_2.vote_average
 	},
 	methods: {
 		shuffle(array) {
@@ -62,16 +63,16 @@ export default {
 			this.countingNum_1(this.counting_num_1)
 			this.countingNum_2(this.counting_num_2)
 			setTimeout(() => {
-				if (this.movie_1.popularity > this.movie_2.popularity) {
+				if (this.movie_1.vote_average > this.movie_2.vote_average) {
 					this.score += 1
 					this.idx_1 = this.idx_2
 					this.idx_2 += 1
 					this.movie_1 = this.movie_list[this.idx_1]
 					this.movie_2 = this.movie_list[this.idx_2]
-					this.counting_num_1 = Math.round(this.movie_1.popularity * 1000)
-					this.counting_num_2 = Math.round(this.movie_2.popularity * 1000)
-					document.querySelector("#popularity_1").innerHTML = this.counting_num_1
-					document.querySelector("#popularity_2").innerHTML = 0
+					this.counting_num_1 = this.movie_1.vote_average
+					this.counting_num_2 = this.movie_2.vote_average
+					document.querySelector("#rate_1").innerHTML = this.counting_num_1
+					document.querySelector("#rate_2").innerHTML = 0
 				}
 				else {
 					alert("틀렸습니다.")
@@ -84,16 +85,16 @@ export default {
 			this.countingNum_1(this.counting_num_1)
 			this.countingNum_2(this.counting_num_2)
 			setTimeout(() => {
-				if (this.movie_1.popularity < this.movie_2.popularity) {
+				if (this.movie_1.vote_average < this.movie_2.vote_average) {
 					this.score += 1
 					this.idx_1 = this.idx_2
 					this.idx_2 += 1
 					this.movie_1 = this.movie_list[this.idx_1]
 					this.movie_2 = this.movie_list[this.idx_2]
-					this.counting_num_1 = Math.round(this.movie_1.popularity * 1000)
-					this.counting_num_2 = Math.round(this.movie_2.popularity * 1000)
-					document.querySelector("#popularity_1").innerHTML = this.counting_num_1
-					document.querySelector("#popularity_2").innerHTML = 0
+					this.counting_num_1 = this.movie_1.vote_average
+					this.counting_num_2 = this.movie_2.vote_average
+					document.querySelector("#rate_1").innerHTML = this.counting_num_1
+					document.querySelector("#rate_2").innerHTML = 0
 				}
 				else {
 					alert("틀렸습니다.")
@@ -103,7 +104,7 @@ export default {
 		},
 		// 숫자가 카운팅되도록 하는 함수
 		countingNum_1(num) {
-			const element = document.querySelector('#popularity_1')
+			const element = document.querySelector('#rate_1')
 			if(num == 0) {
 				element.innerHTML = '0'
 			}
@@ -121,9 +122,9 @@ export default {
 				}
 				time++
 			}}
-	},
-	countingNum_2(num) {
-			const element = document.querySelector('#popularity_2')
+		},
+		countingNum_2(num) {
+			const element = document.querySelector('#rate_2')
 			if(num == 0) {
 				element.innerHTML = '0'
 			}
@@ -167,7 +168,7 @@ export default {
 	margin-bottom: 15rem;
 	margin-top: 5rem;
 }
-.popularity {
+.rate {
 	font-size: 30px;
 }
 </style>

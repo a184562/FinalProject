@@ -105,8 +105,9 @@ export default {
 			put_index:null,
 		}
 	},
-	// axios로 Django 데이터베이스 서버에 연결 후 작업
+	
 	created() {
+		// 현재 로그인한 유저의 데이터가 필요하므로 axios 사용
 		this.getReviewDetail()
 		axios({
 			method:'get',
@@ -171,7 +172,7 @@ export default {
 					
 				}
 			})
-			.catch((err) => console.log(err))
+			.catch(() => {})
 		},
 		Like(){
 			axios({
@@ -263,7 +264,6 @@ export default {
 	border-radius: 0.5rem;
 	margin: auto;
 	width: 1000px;
-	/* height: 75%; */
 	box-shadow: 4px 4px 4px grey;
 	background-color: #141414;
 	margin-bottom: 15rem;

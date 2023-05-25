@@ -48,18 +48,6 @@ def user_genre(request):
 
     serializer = UserGenreSerializer(user)
     return Response(serializer.data)
-    # users = User(request.user)
-    # if request.method == 'POST':
-    #     serializer = UserGenreSerializer(users,data=request.data)
-    #     if serializer.is_valid(raise_exception=True):
-    #         serializer.save(user=request.user, genres=request.user.genres)
-    #         return Response(serializer.data)
-    # print(request.data['genre'])
-    # for genre in request.data['genre']:
-    #     print(genre)
-    #     users.genres.add(genre)
-    # serializer = UserGenreSerializer(users, many=True)
-    # return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -77,5 +65,6 @@ def genres(request):
         genre=Genre(id = i['id'],
                     name=i['name'])
         genres.append(genre)
+        genre.save()
     serializer = GenreSerializer(genres, many=True)
     return Response(serializer.data)
