@@ -62,9 +62,10 @@ export default {
 	// },
 	
 	created() {
+		
 		axios({
-			method:'get',
-			url: `${Django_API_URL}/api/v1/user/${this.$store.state.user_data.pk}/`
+		method:'get',
+		url: `${Django_API_URL}/api/v1/user/${this.$store.state.user_data.pk}/`
 		})
 		.then((res) => {
 			this.like_genres = res.data.genres
@@ -78,6 +79,8 @@ export default {
 			
 		})
 		.catch((err) => console.log(err))
+		
+		
 		this.getMovie()
 		this.getGenre()
 		
@@ -115,11 +118,12 @@ export default {
 			localStorage.setItem('movie_list_length', this.$store.state.movie_list.length)
 		},
 		nowplaying_Movies(array) {
-			let release_date_1 = '2023'
+			let release_date_1 = '2023-05'
+			let release_date_2 = '2023-04'
 			let nowplaying_movies_list = []
 			
 			for(const movie of array) {
-				if(movie.release_date.indexOf(release_date_1) !== -1 && nowplaying_movies_list.length < 30){
+				if(movie.release_date.indexOf(release_date_1) !== -1 || movie.release_date.indexOf(release_date_2) !== -1 && nowplaying_movies_list.length < 30){
 					nowplaying_movies_list.push(movie)
 				}
 			}

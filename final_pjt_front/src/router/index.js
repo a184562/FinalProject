@@ -25,7 +25,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/movies',
     name: 'movies',
     component: MovieListView
   },
@@ -80,7 +80,7 @@ const routes = [
     component: MovieReviewCreate
   },
   {
-    path: '/login',
+    path: '/',
     name: 'login',
     component: LogIn
   },

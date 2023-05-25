@@ -10,3 +10,12 @@ for i in range(1,21):
     objs = json.loads(resdata)
     objs = objs['results']
     ans.append(objs)
+
+
+
+url = 'https://api.themoviedb.org/3/genre/movie/list?language=ko&api_key='+API_KEY
+response = requests.get(url)
+gendata = response.text
+gen = json.loads(gendata)
+
+gen = gen['genres']

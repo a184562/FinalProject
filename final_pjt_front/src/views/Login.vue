@@ -64,6 +64,10 @@ export default {
       else {
         this.$store.dispatch('logIn', payload)
         this.$router.push({ name: 'movies'})
+        setTimeout(() => {
+          this.$router.go(0)
+        }, 200)
+        
       }
       
     }
