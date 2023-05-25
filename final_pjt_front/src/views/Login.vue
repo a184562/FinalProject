@@ -34,21 +34,6 @@ export default {
       password : null,
     }
   },
-  // DB에 genre 데이터를 post하는 과정을 첫 페이지인 login 페이지에서 실행
-  creted() {
-    axios({
-        method:'post',
-        url:`${Django_API_URL}/api/v1/accounts/genre/`
-      })
-      .then(() => {})
-      .catch(() => {})
-    axios({
-        method:'post',
-        url:`${Django_API_URL}/api/v1/movie/genres/`
-      })
-      .then(() => {})
-      .catch(() => {})
-  },
   methods: {
     login() {
       const username = this.username
