@@ -34,11 +34,11 @@ def follow_check(request, me_pk, user_pk):
 
         return Response(following)
 
+# 유저가 선호하는 genre 데이터를 입력하는 함수
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def user_genre(request):
     genres = request.data['genre']
- 
     user = User(id=request.user.id,
                 password=request.user.password,
                 )
@@ -49,15 +49,14 @@ def user_genre(request):
     serializer = UserGenreSerializer(user)
     return Response(serializer.data)
 
-
+# 유저 정보를 불러오는 함수
 @api_view(['GET'])
 def get_user(request,user_pk):
     user = get_object_or_404(User,pk=user_pk)
     serializer = UserSerializer(user)
     return Response(serializer.data)
 
-
-
+# Many To Many field 형성을 위해 DB에 장르 정보를 넣어주는 함수
 @api_view(['POST'])
 def genres(request):
     genres = []

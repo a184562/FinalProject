@@ -5,8 +5,11 @@
 			<div class="col-6 mt-5">
 				<h3>{{movie.title}}</h3><br><hr>
 				<h5>개봉일 : {{movie.release_date}}</h5><br>
-				<div v-for="(genre,index) in movie.genres" :key="index">
-					<h5>{{genre_list[genre]}}</h5>
+				<div class="d-flex">
+					<h5>장르 : </h5>
+					<div v-for="(genre_name,index) in genre_data" :key="index" class="ms-3">
+						<h5>{{genre_name}}</h5>
+					</div>
 				</div>
 				<hr>
 				<p>{{movie.overview}}</p>
@@ -118,6 +121,7 @@ export default {
 			put_check:false,
 			new_content:'',
 			put_index:null,
+			genre_data: [],
 		}
 	},
 	created() {
@@ -128,6 +132,8 @@ export default {
 			url : `${Django_API_URL}/api/v1/movie/${this.$store.state.user_data.pk}/${this.$route.params.movie_id}/likes/`
 		})
 		.then((res)=>this.is_liked= res.data)
+
+		
 	},
 	methods: {
 		// 영화의 Detail 정보를 받아옴
@@ -139,8 +145,18 @@ export default {
 			.then((res) => {
 				this.movie = res.data
 				this.poster_URL = `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${res.data.poster_path}`
+				this.genreData()
 			})
 			.catch((err) => console.log(err))
+		},
+		genreData() {
+			for(const obj of this.genre_list) {
+				for(const genre_id of this.movie.genres) {
+					if(obj['id'] === genre_id) {
+						this.genre_data.push(obj['name'])
+					}
+				}
+			}
 		},
 		// 영화의 좋아요 정보를 받아옴
 		Like(){
