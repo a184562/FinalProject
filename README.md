@@ -54,13 +54,13 @@
 
 ---
 
-![Image Pasted at 2023-5-25 22-16.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/49da9f03-6258-4204-a2b4-449106a004de/Image_Pasted_at_2023-5-25_22-16.png)
+![ERD.png](./readmeimg/ERD.png)
 
 ## 컴포넌트
 
 ---
 
-![Image Pasted at 2023-5-25 22-16 (1).png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/30c1be06-3340-435d-9846-28d0c0d882b6/Image_Pasted_at_2023-5-25_22-16_(1).png)
+![Component.png](./readmeimg/Component.png)
 
 ## 주요 기능
 
