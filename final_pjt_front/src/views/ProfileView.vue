@@ -6,7 +6,7 @@
       </div>
       <div class="userContent mt-4">
         <h3 class="ms-1">e-mail : {{ user_data.email }}</h3><br>
-        <h3 class="ms-1">name : {{ user_data.last_name }}{{ user_data.first_name }}</h3><br>
+        <!-- <h3 class="ms-1">name : {{ user_data.last_name }}{{ user_data.first_name }}</h3><br> -->
 				<div class="d-flex">
 					<h3>선호 장르 : </h3>
 					<div v-for="(genre,index) in genre_data" :key="index" class="ms-3">
