@@ -5,8 +5,11 @@
 			<div class="col-6 mt-5">
 				<h3>{{movie.title}}</h3><br><hr>
 				<h5>개봉일 : {{movie.release_date}}</h5><br>
-				<div v-for="(genre,index) in movie.genres" :key="index">
-					<h5>{{genre_list[genre]}}</h5>
+				<div class="d-flex">
+					<h5>장르 : </h5>
+					<div v-for="(genre_name,index) in genre_data" :key="index" class="ms-3">
+						<h5>{{genre_name}}</h5>
+					</div>
 				</div>
 				<hr>
 				<p>{{movie.overview}}</p>
@@ -103,7 +106,6 @@
 import axios from 'axios'
 const Django_API_URL = 'http://127.0.0.1:8000'
 
-
 export default {
 	name: 'MovieDetailView',
 	
@@ -114,46 +116,60 @@ export default {
 			is_liked: false,
 			movie_comment:null,
 			rank: 1,
-			genre_list:{12:'모험',28:'액션',16:'애니메이션',35:'코미디',80:'범죄',99:'다큐멘터리',18:'드라마',10751:'가족',14:'판타지',36:'역사',27:'공포',10402:'음악',9648:'미스터리',10749:'로맨스',878:'SF',10770:'TV 영화',53:'스릴러',10752:'전쟁',37:'서부'},
+			genre_list: this.$store.state.genre_list,
 			user_id : this.$store.state.user_data.pk,
 			put_check:false,
 			new_content:'',
 			put_index:null,
+			genre_data: [],
 		}
 	},
 	created() {
 		this.getMovieDetail()
+		// 영화 좋아요 버튼의 경우 각 영화마다 DB에서 호출할 방법을 store에서 관리할 방법을 찾지 못해 직접 호출
 		axios({
-				method:'get',
-				url : `${Django_API_URL}/api/v1/movie/${this.$store.state.user_data.pk}/${this.$route.params.movie_id}/likes/`
-			})
-			.then((res)=>this.is_liked= res.data)
+			method:'get',
+			url : `${Django_API_URL}/api/v1/movie/${this.$store.state.user_data.pk}/${this.$route.params.movie_id}/likes/`
+		})
+		.then((res)=>this.is_liked= res.data)
+
+		
 	},
 	methods: {
-		
+		// 영화의 Detail 정보를 받아옴
 		getMovieDetail() {
 			axios({
 				method: 'get',
 				url: `${Django_API_URL}/api/v1/movie/${this.$route.params.movie_id}/`
 			})
 			.then((res) => {
-				console.log(res)
 				this.movie = res.data
 				this.poster_URL = `https://www.themoviedb.org/t/p/w300_and_h450_bestv2${res.data.poster_path}`
+				this.genreData()
 			})
 			.catch((err) => console.log(err))
 		},
+		genreData() {
+			for(const obj of this.genre_list) {
+				for(const genre_id of this.movie.genres) {
+					if(obj['id'] === genre_id) {
+						this.genre_data.push(obj['name'])
+					}
+				}
+			}
+		},
+		// 영화의 좋아요 정보를 받아옴
 		Like(){
 			axios({
 				method:'post',
 				url : `${Django_API_URL}/api/v1/movie/${this.$store.state.user_data.pk}/${this.$route.params.movie_id}/likes/`
 			})
 			.then((res) =>{
-				console.log(res.data)
 				this.is_liked = res.data
 				this.$router.go(0)
 			})
 		},
+		// 영화에 한줄평을 추가하는 로직
 		createMovieComment(){
 			const content = this.movie_comment
 			const radioValue = document.getElementsByName('btnradio')
@@ -164,7 +180,6 @@ export default {
 				}
 			})
 			const rank = this.rank
-			
 			axios({
 				method:'post',
 				url: `${Django_API_URL}/api/v1/movie/${this.$route.params.movie_id}/comments/`,
@@ -182,28 +197,19 @@ export default {
 				console.log(err)
 			})
 		},
-		commentPutOn(a){
+		// 댓글을 수정
+		commentPutOn(comment){
 			if (this.put_check){
 				this.put_index = null
 				return this.put_check = false
 			}else{
-				const index = a.target.getAttribute('data')
+				const index = comment.target.getAttribute('data')
 				this.put_index = index
 				return this.put_check = true
 			}
 		},
-		commentDelete(a){
-			const index = a.target.getAttribute('data')
-			const comment_data = this.movie['comment_set'][index]['id']
-			axios({
-				method:'delete',
-				url:`${Django_API_URL}/api/v1/comment/${comment_data}/`,
-			})
-			.then(()=>{this.$router.go(0)})
-			.catch(()=>{})
-		},
-		commentPut(a){
-			const index = a.target.getAttribute('data')
+		commentPut(comment){
+			const index = comment.target.getAttribute('data')
 			const comment_data = this.movie['comment_set'][index]['id']
 			const content = this.new_content
 			const movie = this.movie['id']
@@ -221,7 +227,18 @@ export default {
 			})
 			.then(()=>{this.$router.go(0)})
 			.catch(()=>{})
-		}
+		},
+		// 댓글 삭제
+		commentDelete(comment){
+			const index = comment.target.getAttribute('data')
+			const comment_data = this.movie['comment_set'][index]['id']
+			axios({
+				method:'delete',
+				url:`${Django_API_URL}/api/v1/comment/${comment_data}/`,
+			})
+			.then(()=>{this.$router.go(0)})
+			.catch(()=>{})
+		},
 	}
 }
 </script>

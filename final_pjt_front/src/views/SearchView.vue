@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<!-- 검색 로직의 경우 검색 키워드가 영화의 제목에 속해있을 경우 데이터가 검색되도록 로직 설정 -->
 		<form @submit.prevent="searchKeyword" class="pt-4 pb-3">
 			<div class="input-group mb-3 ms-3 me-3 mt-3" style="width: 95%;">
 				<span class="input-group-text">검색어</span>
@@ -88,6 +89,8 @@ export default {
 	components: {
 		MovieCard
 	},
+	// 해당 검색 기능을 만들기 위해서 사용한 데이터는 store에 저장된 전체 영화 리스트가 메인이다.
+	// 이 후 키워드에 따라 검색된 영화 리스트에 넣어주고 해당 영화의 정보(포스터와 제목)를 출력
 	data() {
 		return {
 			movie_list: this.$store.state.movie_list,
@@ -101,11 +104,12 @@ export default {
 			this.tempKeyword = ""
 			const keyword = this.searchMovieKeyword
 			this.search_movie_list = []
-
+			// 검색어를 빈 공간으로 두었을 경우 알림 출력
 			if(keyword==="" | keyword === undefined) {
 				alert("검색 결과가 없습니다.")
 				return
 			}
+			// 빈공간으로 두지 않았을 경우 키워드를 바탕으로 검색
 			else {
 				keyword.toLowerCase()
 				this.movie_list.forEach((movie) => {
@@ -115,10 +119,9 @@ export default {
 					}
 				})
 			}
+			// 이후 검색창을 다시 빈 공간으로 만들어주는 작업
 			this.tempKeyword = this.searchMovieKeyword
 			this.searchMovieKeyword = ""
-			console.log(this.search_movie_list)
-			console.log(this.searchMovieKeyword)
 		}
 	}
 }

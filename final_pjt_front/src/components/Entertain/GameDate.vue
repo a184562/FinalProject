@@ -3,14 +3,14 @@
 		<div class="container justify-content-around pt-5">
 			<div @click="selectCard_left">
 				<GameCard class="Card" :movie="movie_1" />
-				<div id="popularity_1" class="mt-5 popularity">
-					0
+				<div id="release_date_1" class="mt-5 release_date">
+					-
 				</div>
 			</div>
 			<div @click="selectCard_right">
 				<GameCard class="Card" :movie="movie_2" />
-				<div id="popularity_2" class="mt-5 popularity">
-					0
+				<div id="release_date_2" class="mt-5 release_date">
+					-
 				</div>
 			</div>
 		</div>
@@ -20,10 +20,8 @@
 
 <script>
 import GameCard from './GameCard.vue'
-
-
 export default {
-	name: 'GamePlay',
+	name: 'GamePlayDate',
 	components: {
 		GameCard,
 	},
@@ -35,8 +33,8 @@ export default {
 			idx_1 : 0,
 			idx_2 : 1,
 			score : 0,
-			counting_num_1 : 0,
-			counting_num_2 : 0,
+			counting_num_1 : "",
+			counting_num_2 : "",
 		}
 	},
 	created() {
@@ -49,29 +47,30 @@ export default {
 		this.shuffle(this.movie_list)
 		this.movie_1 = this.movie_list[this.idx_1]
 		this.movie_2 = this.movie_list[this.idx_2]
-		// popularity 데이터가 소수점이므로 소수점의 자리수를 올려줌
-		this.counting_num_1 = this.movie_1.popularity * 1000
-		this.counting_num_2 = this.movie_2.popularity * 1000
+		this.counting_num_1 = this.movie_1.release_date
+		this.counting_num_2 = this.movie_2.release_date
 	},
 	methods: {
 		shuffle(array) {
 			array.sort(() => Math.random() -0.5)
 		},
+		// 다른 게임과 다르게 수가 아닌 문자열을 받아오므로 카운팅하는 함수는 생략
 		// 왼쪽 카드를 선택시 오른쪽 카드가 왼쪽으로 이동하고 정답일 때 점수를 올려줌
 		async selectCard_left() {
-			this.countingNum_1(this.counting_num_1)
-			this.countingNum_2(this.counting_num_2)
+			document.querySelector("#release_date_1").innerHTML = this.counting_num_1
+			document.querySelector("#release_date_2").innerHTML = this.counting_num_2
 			setTimeout(() => {
-				if (this.movie_1.popularity > this.movie_2.popularity) {
+				if (this.movie_1.release_date <= this.movie_2.release_date) {
 					this.score += 1
 					this.idx_1 = this.idx_2
 					this.idx_2 += 1
 					this.movie_1 = this.movie_list[this.idx_1]
 					this.movie_2 = this.movie_list[this.idx_2]
-					this.counting_num_1 = Math.round(this.movie_1.popularity * 1000)
-					this.counting_num_2 = Math.round(this.movie_2.popularity * 1000)
-					document.querySelector("#popularity_1").innerHTML = this.counting_num_1
-					document.querySelector("#popularity_2").innerHTML = 0
+					console.log(this.movie_1)
+					this.counting_num_1 = this.movie_1.release_date
+					this.counting_num_2 = this.movie_2.release_date
+					document.querySelector("#release_date_1").innerHTML = this.counting_num_1
+					document.querySelector("#release_date_2").innerHTML = 0
 				}
 				else {
 					alert("틀렸습니다.")
@@ -81,66 +80,26 @@ export default {
 		},
 		// 오른쪽 카드를 선택시 오른쪽 카드가 왼쪽으로 이동하고 정답일 때 점수를 올려줌
 		async selectCard_right() {
-			this.countingNum_1(this.counting_num_1)
-			this.countingNum_2(this.counting_num_2)
+			document.querySelector("#release_date_1").innerHTML = this.counting_num_1
+			document.querySelector("#release_date_2").innerHTML = this.counting_num_2
 			setTimeout(() => {
-				if (this.movie_1.popularity < this.movie_2.popularity) {
+				if (this.movie_1.release_date >= this.movie_2.release_date) {
 					this.score += 1
 					this.idx_1 = this.idx_2
 					this.idx_2 += 1
 					this.movie_1 = this.movie_list[this.idx_1]
 					this.movie_2 = this.movie_list[this.idx_2]
-					this.counting_num_1 = Math.round(this.movie_1.popularity * 1000)
-					this.counting_num_2 = Math.round(this.movie_2.popularity * 1000)
-					document.querySelector("#popularity_1").innerHTML = this.counting_num_1
-					document.querySelector("#popularity_2").innerHTML = 0
+					console.log(this.movie_1)
+					this.counting_num_1 = this.movie_1.release_date
+					this.counting_num_2 = this.movie_2.release_date
+					document.querySelector("#release_date_1").innerHTML = this.counting_num_1
+					document.querySelector("#release_date_2").innerHTML = 0
 				}
 				else {
 					alert("틀렸습니다.")
 					this.$router.push({name: 'entertain'})
 				}
 			}, 1000)
-		},
-		// 숫자가 카운팅되도록 하는 함수
-		countingNum_1(num) {
-			const element = document.querySelector('#popularity_1')
-			if(num == 0) {
-				element.innerHTML = '0'
-			}
-			else {
-				const each = Math.ceil(num/25)
-				let time = 0
-			for(let i = 0; i <= num; i += each) {
-				setTimeout(() => {
-					element.innerHTML = i
-				}, 20*time)
-				if(i+each > num) {
-					setTimeout(() => {
-						element.innerHTML = num
-					}, 20*(time+1))
-				}
-				time++
-			}}
-	},
-	countingNum_2(num) {
-			const element = document.querySelector('#popularity_2')
-			if(num == 0) {
-				element.innerHTML = '0'
-			}
-			else {
-				const each = Math.ceil(num/25)
-				let time = 0
-			for(let i = 0; i <= num; i += each) {
-				setTimeout(() => {
-					element.innerHTML = i
-				}, 20*time)
-				if(i+each > num) {
-					setTimeout(() => {
-						element.innerHTML = num
-					}, 20*(time+1))
-				}
-				time++
-			}}
 		},
 }}
 </script>
@@ -167,7 +126,7 @@ export default {
 	margin-bottom: 15rem;
 	margin-top: 5rem;
 }
-.popularity {
+.release_date {
 	font-size: 30px;
 }
 </style>

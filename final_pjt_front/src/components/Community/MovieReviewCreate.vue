@@ -22,32 +22,15 @@
 							<input class="btn btn-dark mb-4" type="submit" value="글 작성">
 							<button class="btn btn-dark ms-3 mb-4" @click="goToReview">글 쓰기 취소</button>
 						</div>
-						
 					</div>
-					
 				</form>
 			</div>
-
 		</div>
 	</div>
-	<!-- <div>
-		<h1>리뷰게시판 게시글 작성</h1>
-		<form @submit.prevent="createReview">
-			<label for="title">제목 : </label>
-			<input type="text" id="title" v-model.trim="title"><br>
-			<label for="content">내용 : </label>
-			<textarea id="content" cols="30" rows="10" v-model.trim="content"></textarea><br>
-			<label for="movie_title">영화 제목 : </label>
-			<input type="text" id="movie_title" v-model.trim="movie_title"><br>
-			<input type="submit" id="제출">
-		</form>
-	
-	</div> -->
 </template>
 
 <script>
 import axios from 'axios'
-
 const Django_API_URL = 'http://127.0.0.1:8000'
 
 export default {
@@ -60,6 +43,7 @@ export default {
 		}
 	},
 	methods: {
+		// 현재 로그인한 유저의 데이터가 필요하므로 axios 사용
 		createReview() {
 			const title = this.title
 			const content = this.content
@@ -94,7 +78,7 @@ export default {
 			.then(() => {
 				this.$router.push({name: 'review'}).catch(() => {})
 			})
-			.catch((err) => console.log(err))
+			.catch(() => {})
 		},
 		goToReview() {
 			this.$router.push({name:'review'})

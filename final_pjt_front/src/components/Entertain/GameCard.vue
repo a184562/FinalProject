@@ -4,7 +4,6 @@
 		<div class="mt-3 align-middle">
 			<p class="pt-3">{{movie.title}}</p>
 		</div>
-		
 	</div>
 </template>
 
@@ -13,11 +12,6 @@ export default {
 	name: 'GameCard',
 	props: {
 		movie: Object,
-	},
-	data() {
-		return {
-			// max_num : this.movie.popularity
-		}
 	},
 	methods:{
 		poster(path) {

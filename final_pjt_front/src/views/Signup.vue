@@ -3,6 +3,8 @@
     <div class="mt-5">
       <div class="accountform">
         <h2 class="signUpTitle pt-2 pb-2 ms-3 me-3">회원가입</h2>
+        <!-- username, password, passwordconfirm, email, firstname, lastname 입력을 통해 가입 정보를 받을 수 있게 함 -->
+        <!-- 다만, username, password, passwordconfirm정보는 필수 값으로 입력 받도록하고 나머지 값은 비워도 가입 가능하게 설정 -->
         <form @submit.prevent="signUp">
           <div style="width: 80%; margin: auto;">
             <div class="input-group">
@@ -36,26 +38,12 @@
 
     </div>
   </div>
-  <!-- <div>
-    <h1>Sign Up Page</h1>
-    <form @submit.prevent="signUp">
-      <label for="username">username : </label>
-      <input type="text" id="username" v-model="username"><br>
-
-      <label for="password1"> password : </label>
-      <input type="password" id="password1" v-model="password1"><br>
-
-      <label for="password2"> password confirmation : </label>
-      <input type="password" id="password2" v-model="password2">
-      
-      <input type="submit" value="SignUp">
-    </form>
-  </div> -->
 </template>
 
 <script>
 export default {
   name: 'SignUp',
+  // 가입하는데 있어서 입력 받을 정보들을 data에 정의
   data() {
     return {
       username: "",
@@ -66,6 +54,7 @@ export default {
       lastname: "",
     }
   },
+  // 가입을 위한 데이터를 Django 서버에 보내주기 위한 함수 정의
   methods: {
     signUp() {
       const username = this.username
@@ -74,11 +63,10 @@ export default {
       const email = this.email
       const firstname = this.firstname
       const lastname = this.lastname
-
       const payload = {
         username, password1, password2, email, firstname, lastname
       }
-      
+      // username과 password, passwordconfirm을 입력하지 않으면 가입할 수 없도록 함수 정의
       console.log(payload)
       if(this.username==""){
         alert('아이디를 입력해주세요')
@@ -91,27 +79,13 @@ export default {
         return false
       }else{
         this.$store.dispatch('signUp', payload)
+        // 가입 후 메인페이지로 가는 것이 아닌 유저의 선호 장르 데이터를 받기 위한 장르 선택 페이지로 이동
         this.$router.push({ name: 'genre'})
       }
 
       
 
     },
-    // GoToHome(){
-    //   console.log(this.username)
-    //   if(this.username==""){
-    //     alert('아이디를 입력해주세요')
-    //     return false
-    //   }else if(this.password1==""){
-    //     alert('비밀번호를 입력해주세요')
-    //     return false
-    //   }else if(this.password1 != this.password2){
-    //     alert('비밀번호가 일치하지 않습니다')
-    //     return false
-    //   }else{
-    //     this.$router.push({ name: 'movies'})
-    //   }
-    // }
   }
 }
 </script>
@@ -121,7 +95,6 @@ export default {
   border-radius: 0.5rem;
 	margin: auto;
 	width: 500px;
-	/* height: 75%; */
 	box-shadow: 4px 4px 4px grey;
 	background-color: #141414;
 	margin-bottom: 15rem;
@@ -134,5 +107,4 @@ export default {
   border-bottom: solid grey 1px;
   text-align: start;
 }
-
 </style>

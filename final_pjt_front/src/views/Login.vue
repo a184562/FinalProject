@@ -21,18 +21,6 @@
 
     </div>
   </div>
-  <!-- <div>
-    <h1>LogIn Page</h1>
-    <form @submit.prevent="login">
-      <label for="username">username : </label>
-      <input type="text" id="username" v-model="username"><br>
-
-      <label for="password"> password : </label>
-      <input type="password" id="password" v-model="password"><br>
-
-      <input type="submit" value="logIn">
-    </form>
-  </div> -->
 </template>
 
 <script>
@@ -46,23 +34,13 @@ export default {
       password : null,
     }
   },
-  created() {
-    axios({
-        method:'post',
-        url:`${Django_API_URL}/api/v1/accounts/genre/`
-      })
-      .then(() => {})
-      .catch(() => {})
-  },
   methods: {
     login() {
       const username = this.username
       const password = this.password
-      
       const payload = {
         username, password
       }
-
       if(this.username==""){
         alert('아이디를 입력해주세요')
         return false
@@ -74,14 +52,12 @@ export default {
       else {
         this.$store.dispatch('logIn', payload)
         this.$router.push({ name: 'movies'})
+        // 로그인 실패시에도 바로 movie 페이지로 가는 오류를 해결해주기 위해 지연로딩 설정
         setTimeout(() => {
           this.$router.go(0)
         }, 200)
-        
       }
-      
     }
-
   }
 }
 </script>
@@ -91,7 +67,6 @@ export default {
   border-radius: 0.5rem;
 	margin: auto;
 	width: 500px;
-	/* height: 75%; */
 	box-shadow: 4px 4px 4px grey;
 	background-color: #141414;
 	margin-bottom: 15rem;
@@ -104,5 +79,4 @@ export default {
   border-bottom: solid grey 1px;
   text-align: start;
 }
-
 </style>

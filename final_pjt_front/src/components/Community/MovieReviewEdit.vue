@@ -1,19 +1,36 @@
 <template>
-	<div>
-		<h1>리뷰게시판 게시글 수정</h1>
-		<form @submit.prevent="editMovieReview">
-			<label for="title">제목 : </label>
-			<input type="text" id="title" v-model="title"><br>
-			<label for="content">내용 : </label>
-			<textarea id="content" cols="30" rows="10" v-model="content"></textarea><br>
-			<label for="movie_title">영화 제목 : </label>
-			<input type="text" id="movie_title" v-model="movie_title"><br>
-			<input type="submit" id="제출">
-		</form>
+	<div class="detail">
+		<div class="mt-5">
+			<div class="articletitle pt-4">
+				<h1>리뷰게시판 게시글 수정</h1><hr>
+				<form @submit.prevent="editMovieReview">
+					<div  style="width: 95%; margin:auto;">
+						<div class="d-flex">
+							<label id="movie_title" class="form-label" for="movie_title">영화 제목 : </label>
+						</div>
+						<input class="form-control inputTitle" type="text" id="title" v-model.trim="movie_title"><br>
+						<div class="d-flex">
+							<label id="title" class="form-label" for="title">제목 : </label>
+						</div>
+						<input class="form-control inputTitle" type="text" id="title" v-model.trim="title"><br>
+						<div class="d-flex">
+							<label id="content" class="form-label" for="content">내용 : </label>
+						</div>
+						<textarea class="form-control inputContent" id="content"  rows="10" v-model.trim="content"></textarea><br>
+						
+						<div class="d-flex">
+							<input class="btn btn-dark mb-4" type="submit" value="글 작성">
+							<button class="btn btn-dark ms-3 mb-4" @click="editMovieReview">수정 취소</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
+// 현재 로그인한 유저의 데이터가 필요하므로 axios 사용
 import axios from 'axios'
 const Django_API_URL = 'http://127.0.0.1:8000'
 export default {

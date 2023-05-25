@@ -21,7 +21,6 @@
 import axios from 'axios'
 const Django_API_URL = 'http://127.0.0.1:8000'
 
-
 export default {
 	name: 'GenreSelect',
 	data() {
@@ -30,18 +29,19 @@ export default {
 			genre :[],
 		}
 	},
+	// store의 genre 데이터가 바로 불러와지지 않는 버그가 있어 해결책으로 따로 불러냄
 	created() {
 		axios({
 			method: 'get',
 			url: `${Django_API_URL}/api/v1/movie/genres/`,
 		})
 		.then((res) => {
-			console.log(res)
 			this.genre_list = res.data
 		})
 		.catch((err) => console.log(err))
 	},
 	methods:{
+		// 장르 선택시 데이터를 보내주기 위한 함수
 		selectGenres(genre) {
 			let genre_HTML = document.getElementById(genre.id)
 			if(this.genre.indexOf(genre.id) === -1) {
@@ -56,9 +56,7 @@ export default {
 						genre_HTML.className = "btn btn-lg btn-dark mt-3 ms-3 me-3 mb-3"
 					}
 				}
-				
 			}
-			console.log(this.genre)
 		},
 		genres(){
 			const genre = this.genre
@@ -66,9 +64,10 @@ export default {
 				alert("너무 많이 선택하셨습니다. 5개 이하로 선택해주세요.")
 			}
 			else {
+				// user와 선호 genre를 연결해주는 DB에 보내주는 작업
 				axios({
 				method:'post',
-				url : 'http://127.0.0.1:8000/api/v1/usergenre/',
+				url : `${Django_API_URL}/api/v1/usergenre/`,
 				data:{
 					genre
 				},
@@ -77,11 +76,12 @@ export default {
 				}
 			})
 			.then(()=>{
+				// 장르 선택까지 마치고 자동으로 로그인하는 작업
+				this.$store.dispatch('getUser')
 				this.$router.push({name:'movies'})
 			})
 			.catch(()=>{})
 			}
-			
 		}
 	}
 }

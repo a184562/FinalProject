@@ -3,14 +3,11 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-
-
-# Create your models here.
-
+# 영화 장르 데이터 모델
 class Genre(models.Model):
     name = models.TextField()
 
-
+# 영화 데이터 모델
 class Movie(models.Model):
     title = models.CharField(max_length=100,null=True)
     original_title = models.CharField(max_length=100, null=True)
@@ -21,7 +18,8 @@ class Movie(models.Model):
     popularity = models.FloatField(null=True)
     genres = models.ManyToManyField(Genre, blank=True)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_movies')
-    
+
+# 한줄평 데이터 모델
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="moviecomments")
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
