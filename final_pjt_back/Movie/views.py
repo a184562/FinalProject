@@ -118,7 +118,7 @@ def like_movie(request, movie_pk, my_pk):
 
         return Response(like)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def genres(request):
     genre = get_list_or_404(Genre)
     serializer = GenreSerializer(genre, many=True)
